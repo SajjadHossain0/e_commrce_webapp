@@ -39,12 +39,12 @@
         .contact-section {
             display: flex;
             justify-content: space-between;
-            padding: 10px 20px;
-            background-color: #f0f0f0;
+            padding: 5px 10px;
+            background-color: #cacaca;
         }
 
         .email {
-            font-size: 18px;
+            font-size: 24px;
         }
 
         .stars {
@@ -61,7 +61,7 @@
         .navbar {
             display: flex;
             align-items: center;
-            background-color: #333;
+            background-color: #6c6c6c;
             color: white;
             padding: 10px 20px;
         }
@@ -97,37 +97,72 @@
             z-index: 1000;
             top: 0;
             left: 0;
-            background-color: #333;
+            background-color: #ffffff;
+            color: black;
             overflow-x: hidden;
             transition: 0.3s;
             padding-top: 60px;
         }
 
         .sidebar-menu a {
-            padding: 8px 8px 8px 32px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
             text-decoration: none;
-            font-size: 20px;
-            color: #fff;
+            font-size: 25px;
+            color: #000000;
             display: block;
             transition: 0.3s;
-        }
-
-        .sidebar-menu a:hover {
-            background-color: #575757;
         }
 
         .sidebar-menu .closebtn {
             position: absolute;
             top: 0;
-            right: 10px;
+            right: 20px;
             font-size: 36px;
             margin-left: 50px;
         }
 
-        .search-icon {
-            font-size: 24px;
-            margin-right: 10px;
+        .category {
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 12px;
+            margin-left: 12px;
+        }
+
+        .category .toggle-icon {
+            position: absolute;
+            right: 20px;
+            transition: transform 0.3s;
+        }
+
+        .subcategory {
             display: none;
+            margin-left: 20px;
+            padding-left: 10px;
+            margin-bottom: 5px;
+        }
+
+        .subcategory a {
+            font-size: 16px;
+            padding: 10px 16px;
+            margin-bottom: 5px;
+        }
+
+        .subcategory a:hover {
+            background-color: #fdfdfd;
+        }
+
+        /* Smooth expand and collapse transition */
+        .subcategory.expanded {
+            display: block;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: #ffffff;
+        }
+
+        .sidebar-menu a svg {
+            margin-left: 10px;
         }
 
         /* Footer Section */
@@ -158,32 +193,79 @@
 <section class="contact-section" th:fragment="contact">
     <div class="email">email@example.com</div>
     <div class="stars">
-        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9734;</span>
+        <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
     </div>
 </section>
 
 <section class="navbar" th:fragment="navbar">
+
     <div class="toggle-button" onclick="openMenu()">
         <span>&#9776;</span>
     </div>
+
     <div class="app-name">My Web App</div>
+
     <div class="search-bar">
-        <input type="text" placeholder="Search...">
+        <form class="d-flex" role="search">
+            <input style="padding: 5px" class="form-control me-2" type="search" placeholder="Search..."
+                   aria-label="Search">
+        </form>
     </div>
-    <div class="search-icon">&#128269;</div>
-    <div class="profile-icon">&#128100;</div>
-    <div class="cart-icon">&#128722;</div>
+
+    <div class="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+             viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg>
+    </div>
+    <div class="profile-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle"
+             viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+            <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
+    </div>
+    <div class="cart-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
+             viewBox="0 0 16 16">
+            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+        </svg>
+    </div>
 
 
     <!-- Sidebar Sliding Menu -->
     <div id="sidebar" class="sidebar-menu">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">&times;</a>
-        <a href="#">Category 1</a>
-        <a href="#">Subcategory 1.1</a>
-        <a href="#">Subcategory 1.2</a>
-        <a href="#">Category 2</a>
-        <a href="#">Subcategory 2.1</a>
-        <a href="#">Subcategory 2.2</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                 viewBox="0 0 16 16">
+                <path
+                        d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+        </a>
+        <div class="category" onclick="toggleSubcategory('cat1')">
+            Category 1
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill toggle-icon"
+                 viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 6.345a.5.5 0 0 1 .708-.708l4.096 4.096 4.096-4.096a.5.5 0 1 1 .708.708L7.247 11.14z"/>
+            </svg>
+        </div>
+        <div id="cat1" class="subcategory">
+            <a href="#">Subcategory 1.1</a>
+            <a href="#">Subcategory 1.2</a>
+        </div>
+
+        <div class="category" onclick="toggleSubcategory('cat2')">
+            Category 2
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill toggle-icon"
+                 viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 6.345a.5.5 0 0 1 .708-.708l4.096 4.096 4.096-4.096a.5.5 0 1 1 .708.708L7.247 11.14z"/>
+            </svg>
+        </div>
+        <div id="cat2" class="subcategory">
+            <a href="#">Subcategory 2.1</a>
+            <a href="#">Subcategory 2.2</a>
+        </div>
     </div>
 
     <script>
@@ -195,6 +277,22 @@
         // Close sidebar menu
         function closeMenu() {
             document.getElementById("sidebar").style.width = "0";
+        }
+
+        // Toggle subcategories
+        function toggleSubcategory(id) {
+            const subcategory = document.getElementById(id);
+            const icon = subcategory.previousElementSibling.querySelector('.toggle-icon');
+
+            if (subcategory.classList.contains('expanded')) {
+                subcategory.classList.remove('expanded');
+                subcategory.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                subcategory.classList.add('expanded');
+                subcategory.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+            }
         }
     </script>
 
