@@ -167,14 +167,14 @@
 
         /* Footer Section */
         .footer {
-            position: fixed;
+            /*position: fixed;*/
             bottom: 0;
             left: 0;
             width: 100%;
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 100px 0;
         }
 
         /* Responsive */
@@ -248,14 +248,99 @@
         </svg>
     </div>
 
-    <div class="profile-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle"
-             viewBox="0 0 16 16">
+<style>
+    /* Profile dropdown */
+    .profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 200px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    }
+
+    .profile-dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+
+    .profile-dropdown ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    background-color: white;
+        color: black;
+    transition: background-color 0.3s;
+    }
+
+    .profile-dropdown ul li:hover {
+    background-color: #f5f5f5;
+    }
+    </style>
+
+    <div class="profile-icon" onclick="toggleProfileDropdown()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd"
-                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
         </svg>
     </div>
+    <!-- Profile dropdown list -->
+    <div id="profileDropdown" class="profile-dropdown">
+        <ul class="list-group">
+            <li class="list-group-item">Profile</li>
+            <li class="list-group-item">Settings</li>
+            <li class="list-group-item">Login</li>
+            <li class="list-group-item">Logout</li>
+        </ul>
+    </div>
+    <script>
+        // Toggle profile dropdown visibility
+        function toggleProfileDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close the profile dropdown if clicked outside
+        document.addEventListener('click', function (event) {
+            const profileIcon = document.querySelector('.profile-icon');
+            const profileDropdown = document.getElementById('profileDropdown');
+
+            if (!profileIcon.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.style.display = 'none';
+            }
+        });
+
+        // Open sidebar menu
+        function openMenu() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        // Close sidebar menu
+        function closeMenu() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        // Toggle subcategories
+        function toggleSubcategory(id) {
+            const subcategory = document.getElementById(id);
+            const icon = subcategory.previousElementSibling.querySelector('.toggle-icon');
+
+            if (subcategory.classList.contains('expanded')) {
+                subcategory.classList.remove('expanded');
+                subcategory.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                subcategory.classList.add('expanded');
+                subcategory.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+
     <div class="cart-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
              viewBox="0 0 16 16">
