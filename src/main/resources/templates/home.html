@@ -7,9 +7,249 @@
     <style th:insert="~{base :: styles}"></style>
 </head>
 <body>
+<!--@@@ Contact section-->
 <section th:insert="~{base :: contact}"></section>
+<!--@@@ Contact section close-->
+
+<!--@@@ Navbar section-->
 <section th:insert="~{base :: navbar}"></section>
-<!-- Add homepage content here -->
+<!--@@@ Navbar section close-->
+
+<!--@@@ Ads section-->
+<style>
+    /* Slideshow Container */
+    .slideshow-container {
+        position: relative;
+        max-width: 100%;
+        margin: auto;
+        overflow: hidden;
+        border: 2px solid #ddd;
+    }
+
+    /* Slides (Images) */
+    .slides {
+        display: none;
+        width: 100%;
+    }
+
+    .slides img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    /* Caption Text */
+    .caption {
+        color: #fff;
+        font-size: 18px;
+        padding: 10px;
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Navigation Dots */
+    .dots-container {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .dot {
+        cursor: pointer;
+        height: 15px;
+        width: 15px;
+        margin: 5px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+    }
+
+    .active {
+        background-color: #717171;
+    }
+
+    /* Fade-in Animation */
+    .fade {
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    @keyframes fade {
+        from {opacity: 0.4}
+        to {opacity: 1}
+    }
+</style>
+
+<!-- Slideshow Container -->
+<div class="slideshow-container">
+
+    <!-- Slide 1 -->
+    <div class="slides fade">
+        <img src="https://via.placeholder.com/1000x400?text=Ad+1" alt="Ad 1">
+        <div class="caption">Advertisement 1</div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slides fade">
+        <img src="https://via.placeholder.com/1000x400?text=Ad+2" alt="Ad 2">
+        <div class="caption">Advertisement 2</div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slides fade">
+        <img src="https://via.placeholder.com/1000x400?text=Ad+3" alt="Ad 3">
+        <div class="caption">Advertisement 3</div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slides fade">
+        <img src="https://via.placeholder.com/1000x400?text=Ad+4" alt="Ad 4">
+        <div class="caption">Advertisement 4</div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slides fade">
+        <img src="https://via.placeholder.com/1000x400?text=Ad+5" alt="Ad 5">
+        <div class="caption">Advertisement 5</div>
+    </div>
+
+</div>
+
+<!-- Navigation Dots -->
+<div class="dots-container">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+    <span class="dot" onclick="currentSlide(5)"></span>
+</div>
+
+<!-- JavaScript for Automatic Slideshow -->
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("slides");
+        let dots = document.getElementsByClassName("dot");
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slideIndex++;
+
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+
+        setTimeout(showSlides, 3000); // Change slide every 3 seconds
+    }
+
+    function currentSlide(n) {
+        slideIndex = n;
+        showSlides();
+    }
+</script>
+<!--@@@ Ads section close-->
+
+<!--@@@ Category card section-->
+<style>
+    /* Card container */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    /* Individual card */
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+    /* Circle image */
+    .card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    /* Responsive Design */
+    @media (min-width: 600px) {
+        .card {
+            width: 180px;
+        }
+        .card img {
+            width: 120px;
+            height: 120px;
+        }
+    }
+
+    @media (min-width: 900px) {
+        .card {
+            width: 200px;
+        }
+        .card img {
+            width: 140px;
+            height: 140px;
+        }
+    }
+</style>
+
+<!-- Circular Cards Section -->
+<div class="card-container" style="margin: 50px">
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+    <div class="card">
+        <img src="/images/img1.png" class="card-img-top" alt="...">
+        <div class="card-body" style="margin: 5px">Category 1</div>
+    </div>
+
+</div>
+<!--@@@ Category card section close-->
+
+
 
 <section th:insert="~{base :: footer}"></section>
 </body>
