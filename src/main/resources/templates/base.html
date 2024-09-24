@@ -81,6 +81,11 @@
             font-size: 20px;
         }
 
+        .navbar .app-name a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
         .navbar .search-bar {
             margin-right: 20px;
         }
@@ -187,6 +192,7 @@
                 display: inline-block;
             }
         }
+
         /* Hide search bar on small screens, show search icon */
         @media (max-width: 600px) {
             .search-bar {
@@ -227,12 +233,11 @@
 </section>
 
 <section class="navbar" th:fragment="navbar">
-
     <div class="toggle-button" onclick="openMenu()">
         <span>&#9776;</span>
     </div>
 
-    <div class="app-name">My Web App</div>
+    <div class="app-name"><a href="/">My Web App</a></div>
 
     <div class="search-bar">
         <form class="d-flex" role="search">
@@ -248,52 +253,53 @@
         </svg>
     </div>
 
-<style>
-    /* Profile dropdown */
-    .profile-dropdown {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 20px;
-    width: 200px;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-    }
+    <style>
+        /* Profile dropdown */
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            width: 200px;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
 
-    .profile-dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    }
+        .profile-dropdown ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    .profile-dropdown ul li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-    background-color: white;
-        color: black;
-    transition: background-color 0.3s;
-    }
+        .profile-dropdown ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s;
+        }
 
-    .profile-dropdown ul li:hover {
-    background-color: #f5f5f5;
-    }
+        .profile-dropdown ul li:hover {
+            background-color: #f5f5f5;
+        }
     </style>
-
     <div class="profile-icon" onclick="toggleProfileDropdown()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle"
+             viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
         </svg>
     </div>
     <!-- Profile dropdown list -->
     <div id="profileDropdown" class="profile-dropdown">
         <ul class="list-group">
-            <li class="list-group-item">Profile</li>
+            <a><li class="list-group-item">Profile</li></a>
             <li class="list-group-item">Settings</li>
-            <li class="list-group-item">Login</li>
+            <a href="/login"><li class="list-group-item">Login</li></a>
             <li class="list-group-item">Logout</li>
         </ul>
     </div>
@@ -360,7 +366,8 @@
         </a>
         <div class="category" onclick="toggleSubcategory('cat1')">
             Category 1
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill toggle-icon"
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-caret-down-fill toggle-icon"
                  viewBox="0 0 16 16">
                 <path d="M7.247 11.14 2.451 6.345a.5.5 0 0 1 .708-.708l4.096 4.096 4.096-4.096a.5.5 0 1 1 .708.708L7.247 11.14z"/>
             </svg>
@@ -372,7 +379,8 @@
 
         <div class="category" onclick="toggleSubcategory('cat2')">
             Category 2
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill toggle-icon"
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-caret-down-fill toggle-icon"
                  viewBox="0 0 16 16">
                 <path d="M7.247 11.14 2.451 6.345a.5.5 0 0 1 .708-.708l4.096 4.096 4.096-4.096a.5.5 0 1 1 .708.708L7.247 11.14z"/>
             </svg>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - My E-Commerce</title>
+    <style th:insert="~{base :: styles}"></style>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        footer {
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .main-content {
+            margin-top: 80px; /* Adjust this according to the height of your navbar */
+            margin-bottom: 80px; /* Adjust this according to the height of your contact/footer */
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px;
+        }
+
+        .register-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .register-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .register-header p {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-register {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-register:hover {
+            background-color: #0056b3;
+        }
+
+        .shipping-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .shipping-info h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group-inline {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-group-inline .form-group {
+            width: 48%;
+        }
+
+        .signup-link {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+        }
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .register-container {
+                padding: 30px;
+                max-width: 90%;
+            }
+
+            .register-header h2 {
+                font-size: 24px;
+            }
+
+            .form-group input {
+                padding: 10px;
+            }
+
+            .btn-register {
+                padding: 10px;
+            }
+
+            .form-group-inline {
+                flex-direction: column;
+            }
+
+            .form-group-inline .form-group {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .register-header h2 {
+                font-size: 20px;
+            }
+
+            .form-group label, .form-group input {
+                font-size: 14px;
+            }
+
+            .btn-register {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!--@@@ Contact section-->
+<section th:insert="~{base :: contact}"></section>
+<!--@@@ Contact section close-->
+
+<!--@@@ Navbar section-->
+<section th:insert="~{base :: navbar}"></section>
+<!--@@@ Navbar section close-->
+
+<div class="main-content">
+    <div class="register-container">
+        <div class="register-header">
+            <h2>Create Your Account</h2>
+            <p>Fill out the form below to create an account and start shopping!</p>
+        </div>
+
+        <form>
+            <!-- Personal Details -->
+            <div class="form-group-inline">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+
+            <!-- Shipping Details -->
+            <div class="shipping-info">
+                <h3>Shipping Address</h3>
+
+                <div class="form-group">
+                    <label for="address">Street Address</label>
+                    <input type="text" id="address" name="address" placeholder="Enter your street address" required>
+                </div>
+
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" placeholder="City" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State/Province</label>
+                        <input type="text" id="state" name="state" placeholder="State/Province" required>
+                    </div>
+                </div>
+
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="zip">Zip/Postal Code</label>
+                        <input type="text" id="zip" name="zip" placeholder="Zip Code" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" placeholder="Country" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-register">Register</button>
+
+            <div class="signup-link">
+                Already have an account? <a href="/login">Login</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
