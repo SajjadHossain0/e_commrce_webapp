@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>E-commerce</title>
-  <style th:insert="~{base :: styles}"></style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>E-commerce</title>
+    <style th:insert="~{base :: styles}"></style>
 </head>
 <body>
 <!--@@@ Contact section-->
@@ -16,6 +16,360 @@
 <!--@@@ Navbar section-->
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
+
+
+<!--@@@ Product Detail Page -->
+<div class="container" style="max-width: 1200px; margin: 30px auto; padding: 0 15px;">
+    <div class="product-detail-grid">
+        <!-- Product Image Section -->
+        <div class="product-image-gallery">
+            <img src="/images/img1.png" alt="Product Image" id="mainProductImage" class="main-product-img">
+            <div class="product-thumbnails">
+                <img src="/images/img1.png" alt="Thumbnail 1" class="thumbnail-img" onclick="changeImage(this)">
+                <img src="/images/img2.png" alt="Thumbnail 2" class="thumbnail-img" onclick="changeImage(this)">
+                <img src="/images/img3.png" alt="Thumbnail 3" class="thumbnail-img" onclick="changeImage(this)">
+            </div>
+        </div>
+
+        <!-- Product Information Section -->
+        <div class="product-info">
+            <h1 class="product-title">Product Name 1</h1>
+            <p class="product-price">$99.99</p>
+
+            <div class="product-reviews">
+                <span class="stars">★★★★★</span>
+                <span class="review-count">(120 reviews)</span>
+            </div>
+
+<!--            short description in 50 word then more description in more field-->
+            <p class="product-description" id="productDescription">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare, erat
+                sit amet
+                pellentesque blandit, justo nulla sodales lorem, a porttitor mauris eros nec lorem. Lorem ipsum dolor
+                sit
+                amet...
+                <span id="moreDescription" style="display: none;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare, erat sit amet pellentesque blandit, justo
+                    nulla sodales lorem, a porttitor mauris eros nec lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </span>
+            </p>
+
+            <a href="javascript:void(0)" class="see-more-btn" id="seeMoreBtn" onclick="toggleDescription()">See More</a>
+
+
+            <!-- Purchase Options -->
+            <div class="purchase-options">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
+
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+
+            <!-- Product Specifications -->
+            <div class="product-specs">
+                <h4>Product Details</h4>
+                <ul>
+                    <li>Material: 100% Cotton</li>
+                    <li>Size: M, L, XL</li>
+                    <li>Available Colors: White, Black, Olive</li>
+                    <li>Shipping: Free Worldwide Shipping</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- same category more Products Section (Optional) -->
+    <div class="related-products">
+        <h2>Related Products</h2>
+        <div class="product-grid">
+
+            <!--      more product card-->
+            <div class="product-card">
+                <!--photo size - 250x200-->
+                <img src="/images/img1.png" alt="Product Image">
+                <div class="product-info">
+                    <h3 class="product-title">Product Name 1</h3>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-reviews">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(120 reviews)</span>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- CSS for Product Detail Page -->
+<style>
+    .container {
+        font-family: Arial, sans-serif;
+    }
+
+    .product-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .main-product-img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .product-thumbnails {
+        display: flex;
+        margin-top: 15px;
+    }
+
+    .thumbnail-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: border 0.3s ease;
+    }
+
+    .thumbnail-img:hover {
+        border: 2px solid #007bff;
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-title {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .product-price {
+        font-size: 24px;
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .product-reviews {
+        margin-bottom: 20px;
+    }
+
+    .product-reviews .stars {
+        color: #f39c12;
+    }
+
+    .product-reviews .review-count {
+        font-size: 14px;
+        color: #777;
+    }
+
+    .product-description {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .see-more-btn {
+        color: #555;
+        font-weight: bold;
+        font-size: 15px;
+        text-decoration: none;
+        margin-bottom: 10px;
+        transition: color 0.3s ease; /* Smooth transition for hover effect */
+    }
+
+    .see-more-btn:hover {
+        color: #007bff; /* Change color on hover */
+        text-decoration: none; /* Optionally add underline */
+    }
+
+    .purchase-options {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .quantity-input {
+        width: 60px;
+        margin-right: 20px;
+        padding: 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .add-to-cart-btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .product-specs {
+        margin-top: 30px;
+    }
+
+    .product-specs h4 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .product-specs ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .product-specs li {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .related-products {
+        margin-top: 50px;
+    }
+
+    .related-products h2 {
+        font-size: 24px;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .product-card .product-info {
+        padding: 15px;
+    }
+
+    .product-card .product-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .product-card .product-price {
+        font-size: 20px;
+        color: #007bff;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .product-btn {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .product-btn:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .product-detail-grid {
+            grid-template-columns: 1fr; /* Stack image and info on top of each other */
+        }
+
+        .main-product-img {
+            height: 400px;
+        }
+
+        .product-thumbnails {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-product-img {
+            height: 300px;
+        }
+
+        .thumbnail-img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .product-title {
+            font-size: 22px;
+        }
+
+        .product-price {
+            font-size: 20px;
+        }
+    }
+</style>
+<!-- JavaScript for Image Switching -->
+<script>
+    function changeImage(element) {
+        document.getElementById('mainProductImage').src = element.src;
+    }
+
+    function toggleDescription() {
+        var moreText = document.getElementById("moreDescription");
+        var seeMoreBtn = document.getElementById("seeMoreBtn");
+
+        if (moreText.style.display === "none") {
+            moreText.style.display = "inline";
+            seeMoreBtn.innerHTML = "See Less";
+        } else {
+            moreText.style.display = "none";
+            seeMoreBtn.innerHTML = "See More";
+        }
+    }
+</script>
+<!--@@@ Product Detail Page End -->
+
 
 </body>
 </html>
