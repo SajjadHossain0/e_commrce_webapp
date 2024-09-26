@@ -48,12 +48,12 @@
                 pellentesque blandit, justo nulla sodales lorem, a porttitor mauris eros nec lorem. Lorem ipsum dolor
                 sit
                 amet...
+                <br>
                 <span id="moreDescription" style="display: none;">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare, erat sit amet pellentesque blandit, justo
                     nulla sodales lorem, a porttitor mauris eros nec lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </span>
             </p>
-
             <a href="javascript:void(0)" class="see-more-btn" id="seeMoreBtn" onclick="toggleDescription()">See More</a>
 
 
@@ -84,6 +84,91 @@
         <div class="product-grid">
 
             <!--      more product card-->
+            <div class="product-card">
+                <!--photo size - 250x200-->
+                <img src="/images/img1.png" alt="Product Image">
+                <div class="product-info">
+                    <h3 class="product-title">Product Name 1</h3>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-reviews">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(120 reviews)</span>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <!--photo size - 250x200-->
+                <img src="/images/img1.png" alt="Product Image">
+                <div class="product-info">
+                    <h3 class="product-title">Product Name 1</h3>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-reviews">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(120 reviews)</span>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <!--photo size - 250x200-->
+                <img src="/images/img1.png" alt="Product Image">
+                <div class="product-info">
+                    <h3 class="product-title">Product Name 1</h3>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-reviews">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(120 reviews)</span>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <!--photo size - 250x200-->
+                <img src="/images/img1.png" alt="Product Image">
+                <div class="product-info">
+                    <h3 class="product-title">Product Name 1</h3>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-reviews">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(120 reviews)</span>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <!--photo size - 250x200-->
+                <img src="/images/img1.png" alt="Product Image">
+                <div class="product-info">
+                    <h3 class="product-title">Product Name 1</h3>
+                    <p class="product-price">$99.99</p>
+                    <div class="product-reviews">
+                        <span class="stars">★★★★★</span>
+                        <span class="review-count">(120 reviews)</span>
+                    </div>
+
+                    <div style="text-align: center">
+                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                    </div>
+                </div>
+            </div>
             <div class="product-card">
                 <!--photo size - 250x200-->
                 <img src="/images/img1.png" alt="Product Image">
@@ -259,8 +344,11 @@
 
     .product-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
+        margin: 0 auto;
+        max-width: 1200px;
+        padding: 0 15px;
     }
 
     .product-card {
@@ -314,6 +402,7 @@
 
     .product-btn:hover {
         background-color: #0056b3;
+        color: white;
     }
 
     @media (max-width: 768px) {

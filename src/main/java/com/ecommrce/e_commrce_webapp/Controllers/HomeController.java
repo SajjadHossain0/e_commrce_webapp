@@ -23,4 +23,10 @@ public class HomeController {
 
         return "view/view_product";
     }
+
+    @GetMapping("/seller")
+    public String seller(){
+
+        return "seller/seller_dashboard";
+    }
 }
