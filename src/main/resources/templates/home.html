@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:font-weight="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>E-commerce</title>
     <style th:insert="~{base :: styles}"></style>
 </head>
@@ -79,8 +80,12 @@
     }
 
     @keyframes fade {
-        from {opacity: 0.4}
-        to {opacity: 1}
+        from {
+            opacity: 0.4
+        }
+        to {
+            opacity: 1
+        }
     }
 </style>
 <!-- Slideshow Container -->
@@ -89,7 +94,7 @@
     <!-- Slide 1 -->
     <div class="slides fade">
         <img src="/images/img1.png" alt="Ad 1">
-<!--        <div class="caption">Advertisement 1</div>-->
+        <!--        <div class="caption">Advertisement 1</div>-->
     </div>
 
     <!-- Slide 2 -->
@@ -163,19 +168,36 @@
 <!--@@@ Ads section close-->
 
 <!--@@@ Category card section-->
-<div class="container" style="text-align: center; margin-top: 20px; font-size: 20px">Category</div>
+<div class="container" style="text-align: center; margin-top: 20px; font-size: 20px; font-weight: bold">Category</div>
+
 <style>
-    /* Card container */
-    .card-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
+    /* Card slider container with hidden overflow */
+    .card-slider-container {
+        position: relative;
         padding: 20px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
     }
 
-    /* Individual card */
+    /* Scrollable card container */
+    .card-container {
+        display: flex;
+        gap: 20px;
+        scroll-behavior: smooth;
+        overflow-x: auto;
+        padding: 20px;
+        scroll-snap-type: x mandatory;
+        transition: all 0.3s ease;
+    }
+
+    .card-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Individual card design */
     .card {
+        flex: none;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -183,8 +205,18 @@
         width: 150px;
         border-radius: 50%;
         overflow: hidden;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        scroll-snap-align: center;
     }
-    /* Circle image */
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Image style */
     .card img {
         width: 100px;
         height: 100px;
@@ -192,11 +224,45 @@
         object-fit: cover;
     }
 
+    /* Navigation button styles */
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #000000;
+        border: none;
+        padding: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        z-index: 10;
+    }
+
+    .nav-btn:hover {
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-btn.left {
+        left: 10px;
+    }
+
+    .nav-btn.right {
+        right: 10px;
+    }
+
+    .nav-btn i {
+        font-size: 24px;
+    }
+
     /* Responsive Design */
     @media (min-width: 600px) {
         .card {
             width: 180px;
         }
+
         .card img {
             width: 120px;
             height: 120px;
@@ -207,6 +273,7 @@
         .card {
             width: 200px;
         }
+
         .card img {
             width: 140px;
             height: 140px;
@@ -214,43 +281,92 @@
     }
 </style>
 <!-- Circular Cards Section -->
-<div class="card-container" style="margin: 50px">
+<div class="card-slider-container">
+    <!-- Left button -->
+    <button class="nav-btn left" onclick="slideLeft()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+        </svg>
+    </button>
 
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top">
-        <div class="card-body" style="margin: 5px">Category 1</div>
+    <!-- Cards -->
+    <div class="card-container">
+        <a href="/category" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px">Category 1</div>
+            </div>
+        </a>
+        <a href="/category" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px">Category 2</div>
+            </div>
+        </a>
+        <a href="/category" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px">Category 3</div>
+            </div>
+        </a>
+        <a href="/category" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px">Category 4</div>
+            </div>
+        </a>
+        <a href="/category" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px">Category 5</div>
+            </div>
+        </a>
+        <a href="/category" style="text-decoration: none; color: inherit;">
+            <div class="card">
+                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px">Category 5</div>
+            </div>
+        </a>
     </div>
 
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top" alt="...">
-        <div class="card-body" style="margin: 5px">Category 1</div>
-    </div>
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top" alt="...">
-        <div class="card-body" style="margin: 5px">Category 1</div>
-    </div>
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top" alt="...">
-        <div class="card-body" style="margin: 5px">Category 1</div>
-    </div>
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top" alt="...">
-        <div class="card-body" style="margin: 5px">Category 1</div>
-    </div>
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top" alt="...">
-        <div class="card-body" style="margin: 5px">Category 1</div>
-    </div>
-    <div class="card">
-        <img src="/images/img1.png" class="card-img-top" alt="...">
-        <div class="card-body" style="margin: 5px">Category 1</div>
-    </div>
-
+    <!-- Right button -->
+    <button class="nav-btn right" onclick="slideRight()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+        </svg>
+    </button>
 </div>
+
+<!-- JavaScript for sliding -->
+<script>
+    const cardContainer = document.querySelector('.card-container');
+
+    function slideLeft() {
+        cardContainer.scrollBy({
+            left: -200, // Adjust the scroll distance for left sliding
+            behavior: 'smooth'
+        });
+    }
+
+    function slideRight() {
+        cardContainer.scrollBy({
+            left: 200, // Adjust the scroll distance for right sliding
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+
 <!--@@@ Category card section close-->
 
+
 <!--@@@ Product card section-->
-<div class="container" style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px">All Products</div>
+<div class="container" style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px; font-weight: bold">All Products
+</div>
 <style>
     .product-grid {
         display: grid;
@@ -313,13 +429,15 @@
 
     .product-btn {
         display: inline-block;
-        padding: 10px 15px;
+        padding: 5px;
         background-color: #007bff;
         color: #fff;
         text-align: center;
         text-decoration: none;
         border-radius: 5px;
-        font-size: 16px;
+        font-size: 15px;
+        height: 40px;
+        width: 100px;
         transition: background-color 0.3s ease;
     }
 
@@ -349,9 +467,9 @@
 </style>
 
 <div class="product-grid">
-    <!-- Product Card 1 -->
-    <div  class="product-card">
-<!--photo size - 250x200-->
+
+    <div class="product-card">
+        <!--photo size - 250x200-->
         <img src="/images/img1.png" alt="Product Image">
         <div class="product-info">
             <h3 class="product-title">Product Name 1</h3>
@@ -360,23 +478,29 @@
                 <span class="stars">★★★★★</span>
                 <span class="review-count">(120 reviews)</span>
             </div>
-            <a href="#" class="product-btn">Add to Cart</a>
+
+            <div style="text-align: center">
+                <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
+                <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+            </div>
         </div>
     </div>
+
+
 
 </div>
 
 <!--@@@ Product card section close-->
 
 
-
-
-
-
 <section th:insert="~{base :: footer}"></section>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 </body>
 </html>

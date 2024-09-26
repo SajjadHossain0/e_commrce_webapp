@@ -11,4 +11,16 @@ public class HomeController {
 
         return "home";
     }
+
+    @GetMapping("/category")
+    public String category(){
+
+        return "view/view_category";
+    }
+
+    @GetMapping("/product")
+    public String product(){
+
+        return "view/view_product";
+    }
 }
