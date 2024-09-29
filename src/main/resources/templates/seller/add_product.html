@@ -17,5 +17,111 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
+<style>
+  body {
+    background-color: #f8f9fa;
+    padding-top: 50px;
+  }
+
+  .container {
+    max-width: 700px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  /* Custom file input */
+  .custom-file-input::-webkit-file-upload-button {
+    display: none;
+  }
+
+  .custom-file-input::before {
+    content: 'Upload Image';
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .custom-file-input:hover::before {
+    background: #0056b3;
+  }
+</style>
+
+
+<div class="container">
+  <h2 class="text-center mb-4">Add New Product</h2>
+  <form id="addProductForm">
+    <!-- Product Image -->
+    <div class="mb-3">
+      <label for="productImage" class="form-label">Product Image (3/4 View)</label>
+      <input type="file" class="form-control custom-file-input" id="productImage" required>
+    </div>
+
+    <!-- Product Name -->
+    <div class="mb-3">
+      <label for="productName" class="form-label">Product Name</label>
+      <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
+    </div>
+
+    <!-- Price -->
+    <div class="mb-3">
+      <label for="productPrice" class="form-label">Price</label>
+      <input type="number" class="form-control" id="productPrice" placeholder="Enter price" required>
+    </div>
+
+    <!-- Short Description -->
+    <div class="mb-3">
+      <label for="productShortDesc" class="form-label">Short Description</label>
+      <textarea class="form-control" id="productShortDesc" rows="2" placeholder="Enter short description" required></textarea>
+    </div>
+
+    <!-- More Description -->
+    <div class="mb-3">
+      <label for="productMoreDesc" class="form-label">Detailed Description</label>
+      <textarea class="form-control" id="productMoreDesc" rows="4" placeholder="Enter detailed description" required></textarea>
+    </div>
+
+    <!-- Product Details -->
+    <div class="mb-3">
+      <label for="productDetails" class="form-label">Product Details</label>
+      <textarea class="form-control" id="productDetails" rows="3" placeholder="Enter product details" required></textarea>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Add Product</button>
+    </div>
+  </form>
+</div>
+
+<!-- Bootstrap JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>
+

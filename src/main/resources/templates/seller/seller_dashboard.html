@@ -120,153 +120,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/2732/2732739.png" alt="Add Product Icon" class="img-fluid">
           <h5 class="card-title">Add Product</h5>
           <p class="card-text">Easily add new products to your store.</p>
-          <button type="button" data-bs-toggle="modal"
-                  data-bs-target="#addProductModal"
-                  class="btn btn-light btn-custom">
-            Add Product</button>
-        </div>
-      </div>
-    </div>
-
-    <!--Add product modal-->
-    <style>
-      body {
-        background-color: #f8f9fa;
-      }
-
-      .modal-header {
-        background-color: #007bff;
-        color: #fff;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-      }
-
-      .modal-content {
-        border-radius: 10px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      }
-
-      .modal-footer {
-        justify-content: center;
-      }
-
-      .btn-primary {
-        background-color: #007bff;
-        border: none;
-      }
-
-      .btn-primary:hover {
-        background-color: #0056b3;
-      }
-
-      .form-control {
-        border-radius: 5px;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-      }
-
-      .form-label {
-        font-weight: bold;
-        color: #333;
-      }
-
-      .modal-footer .btn {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-      }
-
-      .modal-footer .btn-secondary {
-        background-color: #6c757d;
-      }
-
-      .modal-footer .btn-secondary:hover {
-        background-color: #5a6268;
-      }
-
-      /* Custom file input */
-      .custom-file-input::-webkit-file-upload-button {
-        display: none;
-      }
-
-      .custom-file-input::before {
-        content: 'Upload Image';
-        display: inline-block;
-        background: #007bff;
-        color: white;
-        padding: 10px 20px;
-        font-size: 14px;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-      }
-
-      .custom-file-input:hover::before {
-        background: #0056b3;
-      }
-
-      .modal-dialog {
-        max-width: 700px;
-      }
-
-      @media (max-width: 576px) {
-        .modal-dialog {
-          max-width: 95%;
-        }
-      }
-    </style>
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="addProductForm">
-              <!-- Product Image -->
-              <div class="mb-3">
-                <label for="productImage" class="form-label">Product Image (3/4 View)</label>
-                <input type="file" class="form-control custom-file-input" id="productImage" required>
-              </div>
-
-              <!-- Product Name -->
-              <div class="mb-3">
-                <label for="productName" class="form-label">Product Name</label>
-                <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
-              </div>
-
-              <!-- Price -->
-              <div class="mb-3">
-                <label for="productPrice" class="form-label">Price</label>
-                <input type="number" class="form-control" id="productPrice" placeholder="Enter price" required>
-              </div>
-
-              <!-- Short Description -->
-              <div class="mb-3">
-                <label for="productShortDesc" class="form-label">Short Description</label>
-                <textarea class="form-control" id="productShortDesc" rows="2"
-                          placeholder="Enter short description" required></textarea>
-              </div>
-
-              <!-- More Description -->
-              <div class="mb-3">
-                <label for="productMoreDesc" class="form-label">Detailed Description</label>
-                <textarea class="form-control" id="productMoreDesc" rows="4"
-                          placeholder="Enter detailed description" required></textarea>
-              </div>
-
-              <!-- Product Details -->
-              <div class="mb-3">
-                <label for="productDetails" class="form-label">Product Details</label>
-                <textarea class="form-control" id="productDetails" rows="3"
-                          placeholder="Enter product details" required></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" form="addProductForm" class="btn btn-primary">Add Product</button>
-          </div>
+          <a href="/seller/add_product" class="btn btn-light btn-custom">Add Products</a>
         </div>
       </div>
     </div>
@@ -278,7 +132,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" alt="View Products Icon" class="img-fluid">
           <h5 class="card-title">View Products</h5>
           <p class="card-text">Browse and manage all products in your inventory.</p>
-          <a href="/view-products" class="btn btn-light btn-custom">View Products</a>
+          <a href="/seller/view_products" class="btn btn-light btn-custom">View Products</a>
         </div>
       </div>
     </div>
@@ -290,7 +144,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/2511/2511059.png" alt="Manage Categories Icon" class="img-fluid">
           <h5 class="card-title">Manage Categories</h5>
           <p class="card-text">Organize and edit product categories.</p>
-          <a href="/manage-categories" class="btn btn-light btn-custom">Manage Categories</a>
+          <a href="/seller/manage_categories" class="btn btn-light btn-custom">Manage Categories</a>
         </div>
       </div>
     </div>
@@ -302,23 +156,20 @@
           <img src="https://cdn-icons-png.flaticon.com/512/4819/4819855.png" alt="View Orders Icon" class="img-fluid">
           <h5 class="card-title">View Orders</h5>
           <p class="card-text">Track and manage customer orders efficiently.</p>
-          <a href="/view-orders" class="btn btn-light btn-custom">View Orders</a>
+          <a href="/seller/view_orders" class="btn btn-light btn-custom">View Orders</a>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
 
-
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-        integrity="sha384-eMNk3HAv8Yh1W2K+/4OUVHPjm9Kc6QD6ev30iCpV+evUuA4B9F4FndJw8WhMF22R"
+<!-- Bootstrap JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
         crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhG81rIYZqLQevkABihCZbmaR5a2bFh7WV1z2iw5yBjGZb6YpF1hg6MFAFJ/"
-        crossorigin="anonymous"></script>
+
 
 </body>
 </html>
