@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:font-weight="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,27 +50,6 @@
     font-size: 12px;
   }
 
-  /* Custom file input style */
-  .custom-file-input::-webkit-file-upload-button {
-    display: none;
-  }
-
-  .custom-file-input::before {
-    content: 'Upload Cover Photo';
-    display: inline-block;
-    background: #007bff;
-    color: white;
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  }
-
-  .custom-file-input:hover::before {
-    background: #0056b3;
-  }
-
   .added-items {
     border: 1px solid #ddd;
     padding: 15px;
@@ -98,6 +77,7 @@
     height: 50px;
     object-fit: cover;
     margin-right: 10px;
+    border-radius: 5px;
   }
 
   .subcategory {
@@ -111,36 +91,23 @@
   }
 </style>
 
-
 <div class="container">
   <div class="row">
-    <!-- Left Column: Add New Category and Subcategories -->
+    <!-- Left Column: Add New Category -->
     <div class="col-md-6">
       <h2 class="text-center mb-4">Add New Category</h2>
-      <form id="addCategoryForm">
+      <form id="addCategoryForm" th:action="@{/seller/add}" method="post" enctype="multipart/form-data">
         <!-- Category Name -->
         <div class="mb-3">
           <label for="categoryName" class="form-label">Category Name</label>
-          <input type="text" class="form-control" id="categoryName" placeholder="Enter category name" required>
+          <input type="text" class="form-control" id="categoryName" name="name" placeholder="Enter category name" required>
         </div>
 
         <!-- Category Cover Photo -->
         <div class="mb-3">
           <label for="categoryCoverPhoto" class="form-label">Category Cover Photo</label>
-          <input type="file" class="form-control custom-file-input" id="categoryCoverPhoto" required>
-        </div>
-
-        <!-- Subcategories -->
-        <div class="mb-3">
-          <label class="form-label">Subcategories</label>
-          <div id="subcategoryInputs">
-            <div class="input-group mb-2">
-              <input type="text" class="form-control" name="subcategories[]" placeholder="Enter subcategory name" required>
-              <input type="file" class="form-control custom-file-input" name="subcategoryCoverPhoto[]" required>
-              <button class="btn btn-danger removeSubcategory" type="button">Remove</button>
-            </div>
-          </div>
-          <button type="button" id="addSubcategoryBtn" class="btn btn-outline-primary">Add Another Subcategory</button>
+          <input type="file" class="form-control custom-file-input" id="categoryCoverPhoto" name="coverPhoto" accept="image/*" required>
+          <span style="color: #f86363">Make sure to add 1x1 cover photo</span>
         </div>
 
         <div class="d-grid">
@@ -149,11 +116,21 @@
       </form>
     </div>
 
-    <!-- Right Column: Display Added Categories and Subcategories -->
+    <!-- Right Column: Display Added Categories -->
     <div class="col-md-6">
       <h2 class="text-center mb-4">View Categories</h2>
-      <div class="added-items" id="viewAddedCategories">
-        <!-- This section will dynamically update with added categories and subcategories -->
+      <div class="added-items">
+        <div th:each="category : ${categories}" class="added-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" alt="Cover Image">
+              <h5 th:text="${category.name}">Category Name</h5>
+            </div>
+            <div>
+              <button class="btn btn-danger btn-sm" onclick="deleteCategory(/*[[${category.id}]]*/)">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -164,92 +141,27 @@
         integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
         crossorigin="anonymous"></script>
 
-<!-- JavaScript for dynamic subcategories, viewing, editing, and deleting added categories -->
 <script>
-  document.getElementById('addSubcategoryBtn').addEventListener('click', function () {
-    const subcategoryDiv = document.createElement('div');
-    subcategoryDiv.classList.add('input-group', 'mb-2');
-    subcategoryDiv.innerHTML = `
-      <input type="text" class="form-control" name="subcategories[]" placeholder="Enter subcategory name" required>
-      <input type="file" class="form-control custom-file-input" name="subcategoryCoverPhoto[]" required>
-      <button class="btn btn-danger removeSubcategory" type="button">Remove</button>
-    `;
-    document.getElementById('subcategoryInputs').appendChild(subcategoryDiv);
-  });
-
-  document.getElementById('subcategoryInputs').addEventListener('click', function (e) {
-    if (e.target.classList.contains('removeSubcategory')) {
-      e.target.parentElement.remove();
+  function deleteCategory(categoryId) {
+    if (confirm('Are you sure you want to delete this category?')) {
+      fetch(`/seller/delete/${categoryId}`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': /* CSRF token from Thymeleaf */,
+        }
+      }).then(response => {
+        if (response.ok) {
+          alert('Category deleted successfully!');
+          location.reload(); // Reload the page to reflect changes
+        } else {
+          alert('Failed to delete category.');
+        }
+      }).catch(error => {
+        console.error('Error deleting category:', error);
+      });
     }
-  });
-
-  // Handle form submission and display added categories/subcategories
-  document.getElementById('addCategoryForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    // Get form data
-    const categoryName = document.getElementById('categoryName').value;
-    const subcategoryElements = document.querySelectorAll('[name="subcategories[]"]');
-
-    const subcategories = [];
-    subcategoryElements.forEach((el) => {
-      subcategories.push(el.value);
-    });
-
-    // Display added category and subcategories with edit/delete buttons
-    const addedCategoryHtml = `
-      <div class="added-item">
-        <div class="d-flex justify-content-between">
-          <h5>${categoryName}</h5>
-          <button class="btn btn-warning btn-sm editCategoryBtn">Edit</button>
-          <button class="btn btn-danger btn-sm deleteCategoryBtn">Delete</button>
-        </div>
-        <ul>
-          ${subcategories.map(sub => `
-            <li class="subcategory">
-              <span class="subcategory-name">${sub}</span>
-              <button class="btn btn-warning btn-sm editSubcategoryBtn">Edit</button>
-              <button class="btn btn-danger btn-sm deleteSubcategoryBtn">Delete</button>
-            </li>
-          `).join('')}
-        </ul>
-      </div>
-    `;
-
-    document.getElementById('viewAddedCategories').insertAdjacentHTML('beforeend', addedCategoryHtml);
-
-    // Reset form fields after submission
-    document.getElementById('addCategoryForm').reset();
-  });
-
-  // Handle delete for category or subcategory
-  document.getElementById('viewAddedCategories').addEventListener('click', function (e) {
-    if (e.target.classList.contains('deleteCategoryBtn')) {
-      e.target.closest('.added-item').remove();
-    } else if (e.target.classList.contains('deleteSubcategoryBtn')) {
-      e.target.closest('li').remove();
-    }
-  });
-
-  // Handle edit for category or subcategory
-  document.getElementById('viewAddedCategories').addEventListener('click', function (e) {
-    if (e.target.classList.contains('editCategoryBtn')) {
-      const categoryTitle = e.target.closest('.d-flex').querySelector('h5');
-      const newCategoryName = prompt('Edit Category Name', categoryTitle.textContent);
-      if (newCategoryName) {
-        categoryTitle.textContent = newCategoryName;
-      }
-    } else if (e.target.classList.contains('editSubcategoryBtn')) {
-      const subcategoryName = e.target.closest('li').querySelector('.subcategory-name');
-      const newSubcategoryName = prompt('Edit Subcategory Name', subcategoryName.textContent);
-      if (newSubcategoryName) {
-        subcategoryName.textContent = newSubcategoryName;
-      }
-    }
-  });
+  }
 </script>
 
 </body>
 </html>
-
-

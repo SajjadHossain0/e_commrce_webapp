@@ -109,228 +109,46 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
-<style>
-  body {
-    background-color: #f8f9fa;
-    font-family: 'Arial', sans-serif;
-  }
-
-  .admin-dashboard {
-    margin: 40px auto;
-    max-width: 1200px;
-  }
-
-  .dashboard-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .table-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .table-container h4 {
-    margin-bottom: 30px;
-    font-size: 24px;
-    color: #007bff;
-    font-weight: bold;
-  }
-
-  .search-bar {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .search-bar input {
-    width: 300px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-
-  .table thead th {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    font-size: 16px;
-    text-align: center;
-  }
-
-  .table tbody td {
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  .dropdown-menu {
-    min-width: 150px;
-  }
-
-  .dropdown-item {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
-
-  .status-label {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .status-blocked {
-    background-color: #dc3545;
-    color: white;
-  }
-
-  .status-active {
-    background-color: #28a745;
-    color: white;
-  }
-
-  .status-seller {
-    background-color: #ffc107;
-    color: white;
-  }
-
-  .status-admin {
-    background-color: #17a2b8;
-    color: white;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .admin-dashboard {
-      padding: 10px;
-    }
-
-    .search-bar input {
-      width: 100%;
-      margin-bottom: 15px;
-    }
-  }
-</style>
-
 <div class="container admin-dashboard">
-  <h2 class="dashboard-title text-primary">Admin Dashboard - User Management</h2>
+  <h2 class="text-center mb-5">Seller Dashboard</h2>
+  <div class="row g-4">
 
-  <div class="table-container">
-    <h4 class="text-center">Manage Users</h4>
-
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search users by name or email..." onkeyup="searchTable()">
+    <!-- Add Advertisement Card -->
+    <div class="col-md-6">
+      <div class="card bg-primary-gradient">
+        <div class="card-body">
+          <img src="/images/add_button_admin_panel.png" alt="Add Product Icon" class="img-fluid">
+          <h5 class="card-title">Add Advertisement</h5>
+          <p class="card-text">Easily add new Advertisement.</p>
+          <a href="/admin/add_advertisement" class="btn btn-light btn-custom">Add Advertisement</a>
+        </div>
+      </div>
     </div>
 
-    <table class="table table-bordered table-hover" id="userTable">
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>User Name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!-- Example user row, dynamic rows can be added via backend logic -->
-      <tr>
-        <td>1</td>
-        <td>John Doe</td>
-        <td>johndoe@example.com</td>
-        <td><span class="status-label status-admin">Admin</span></td>
-        <td><span class="status-label status-active">Active</span></td>
-        <td>
-          <!-- 3-dot Dropdown Menu -->
-          <div class="dropdown">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="actionMenu1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-              &#x2022;&#x2022;&#x2022;
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="actionMenu1">
-              <li><a class="dropdown-item" href="#" onclick="blockUser()">Block</a></li>
-              <li><a class="dropdown-item" href="#" onclick="makeSeller()">Make Seller</a></li>
-              <li><a class="dropdown-item" href="#" onclick="removeSeller()">Remove Seller</a></li>
-              <li><a class="dropdown-item" href="#" onclick="makeAdmin()">Make Admin</a></li>
-              <li><a class="dropdown-item" href="#" onclick="removeAdmin()">Remove Admin</a></li>
-              <li><a class="dropdown-item text-danger" href="#" onclick="deleteUser()">Delete</a></li>
-            </ul>
-          </div>
-        </td>
-      </tr>
-      <!-- Add more users dynamically -->
-      </tbody>
-    </table>
+    <!-- View User Card -->
+    <div class="col-md-6">
+      <div class="card bg-success-gradient">
+        <div class="card-body">
+          <img src="/images/view_admin_panel.png" alt="View Products Icon" class="img-fluid">
+          <h5 class="card-title">View Users</h5>
+          <p class="card-text">Browse and manage all User in your site.</p>
+          <a href="/admin/view_users" class="btn btn-light btn-custom">View Users</a>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
 
-<script>
-  // Search function for the table
-  function searchTable() {
-    let input = document.getElementById("searchInput");
-    let filter = input.value.toLowerCase();
-    let table = document.getElementById("userTable");
-    let tr = table.getElementsByTagName("tr");
 
-    for (let i = 1; i < tr.length; i++) { // Skip header row
-      let tdName = tr[i].getElementsByTagName("td")[1];
-      let tdEmail = tr[i].getElementsByTagName("td")[2];
-      if (tdName || tdEmail) {
-        let nameValue = tdName.textContent || tdName.innerText;
-        let emailValue = tdEmail.textContent || tdEmail.innerText;
-        if (nameValue.toLowerCase().indexOf(filter) > -1 || emailValue.toLowerCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function blockUser() {
-    alert('User Blocked');
-    // Add your backend logic to block the user
-  }
-
-  function unblockUser() {
-    alert('User Unblocked');
-    // Add your backend logic to unblock the user
-  }
-
-  function makeSeller() {
-    alert('User is now a Seller');
-    // Add your backend logic to make the user a seller
-  }
-
-  function removeSeller() {
-    alert('Seller role removed');
-    // Add your backend logic to remove the seller role
-  }
-
-  function makeAdmin() {
-    alert('User is now an Admin');
-    // Add your backend logic to make the user an admin
-  }
-
-  function removeAdmin() {
-    alert('Admin role removed');
-    // Add your backend logic to remove the admin role
-  }
-
-  function deleteUser() {
-    if (confirm('Are you sure you want to delete this user?')) {
-      alert('User Deleted');
-      // Add your backend logic to delete the user
-    }
-  }
-</script>
-
-<!-- Bootstrap JS -->
+<!-- Bootstrap JS (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kQtW33rZJAHjgefvhyyzcGFc1emctEFTVdKzq3jsPtR0I5BRw1erYGIdLQkoD8/A" crossorigin="anonymous"></script>
+        integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
+        crossorigin="anonymous"></script>
+
+
 </body>
 </html>
+
+

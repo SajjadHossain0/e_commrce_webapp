@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>E-commerce</title>
+  <style th:insert="~{base :: styles}"></style>
+
+</head>
+<body>
+
+<!--@@@ Contact section-->
+<section th:insert="~{base :: contact}"></section>
+<!--@@@ Contact section close-->
+
+<!--@@@ Navbar section-->
+<section th:insert="~{base :: navbar}"></section>
+<!--@@@ Navbar section close-->
+
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .container {
+    margin-top: 50px;
+  }
+
+  .preview-img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .upload-date {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .uploaded-advertisement {
+    max-width: 100px;
+    margin-bottom: 15px;
+    margin-right: 20px;
+  }
+
+  .uploaded-section {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+
+  .delete-btn {
+    margin-top: 10px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <!-- Add Advertisement Form -->
+    <div class="col-md-6">
+      <h2 class="text-center text-primary">Add Advertisement</h2>
+
+      <form action="#" th:action="@{/admin/uploadAdvertisement}" method="post" enctype="multipart/form-data" class="row">
+        <div class="col-md-12">
+          <div class="mb-3">
+            <label for="imageFile" class="form-label">Upload Advertisement Image</label>
+            <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage(event)" required>
+          </div>
+          <button type="submit" class="btn btn-success mt-3">Upload</button>
+
+          <!-- Image Preview -->
+          <div class="mt-4">
+            <h4 class="text-center">Preview</h4>
+            <img id="preview" class="preview-img" src="" alt="Preview" />
+            <p class="upload-date mt-3" id="uploadDate"></p>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- List of Uploaded Advertisements -->
+    <div class="col-md-6">
+      <h3 class="text-center">Uploaded Advertisements</h3>
+
+      <div class="uploaded-section">
+        <div class="row" th:each="ad : ${advertisements}">
+          <div class="col-md-4 text-center">
+            <!-- Use the Base64 encoded image directly -->
+            <img th:src="'data:image/jpeg;base64,' + ${ad.base64Image}"
+                 class="uploaded-advertisement" alt="Advertisement Image">
+          </div>
+          <div class="col-md-8">
+            <p>Uploaded on: <span th:text="${ad.uploadDate}"></span></p>
+            <a th:href="@{/admin/deleteAdvertisement/{id}(id=${ad.id})}" class="btn btn-danger btn-sm delete-btn">Delete</a>
+          </div>
+        </div>
+        <hr th:each="ad, stat : ${advertisements}" th:if="${!stat.last}"/>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+<script>
+  // Function to preview image before uploading
+  function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      const output = document.getElementById('preview');
+      output.src = reader.result;
+
+      const currentDate = new Date().toLocaleString();
+      document.getElementById('uploadDate').innerHTML = 'Uploaded on: ' + currentDate;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+</script>
+
+</body>
+</html>

@@ -71,7 +71,6 @@
   }
 </style>
 
-
 <div class="container">
   <h2 class="text-center mb-4">Add New Product</h2>
   <form id="addProductForm">
@@ -91,6 +90,25 @@
     <div class="mb-3">
       <label for="productPrice" class="form-label">Price</label>
       <input type="number" class="form-control" id="productPrice" placeholder="Enter price" required>
+    </div>
+
+    <!-- Category Selection -->
+    <div class="mb-3">
+      <label for="productCategory" class="form-label">Category</label>
+      <select class="form-select" id="productCategory" required>
+        <!-- Dynamically populate options with category names -->
+        <option value="" disabled selected>Select a category</option>
+        <option value="electronics">Electronics</option>
+        <option value="fashion">Fashion</option>
+        <option value="home_appliances">Home Appliances</option>
+        <!-- Additional categories -->
+      </select>
+    </div>
+
+    <!-- Stock Quantity -->
+    <div class="mb-3">
+      <label for="productStock" class="form-label">Stock Quantity</label>
+      <input type="number" class="form-control" id="productStock" placeholder="Enter stock quantity" required>
     </div>
 
     <!-- Short Description -->
@@ -124,4 +142,3 @@
 
 </body>
 </html>
-

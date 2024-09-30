@@ -291,41 +291,11 @@
     </button>
 
     <!-- Cards -->
-    <div class="card-container">
-        <a href="/category" style="text-decoration: none; color: inherit;">
+    <div class="card-container" >
+        <a href="/category" th:each="category : ${categories}" style="text-decoration: none; color: inherit;">
             <div class="card">
-                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
-                <div class="card-body" style="margin: 5px">Category 1</div>
-            </div>
-        </a>
-        <a href="/category" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
-                <div class="card-body" style="margin: 5px">Category 2</div>
-            </div>
-        </a>
-        <a href="/category" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
-                <div class="card-body" style="margin: 5px">Category 3</div>
-            </div>
-        </a>
-        <a href="/category" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
-                <div class="card-body" style="margin: 5px">Category 4</div>
-            </div>
-        </a>
-        <a href="/category" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
-                <div class="card-body" style="margin: 5px">Category 5</div>
-            </div>
-        </a>
-        <a href="/category" style="text-decoration: none; color: inherit;">
-            <div class="card">
-                <img src="/images/img1.png" class="card-img-top" alt="Category Image">
-                <div class="card-body" style="margin: 5px">Category 5</div>
+                <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" class="card-img-top" alt="Category Image">
+                <div class="card-body" style="margin: 5px" th:text="${category.name}">Category 1</div>
             </div>
         </a>
     </div>
