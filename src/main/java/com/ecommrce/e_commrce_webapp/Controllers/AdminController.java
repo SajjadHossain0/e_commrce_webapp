@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -82,7 +83,8 @@ public class AdminController {
 
     // Get all categories
     @GetMapping
-    public List<Category> getAllCategories() {
+    public List<Category> getAllCategories(Model model) {
+
         return categoryService.getAllCategories();
     }
 
@@ -105,12 +107,35 @@ public class AdminController {
         return "redirect:/admin/manage_categories";
     }
 
+
+    @PostMapping("/edit")
+    public String editCategory(@RequestParam("id") Long id,
+                               @RequestParam("name") String name,
+                               @RequestParam("coverPhoto") MultipartFile coverPhoto) throws IOException {
+
+        Category category = categoryService.getCategoryById(id);
+
+        // Convert the cover photo to a Base64 string
+        String encodedImage = Base64.getEncoder().encodeToString(coverPhoto.getBytes());
+
+        // Update category details
+        category.setName(name);
+        category.setCoverPhoto(encodedImage);
+
+        // Save updated category
+        categoryService.saveCategory(category);
+
+        return "redirect:/admin/manage_categories";
+    }
+
     // Optional: Delete category
     @GetMapping("/deleteCategory/{id}")
     public String deleteCategory(@PathVariable("id") Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/admin/manage_categories";
     }
+
+
 
 
 
