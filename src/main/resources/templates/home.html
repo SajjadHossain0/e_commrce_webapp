@@ -90,46 +90,13 @@
 </style>
 <!-- Slideshow Container -->
 <div class="slideshow-container">
-
-    <!-- Slide 1 -->
-    <div class="slides fade">
-        <img src="/images/img1.png" alt="Ad 1">
-        <!--        <div class="caption">Advertisement 1</div>-->
+    <div class="slides fade" th:each="ad : ${advertisements}">
+        <img th:src="'data:image/jpeg;base64,' + ${ad.base64Image}">
     </div>
-
-    <!-- Slide 2 -->
-    <div class="slides fade">
-        <img src="/images/img2.png" alt="Ad 1">
-        <!--        <div class="caption">Advertisement 1</div>-->
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="slides fade">
-        <img src="/images/img3.png" alt="Ad 1">
-        <!--        <div class="caption">Advertisement 1</div>-->
-    </div>
-
-    <!-- Slide 4 -->
-    <div class="slides fade">
-        <img src="/images/img4.png" alt="Ad 1">
-        <!--        <div class="caption">Advertisement 1</div>-->
-    </div>
-
-    <!-- Slide 5 -->
-    <div class="slides fade">
-        <img src="/images/img5.png" alt="Ad 1">
-        <!--        <div class="caption">Advertisement 1</div>-->
-    </div>
-
-
 </div>
 <!-- Navigation Dots -->
 <div class="dots-container">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-    <span class="dot" onclick="currentSlide(4)"></span>
-    <span class="dot" onclick="currentSlide(5)"></span>
+    <span class="dot" th:each="ad,status : ${advertisements}" onclick="currentSlide(status.index + 1)"></span>
 </div>
 <script>
     let slideIndex = 0;
@@ -166,6 +133,7 @@
     }
 </script>
 <!--@@@ Ads section close-->
+
 
 <!--@@@ Category card section-->
 <div class="container" style="text-align: center; margin-top: 20px; font-size: 20px; font-weight: bold">Category</div>
@@ -221,6 +189,7 @@
         height: 100px;
         border-radius: 50%;
         object-fit: cover;
+        margin-top: 10px;
     }
 
     /* Navigation button styles */
@@ -452,6 +421,7 @@
             </div>
         </div>
     </div>
+
 
 
 

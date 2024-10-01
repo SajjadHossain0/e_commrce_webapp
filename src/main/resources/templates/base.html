@@ -41,10 +41,14 @@
             justify-content: space-between;
             padding: 5px 10px;
             background-color: #cacaca;
+            position: fixed; /* Make it fixed at the top */
+            top: 0; /* Stays at the very top of the page */
+            width: 100%;
+            z-index: 1000; /* Ensure it stays above other elements */
         }
 
         .email {
-            font-size: 18px;
+            font-size: 15px;
         }
 
         .stars {
@@ -53,7 +57,7 @@
         }
 
         .stars span {
-            font-size: 18px;
+            font-size: 15px;
             color: gold;
         }
 
@@ -64,6 +68,13 @@
             background-color: #6c6c6c;
             color: white;
             padding: 10px 20px;
+            position: fixed; /* Fixed below the contact section */
+            top: 32px; /* Adjust this based on the height of the contact section */
+            width: 100%;
+            z-index: 999; /* Slightly lower than the contact section */
+        }
+        body {
+            margin-top: 100px; /* Adjust this based on the height of your navbar */
         }
 
         .toggle-button {

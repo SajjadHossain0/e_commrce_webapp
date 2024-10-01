@@ -42,51 +42,7 @@ public class SellerController {
         return "seller/view_products";
     }
 
-    /*Category controllers*/
 
-    @GetMapping("/manage_categories")
-    public String manage_categories(Model model) {
-        List<Category> categories = categoryService.getAllCategories();
-        model.addAttribute("categories", categories);
-        return "seller/manage_categories";
-    }
-
-
-
-    @Autowired
-    private CategoryService categoryService;
-
-    // Get all categories
-    @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
-    }
-
-    // Add a new category
-    @PostMapping("/add")
-    public String addCategory(@RequestParam("name") String name,
-                                @RequestParam("coverPhoto") MultipartFile coverPhoto) throws IOException {
-        // Convert the cover photo to a Base64 string
-        String encodedImage = null;
-        try {
-            encodedImage = Base64.getEncoder().encodeToString(coverPhoto.getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Create and save the new category
-        Category category = new Category(name, encodedImage);
-        categoryService.saveCategory(category);
-
-        return "redirect:/seller/manage_categories";
-    }
-
-    // Optional: Delete category
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
-        return ResponseEntity.ok().build(); // Return a 200 OK response
-    }
 
 
 

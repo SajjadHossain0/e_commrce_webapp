@@ -18,6 +18,11 @@
 <!--@@@ Navbar section-->
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
+<div>
+  <a href="/admin/admin_dashboard" class="btn btn-info btn-sm"
+  style="margin: 20px"
+  >Back</a>
+</div>
 
 <style>
   body {
@@ -67,9 +72,9 @@
           <div class="mb-3">
             <label for="imageFile" class="form-label">Upload Advertisement Image</label>
             <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage(event)" required>
+            <span style="color: #f86363">Make sure to add 851x285px cover photo for better view.</span>
           </div>
           <button type="submit" class="btn btn-success mt-3">Upload</button>
-
           <!-- Image Preview -->
           <div class="mt-4">
             <h4 class="text-center">Preview</h4>
@@ -81,11 +86,10 @@
     </div>
 
     <!-- List of Uploaded Advertisements -->
-    <div class="col-md-6">
+    <div class="col-md-6" >
       <h3 class="text-center">Uploaded Advertisements</h3>
-
       <div class="uploaded-section">
-        <div class="row" th:each="ad : ${advertisements}">
+        <div class="row" style="margin-bottom: 20px" th:each="ad : ${advertisements}">
           <div class="col-md-4 text-center">
             <!-- Use the Base64 encoded image directly -->
             <img th:src="'data:image/jpeg;base64,' + ${ad.base64Image}"
@@ -96,7 +100,6 @@
             <a th:href="@{/admin/deleteAdvertisement/{id}(id=${ad.id})}" class="btn btn-danger btn-sm delete-btn">Delete</a>
           </div>
         </div>
-        <hr th:each="ad, stat : ${advertisements}" th:if="${!stat.last}"/>
       </div>
     </div>
 

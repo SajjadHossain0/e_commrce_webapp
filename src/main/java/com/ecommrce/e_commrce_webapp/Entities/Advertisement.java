@@ -18,7 +18,7 @@ public class Advertisement {
     @Lob
     private byte[] imageData;
 
-    private LocalDateTime uploadDate;
+    private String uploadDate;
 
     @Transient
     private String base64Image;  // Field to hold the Base64 string for the image
@@ -26,7 +26,7 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(Long id, byte[] imageData, LocalDateTime uploadDate, String base64Image) {
+    public Advertisement(Long id, byte[] imageData, String uploadDate, String base64Image) {
         this.id = id;
         this.imageData = imageData;
         this.uploadDate = uploadDate;
@@ -49,11 +49,11 @@ public class Advertisement {
         this.imageData = imageData;
     }
 
-    public LocalDateTime getUploadDate() {
+    public String getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(LocalDateTime uploadDate) {
+    public void setUploadDate(String uploadDate) {
         this.uploadDate = uploadDate;
     }
 
