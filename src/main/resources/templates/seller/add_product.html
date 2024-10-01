@@ -73,60 +73,59 @@
 
 <div class="container">
   <h2 class="text-center mb-4">Add New Product</h2>
-  <form id="addProductForm">
+  <form id="addProductForm" th:action="@{/seller/add-product}"  method="post" enctype="multipart/form-data">
+
     <!-- Product Image -->
     <div class="mb-3">
-      <label for="productImage" class="form-label">Product Image (3/4 View)</label>
-      <input type="file" class="form-control custom-file-input" id="productImage" required>
+      <label for="productImage" class="form-label">Product Image</label>
+      <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*" required>
     </div>
+
 
     <!-- Product Name -->
     <div class="mb-3">
-      <label for="productName" class="form-label">Product Name</label>
-      <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
+      <label for="productTitle" class="form-label">Product Title</label>
+      <input type="text" class="form-control" id="productTitle" name="title" placeholder="Enter product title" required>
     </div>
 
     <!-- Price -->
     <div class="mb-3">
       <label for="productPrice" class="form-label">Price</label>
-      <input type="number" class="form-control" id="productPrice" placeholder="Enter price" required>
-    </div>
-
-    <!-- Category Selection -->
-    <div class="mb-3">
-      <label for="productCategory" class="form-label">Category</label>
-      <select class="form-select" id="productCategory" required>
-        <!-- Dynamically populate options with category names -->
-        <option value="" disabled selected>Select a category</option>
-        <option value="electronics">Electronics</option>
-        <option value="fashion">Fashion</option>
-        <option value="home_appliances">Home Appliances</option>
-        <!-- Additional categories -->
-      </select>
+      <input type="number" class="form-control" id="productPrice" name="price" placeholder="Enter price" required>
     </div>
 
     <!-- Stock Quantity -->
     <div class="mb-3">
       <label for="productStock" class="form-label">Stock Quantity</label>
-      <input type="number" class="form-control" id="productStock" placeholder="Enter stock quantity" required>
+      <input type="number" class="form-control" id="productStock" name="quantity" placeholder="Enter stock quantity" required>
     </div>
 
-    <!-- Short Description -->
-    <div class="mb-3">
-      <label for="productShortDesc" class="form-label">Short Description</label>
-      <textarea class="form-control" id="productShortDesc" rows="2" placeholder="Enter short description" required></textarea>
-    </div>
-
-    <!-- More Description -->
-    <div class="mb-3">
-      <label for="productMoreDesc" class="form-label">Detailed Description</label>
-      <textarea class="form-control" id="productMoreDesc" rows="4" placeholder="Enter detailed description" required></textarea>
+    <!-- Category Selection -->
+    <div class="mb-3" >
+      <label for="productCategory" class="form-label">Category</label>
+      <select class="form-select" id="productCategory" name="category" required>
+        <!-- Dynamically populate options with category names -->
+        <option value="" disabled selected>Select a category</option>
+        <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+      </select>
     </div>
 
     <!-- Product Details -->
     <div class="mb-3">
       <label for="productDetails" class="form-label">Product Details</label>
-      <textarea class="form-control" id="productDetails" rows="3" placeholder="Enter product details" required></textarea>
+      <textarea class="form-control" id="productDetails" rows="3" name="product_details" placeholder="Enter product details" required></textarea>
+    </div>
+
+    <!-- Short Description -->
+    <div class="mb-3">
+      <label for="productShortDesc" class="form-label">Short Description</label>
+      <textarea class="form-control" id="productShortDesc" rows="2" name="short_description" placeholder="Enter short description" required></textarea>
+    </div>
+
+    <!-- More Description -->
+    <div class="mb-3">
+      <label for="productMoreDesc" class="form-label">Detailed Description</label>
+      <textarea class="form-control" id="productMoreDesc" rows="4" name="detailed_description" placeholder="Enter detailed description" required></textarea>
     </div>
 
     <div class="d-grid">
