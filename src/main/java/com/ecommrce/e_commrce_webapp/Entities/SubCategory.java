@@ -1,16 +1,12 @@
 package com.ecommrce.e_commrce_webapp.Entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
-
-@Setter
 @Getter
+@Setter
 @Entity
-public class Category {
-
+public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,15 +17,16 @@ public class Category {
     @Lob
     private String coverPhoto; // This will store the image as Base64 string
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<SubCategory> subCategory;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    public Category() {}
-
-    public Category(String name, String coverPhoto) {
-        this.name = name;
-        this.coverPhoto = coverPhoto;
+    public SubCategory() {
     }
 
+    public SubCategory(String name, String coverPhoto, Category category) {
+        this.name = name;
+        this.coverPhoto = coverPhoto;
+        this.category = category;
+    }
 }
-

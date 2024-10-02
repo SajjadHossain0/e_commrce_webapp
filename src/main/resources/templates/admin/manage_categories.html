@@ -156,7 +156,6 @@
     </div>
   </div>
 </div>
-
 <!-- Edit Category Modal -->
 <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -206,6 +205,114 @@
         document.getElementById('editCategoryId').value = categoryId;
         document.getElementById('editcategoryName').value = categoryName;
       });
+    });
+  });
+</script>
+
+<div class="container" style="margin-bottom: 50px">
+  <div class="row">
+    <!-- Left Column: Add New SubCategory -->
+    <div class="col-md-6" style="margin-top: 20px">
+      <h2 class="text-center mb-4">Add New SubCategory</h2>
+      <form id="addSubCategoryForm" th:action="@{/admin/addSubCategory}" method="post" enctype="multipart/form-data">
+
+        <!-- SubCategory Name -->
+        <div class="mb-3">
+          <label for="subCategoryName" class="form-label">SubCategory Name</label>
+          <input type="text" class="form-control" id="subCategoryName" name="name" placeholder="Enter subcategory name" required>
+        </div>
+
+        <!-- Select Category -->
+        <div class="mb-3">
+          <label for="categorySelect" class="form-label">Select Category</label>
+          <select id="categorySelect" class="form-select" name="categoryId" required>
+            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
+          </select>
+        </div>
+
+        <!-- SubCategory Cover Photo -->
+        <div class="mb-3">
+          <label for="subCategoryCoverPhoto" class="form-label">SubCategory Cover Photo</label>
+          <input type="file" class="form-control" id="subCategoryCoverPhoto" name="coverPhoto" accept="image/*" required>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Add SubCategory</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column: Display Added SubCategories -->
+    <div class="col-md-6" style="margin-top: 20px">
+      <h2 class="text-center mb-4">View SubCategories</h2>
+      <div class="added-items">
+        <div th:each="subCategory : ${subCategories}" class="added-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <img th:src="'data:image/jpeg;base64,' + ${subCategory.coverPhoto}" alt="Cover Image">
+              <h5 th:text="${subCategory.name}">SubCategory Name</h5>
+            </div>
+            <div>
+              <div class="d-flex justify-content-end p-2">
+                <div class="dropdown">
+                  <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                    </svg>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a id="scedit-btn" class="dropdown-item" th:data-id="${subCategory.id}" th:data-name="${subCategory.name}" data-bs-toggle="modal" data-bs-target="#editSubCategoryModal">Edit</a></li>
+                    <li><a th:href="@{/admin/deleteSubCategory/{id}(id=${subCategory.id})}" class="dropdown-item">Delete</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit SubCategory Modal -->
+<div class="modal fade" id="editSubCategoryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit SubCategory</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editSubCategoryForm" th:action="@{/admin/editSubCategory}" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="editSubCategoryId" name="id">
+
+          <!-- SubCategory Name -->
+          <div class="mb-3">
+            <label for="editSubCategoryName" class="form-label">SubCategory Name</label>
+            <input type="text" class="form-control" id="editSubCategoryName" name="name" required>
+          </div>
+
+          <!-- SubCategory Cover Photo -->
+          <div class="mb-3">
+            <label for="editSubCategoryCoverPhoto" class="form-label">SubCategory Cover Photo</label>
+            <input type="file" class="form-control" id="editSubCategoryCoverPhoto" name="coverPhoto" accept="image/*">
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelectorAll('#edit-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.getElementById('editSubCategoryId').value = btn.getAttribute('data-id');
+      document.getElementById('editSubCategoryName').value = btn.getAttribute('data-name');
     });
   });
 </script>
