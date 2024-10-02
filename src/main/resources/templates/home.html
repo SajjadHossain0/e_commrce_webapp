@@ -260,8 +260,8 @@
     </button>
 
     <!-- Cards -->
-    <div class="card-container" >
-        <a href="/category" th:each="category : ${categories}" style="text-decoration: none; color: inherit;">
+    <div class="card-container">
+        <a th:href="@{/categories/{categoryId}(categoryId=${category.id})}" th:each="category : ${categories}" style="text-decoration: none; color: inherit;">
             <div class="card">
                 <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" class="card-img-top" alt="Category Image">
                 <div class="card-body" style="margin: 5px" th:text="${category.name}">Category 1</div>
@@ -300,7 +300,8 @@
 
 
 <!--@@@ Product card section-->
-<div class="container" style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px; font-weight: bold">All Products
+<div class="container"
+     style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px; font-weight: bold">All Products
 </div>
 <style>
     .product-grid {
@@ -404,12 +405,13 @@
 
 <div class="product-grid">
 
-    <div class="product-card">
+    <div class="product-card" th:each="product : ${products}">
         <!--photo size - 250x200-->
-        <img src="/images/view_admin_panel.png" alt="Product Image">
+        <img th:src="'data:image/jpeg;base64,' + ${product.product_image}" class="card-img-top"
+             alt="Category Image">
         <div class="product-info">
-            <h3 class="product-title">Product Name 1</h3>
-            <p class="product-price">$99.99</p>
+            <h3 class="product-title" th:text="${product.title}">Product Name 1</h3>
+            <p class="product-price" th:text="${product.price}">$99.99</p>
             <div class="product-reviews">
                 <span class="stars">★★★★★</span>
                 <span class="review-count">(120 reviews)</span>
@@ -417,13 +419,10 @@
 
             <div style="text-align: center">
                 <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+                <a style="margin: 5px" th:href="@{/view_products/{productId}(productId=${product.id})}" class="product-btn">view product</a>
             </div>
         </div>
     </div>
-
-
-
 
 </div>
 

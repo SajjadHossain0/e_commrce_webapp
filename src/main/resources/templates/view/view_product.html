@@ -19,43 +19,37 @@
 
 
 <!--@@@ Product Detail Page -->
-<div class="container" style="max-width: 1200px; margin: 30px auto; padding: 0 15px;">
+<div class="container" style="max-width: 1200px; margin: 30px auto; padding: 0 15px;" th:each="product : ${product}">
     <div class="product-detail-grid">
         <!-- Product Image Section -->
         <div class="product-image-gallery">
-            <img src="/images/img1.png" alt="Product Image" id="mainProductImage" class="main-product-img">
+            <img id="mainProductImage" th:src="'data:image/jpeg;base64,' + ${product.product_image}" class="card-img-top" alt="Category Image">
+
+
             <div class="product-thumbnails">
-                <img src="/images/img1.png" alt="Thumbnail 1" class="thumbnail-img" onclick="changeImage(this)">
-                <img src="/images/img2.png" alt="Thumbnail 2" class="thumbnail-img" onclick="changeImage(this)">
-                <img src="/images/img3.png" alt="Thumbnail 3" class="thumbnail-img" onclick="changeImage(this)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image1}" alt="Thumbnail 1" class="thumbnail-img" onclick="changeImage(this)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image2}" alt="Thumbnail 2" class="thumbnail-img" onclick="changeImage(this)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image3}" alt="Thumbnail 3" class="thumbnail-img" onclick="changeImage(this)">
             </div>
         </div>
 
         <!-- Product Information Section -->
         <div class="product-info">
-            <h1 class="product-title">Product Name 1</h1>
-            <p class="product-price">$99.99</p>
+            <h1 class="product-title" th:text="${product.title}">Product Name 1</h1>
+            <p class="product-price" th:text="${product.price}">$99.99</p>
 
             <div class="product-reviews">
                 <span class="stars">★★★★★</span>
                 <span class="review-count">(120 reviews)</span>
             </div>
-
-<!--            short description in 50 word then more description in more field-->
-            <p class="product-description" id="productDescription">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare, erat
-                sit amet
-                pellentesque blandit, justo nulla sodales lorem, a porttitor mauris eros nec lorem. Lorem ipsum dolor
-                sit
-                amet...
-                <br>
-                <span id="moreDescription" style="display: none;">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare, erat sit amet pellentesque blandit, justo
-                    nulla sodales lorem, a porttitor mauris eros nec lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            <!-- Product Description -->
+            <p class="product-description">
+                <span th:text="${product.short_description}">Lorem ipsum dolor sit amet...</span>
+                <span id="moreDescription" style="display: none;" th:text="${product.detailed_description}">
+                    More detailed description goes here.
                 </span>
             </p>
             <a href="javascript:void(0)" class="see-more-btn" id="seeMoreBtn" onclick="toggleDescription()">See More</a>
-
 
             <!-- Purchase Options -->
             <div class="purchase-options">
@@ -64,16 +58,10 @@
 
                 <button class="add-to-cart-btn">Add to Cart</button>
             </div>
-
             <!-- Product Specifications -->
             <div class="product-specs">
                 <h4>Product Details</h4>
-                <ul>
-                    <li>Material: 100% Cotton</li>
-                    <li>Size: M, L, XL</li>
-                    <li>Available Colors: White, Black, Olive</li>
-                    <li>Shipping: Free Worldwide Shipping</li>
-                </ul>
+                <span th:text="${product.product_details}"></span>
             </div>
         </div>
     </div>
@@ -83,98 +71,13 @@
         <h2>Related Products</h2>
         <div class="product-grid">
 
-            <!--      more product card-->
-            <div class="product-card">
+            <div class="product-card" th:each="product : ${products}">
                 <!--photo size - 250x200-->
-                <img src="/images/img1.png" alt="Product Image">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image}" class="card-img-top"
+                     alt="Category Image">
                 <div class="product-info">
-                    <h3 class="product-title">Product Name 1</h3>
-                    <p class="product-price">$99.99</p>
-                    <div class="product-reviews">
-                        <span class="stars">★★★★★</span>
-                        <span class="review-count">(120 reviews)</span>
-                    </div>
-
-                    <div style="text-align: center">
-                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <!--photo size - 250x200-->
-                <img src="/images/img1.png" alt="Product Image">
-                <div class="product-info">
-                    <h3 class="product-title">Product Name 1</h3>
-                    <p class="product-price">$99.99</p>
-                    <div class="product-reviews">
-                        <span class="stars">★★★★★</span>
-                        <span class="review-count">(120 reviews)</span>
-                    </div>
-
-                    <div style="text-align: center">
-                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <!--photo size - 250x200-->
-                <img src="/images/img1.png" alt="Product Image">
-                <div class="product-info">
-                    <h3 class="product-title">Product Name 1</h3>
-                    <p class="product-price">$99.99</p>
-                    <div class="product-reviews">
-                        <span class="stars">★★★★★</span>
-                        <span class="review-count">(120 reviews)</span>
-                    </div>
-
-                    <div style="text-align: center">
-                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <!--photo size - 250x200-->
-                <img src="/images/img1.png" alt="Product Image">
-                <div class="product-info">
-                    <h3 class="product-title">Product Name 1</h3>
-                    <p class="product-price">$99.99</p>
-                    <div class="product-reviews">
-                        <span class="stars">★★★★★</span>
-                        <span class="review-count">(120 reviews)</span>
-                    </div>
-
-                    <div style="text-align: center">
-                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <!--photo size - 250x200-->
-                <img src="/images/img1.png" alt="Product Image">
-                <div class="product-info">
-                    <h3 class="product-title">Product Name 1</h3>
-                    <p class="product-price">$99.99</p>
-                    <div class="product-reviews">
-                        <span class="stars">★★★★★</span>
-                        <span class="review-count">(120 reviews)</span>
-                    </div>
-
-                    <div style="text-align: center">
-                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <!--photo size - 250x200-->
-                <img src="/images/img1.png" alt="Product Image">
-                <div class="product-info">
-                    <h3 class="product-title">Product Name 1</h3>
-                    <p class="product-price">$99.99</p>
+                    <h3 class="product-title" th:text="${product.title}">Product Name 1</h3>
+                    <p class="product-price" th:text="${product.price}">$99.99</p>
                     <div class="product-reviews">
                         <span class="stars">★★★★★</span>
                         <span class="review-count">(120 reviews)</span>
@@ -187,8 +90,7 @@
                 </div>
             </div>
 
-        </div>
-    </div>
+        </div>    </div>
 </div>
 
 <!-- CSS for Product Detail Page -->
@@ -455,8 +357,7 @@
             moreText.style.display = "none";
             seeMoreBtn.innerHTML = "See More";
         }
-    }
-</script>
+    }</script>
 <!--@@@ Product Detail Page End -->
 
 

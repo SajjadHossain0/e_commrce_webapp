@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>E-commerce</title>
-  <style th:insert="~{base :: styles}"></style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>E-commerce</title>
+    <style th:insert="~{base :: styles}"></style>
 </head>
 <body>
 <!--@@@ Contact section-->
@@ -17,306 +17,349 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 <div style="margin: 10px">
-  <a href="/admin/admin_dashboard" class="btn btn-info btn-sm">Back</a>
+    <a href="/admin/admin_dashboard" class="btn btn-info btn-sm">Back</a>
 </div>
 
 <style>
-  body {
-    background-color: #f8f9fa;
-    padding-top: 30px;
-  }
+    body {
+        background-color: #f8f9fa;
+        padding-top: 30px;
+    }
 
-  .container {
-    max-width: 1000px;
-  }
+    .container {
+        max-width: 1000px;
+    }
 
-  .form-label {
-    font-weight: bold;
-    color: #333;
-  }
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
 
-  .btn-primary {
-    background-color: #007bff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
 
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
 
-  .btn-danger, .btn-warning {
-    padding: 5px 10px;
-    font-size: 12px;
-  }
+    .btn-danger, .btn-warning {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
 
-  .added-items {
-    border: 1px solid #ddd;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 10px;
-    max-height: 450px;
-    overflow-y: auto;
-  }
+    .added-items {
+        border: 1px solid #ddd;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 10px;
+        max-height: 450px;
+        overflow-y: auto;
+    }
 
-  .added-items h5 {
-    font-weight: bold;
-  }
+    .added-items h5 {
+        font-weight: bold;
+    }
 
-  .added-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
+    .added-item {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+    }
 
-  .added-item:last-child {
-    border-bottom: none;
-  }
+    .added-item:last-child {
+        border-bottom: none;
+    }
 
-  .added-item img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 5px;
-  }
+    .added-item img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 5px;
+    }
 
-  .subcategory {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    .subcategory {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-  .edit-input {
-    display: none;
-  }
+    .edit-input {
+        display: none;
+    }
 </style>
 
 <div class="container">
-  <div class="row">
-    <!-- Left Column: Add New Category -->
-    <div class="col-md-6" style="margin-top: 20px">
-      <h2 class="text-center mb-4">Add New Category</h2>
-      <form id="addCategoryForm" th:action="@{/admin/add}" method="post" enctype="multipart/form-data">
+    <div class="row">
 
-        <!-- Category Name -->
-        <div class="mb-3">
-          <label for="categoryName" class="form-label">Category Name</label>
-          <input type="text" class="form-control" id="categoryName" name="name" placeholder="Enter category name" required>
-        </div>
+        <!-- Left Column: Add New Category -->
+        <div class="col-md-6" style="margin-top: 20px">
+            <h2 class="text-center mb-4">Add New Category</h2>
+            <form id="addCategoryForm" th:action="@{/admin/add}" method="post" enctype="multipart/form-data">
 
-        <!-- Category Cover Photo -->
-        <div class="mb-3">
-          <label for="categoryCoverPhoto" class="form-label">Category Cover Photo</label>
-          <input type="file" class="form-control custom-file-input" id="categoryCoverPhoto" name="coverPhoto" accept="image/*" required>
-          <span style="color: #f86363">Make sure to add 1x1 cover photo</span>
-        </div>
-
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Add Category</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Right Column: Display Added Categories -->
-    <div class="col-md-6" style="margin-top: 20px">
-      <h2 class="text-center mb-4">View Categories</h2>
-      <div class="added-items">
-        <div th:each="category : ${categories}" class="added-item">
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-              <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" alt="Cover Image">
-              <h5 th:text="${category.name}">Category Name</h5>
-            </div>
-            <div>
-              <div class="d-flex justify-content-end p-2" style="margin: 5px">
-                <div class="dropdown">
-                  <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                    </svg>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a id="edit-btn" class="dropdown-item"
-                           th:data-id="${category.id}"
-                           th:data-name="${category.name}"
-                           th:data-coverPhoto="${category.coverPhoto}"
-                           data-bs-toggle="modal" data-bs-target="#editCategoryModal">Edit</a></li>
-                    <li><a th:href="@{/admin/deleteCategory/{id}(id=${category.id})}" class="dropdown-item">Delete</a>
-                    </li>
-                  </ul>
+                <!-- Category Name -->
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label">Category Name</label>
+                    <input type="text" class="form-control" id="categoryName" name="name"
+                           placeholder="Enter category name" required>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Edit Category Modal -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="editCategoryForm" th:action="@{/admin/edit}" method="post" enctype="multipart/form-data">
-          <input type="hidden" id="editCategoryId" name="id">
 
-
-          <!-- Category Name -->
-          <div class="mb-3">
-            <label for="categoryName" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="editcategoryName" name="name" placeholder="Enter category name" required>
-          </div>
-
-          <!-- Category Cover Photo -->
-          <div class="mb-3">
-            <label for="categoryCoverPhoto" class="form-label">Category Cover Photo</label>
-            <input type="file" class="form-control custom-file-input" id="editcategoryCoverPhoto" name="coverPhoto" accept="image/*" required>
-            <span style="color: #f86363">Make sure to add 1x1 cover photo</span>
-          </div>
-
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Add Category</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Get the edit buttons
-    const editButtons = document.querySelectorAll('#edit-btn');
-
-    // Add click event listener to each button
-    editButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const categoryId = button.getAttribute('data-id');
-        const categoryName = button.getAttribute('data-name');
-
-        // Set the form fields with the category data
-        document.getElementById('editCategoryId').value = categoryId;
-        document.getElementById('editcategoryName').value = categoryName;
-      });
-    });
-  });
-</script>
-
-<div class="container" style="margin-bottom: 50px">
-  <div class="row">
-    <!-- Left Column: Add New SubCategory -->
-    <div class="col-md-6" style="margin-top: 20px">
-      <h2 class="text-center mb-4">Add New SubCategory</h2>
-      <form id="addSubCategoryForm" th:action="@{/admin/addSubCategory}" method="post" enctype="multipart/form-data">
-
-        <!-- SubCategory Name -->
-        <div class="mb-3">
-          <label for="subCategoryName" class="form-label">SubCategory Name</label>
-          <input type="text" class="form-control" id="subCategoryName" name="name" placeholder="Enter subcategory name" required>
-        </div>
-
-        <!-- Select Category -->
-        <div class="mb-3">
-          <label for="categorySelect" class="form-label">Select Category</label>
-          <select id="categorySelect" class="form-select" name="categoryId" required>
-            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Category</option>
-          </select>
-        </div>
-
-        <!-- SubCategory Cover Photo -->
-        <div class="mb-3">
-          <label for="subCategoryCoverPhoto" class="form-label">SubCategory Cover Photo</label>
-          <input type="file" class="form-control" id="subCategoryCoverPhoto" name="coverPhoto" accept="image/*" required>
-        </div>
-
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Add SubCategory</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Right Column: Display Added SubCategories -->
-    <div class="col-md-6" style="margin-top: 20px">
-      <h2 class="text-center mb-4">View SubCategories</h2>
-      <div class="added-items">
-        <div th:each="subCategory : ${subCategories}" class="added-item">
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-              <img th:src="'data:image/jpeg;base64,' + ${subCategory.coverPhoto}" alt="Cover Image">
-              <h5 th:text="${subCategory.name}">SubCategory Name</h5>
-            </div>
-            <div>
-              <div class="d-flex justify-content-end p-2">
-                <div class="dropdown">
-                  <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                    </svg>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a id="scedit-btn" class="dropdown-item" th:data-id="${subCategory.id}" th:data-name="${subCategory.name}" data-bs-toggle="modal" data-bs-target="#editSubCategoryModal">Edit</a></li>
-                    <li><a th:href="@{/admin/deleteSubCategory/{id}(id=${subCategory.id})}" class="dropdown-item">Delete</a></li>
-                  </ul>
+                <!-- Category Cover Photo -->
+                <div class="mb-3">
+                    <label for="categoryCoverPhoto" class="form-label">Category Cover Photo</label>
+                    <input type="file" class="form-control custom-file-input" id="categoryCoverPhoto" name="coverPhoto"
+                           accept="image/*" required>
+                    <span style="color: #f86363">Make sure to add 1x1 cover photo</span>
                 </div>
-              </div>
-            </div>
-          </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </div>
+            </form>
         </div>
-      </div>
+        <!-- Edit Category Modal -->
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCategoryForm" th:action="@{/admin/edit}" method="post"
+                              enctype="multipart/form-data">
+                            <input type="hidden" id="editCategoryId" name="id">
+
+
+                            <!-- Category Name -->
+                            <div class="mb-3">
+                                <label for="categoryName" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" id="editcategoryName" name="name"
+                                       placeholder="Enter category name" required>
+                            </div>
+
+                            <!-- Category Cover Photo -->
+                            <div class="mb-3">
+                                <label for="categoryCoverPhoto" class="form-label">Category Cover Photo</label>
+                                <input type="file" class="form-control custom-file-input" id="editcategoryCoverPhoto"
+                                       name="coverPhoto" accept="image/*" required>
+                                <span style="color: #f86363">Make sure to add 1x1 cover photo</span>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Add Category</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the edit buttons
+                const editButtons = document.querySelectorAll('#edit-btn');
+
+                // Add click event listener to each button
+                editButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const categoryId = button.getAttribute('data-id');
+                        const categoryName = button.getAttribute('data-name');
+
+                        // Set the form fields with the category data
+                        document.getElementById('editCategoryId').value = categoryId;
+                        document.getElementById('editcategoryName').value = categoryName;
+                    });
+                });
+            });
+        </script>
+
+        <!-- Right Column: Add New Sub-Category -->
+        <div class="col-md-6" style="margin-top: 20px">
+            <h2 class="text-center mb-4">Add New SubCategory</h2>
+            <form id="addSubCategoryForm" th:action="@{/admin/addSubCategory}" method="post"
+                  enctype="multipart/form-data">
+
+                <!-- SubCategory Name -->
+                <div class="mb-3">
+                    <label for="subCategoryName" class="form-label">SubCategory Name</label>
+                    <input type="text" class="form-control" id="subCategoryName" name="name"
+                           placeholder="Enter subcategory name" required>
+                </div>
+
+                <!-- Select Category -->
+                <div class="mb-3">
+                    <label for="categorySelect" class="form-label">Select Category</label>
+                    <select id="categorySelect" class="form-select" name="categoryId" required>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+                            Category
+                        </option>
+                    </select>
+                </div>
+
+                <!-- SubCategory Cover Photo -->
+                <div class="mb-3">
+                    <label for="subCategoryCoverPhoto" class="form-label">SubCategory Cover Photo</label>
+                    <input type="file" class="form-control" id="subCategoryCoverPhoto" name="coverPhoto"
+                           accept="image/*" required>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Add SubCategory</button>
+                </div>
+            </form>
+        </div>
+        <!-- Edit SubCategory Modal -->
+        <div class="modal fade" id="editSubCategoryModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit SubCategory</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editSubCategoryForm" th:action="@{/admin/editSubCategory}" method="post"
+                              enctype="multipart/form-data">
+                            <input type="hidden" id="editSubCategoryId" name="id">
+
+                            <!-- SubCategory Name -->
+                            <div class="mb-3">
+                                <label for="editSubCategoryName" class="form-label">SubCategory Name</label>
+                                <input type="text" class="form-control" id="editSubCategoryName" name="name" placeholder="Enter sub-category name" required>
+                            </div>
+
+                            <!-- SubCategory Cover Photo -->
+                            <div class="mb-3">
+                                <label for="editSubCategoryCoverPhoto" class="form-label">SubCategory Cover
+                                    Photo</label>
+                                <input type="file" class="form-control" id="editSubCategoryCoverPhoto" name="coverPhoto"
+                                       accept="image/*">
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the edit buttons
+                const editButtons = document.querySelectorAll('#sub-edit-btn');
+
+                // Add click event listener to each button
+                editButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const subcategoryId = button.getAttribute('data-id');
+                        const subcategoryName = button.getAttribute('data-name');
+
+                        // Set the form fields with the category data
+                        document.getElementById('editSubCategoryId').value = subcategoryId;
+                        document.getElementById('editSubCategoryName').value = subcategoryName;
+                    });
+                });
+            });
+        </script>
+
     </div>
-  </div>
 </div>
 
-<!-- Edit SubCategory Modal -->
-<div class="modal fade" id="editSubCategoryModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit SubCategory</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="editSubCategoryForm" th:action="@{/admin/editSubCategory}" method="post" enctype="multipart/form-data">
-          <input type="hidden" id="editSubCategoryId" name="id">
+<div class="container">
+    <div class="row">
+        <div class="container" style="margin-bottom: 50px">
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 20px">
+                    <h2 class="text-center mb-4">View Categories</h2>
+                    <div class="added-items">
+                        <div th:each="category : ${categories}" class="added-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" alt="Cover Image">
+                                    <h5 th:text="${category.name}">Category Name</h5>
+                                </div>
+                                <!--Action div-->
+                                  <div>
+                                    <div class="d-flex justify-content-end p-2" style="margin: 5px">
+                                        <div class="dropdown">
+                                            <button class="btn" type="button" id="dropdownMenuButton1"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-three-dots-vertical"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                                                </svg>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a id="edit-btn" class="dropdown-item"
+                                                       th:data-id="${category.id}"
+                                                       th:data-name="${category.name}"
+                                                       th:data-coverPhoto="${category.coverPhoto}"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#editCategoryModal">Edit</a></li>
+                                                <li><a th:href="@{/admin/deleteCategory/{id}(id=${category.id})}"
+                                                       class="dropdown-item">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Action div end-->
+                            </div>
 
-          <!-- SubCategory Name -->
-          <div class="mb-3">
-            <label for="editSubCategoryName" class="form-label">SubCategory Name</label>
-            <input type="text" class="form-control" id="editSubCategoryName" name="name" required>
-          </div>
-
-          <!-- SubCategory Cover Photo -->
-          <div class="mb-3">
-            <label for="editSubCategoryCoverPhoto" class="form-label">SubCategory Cover Photo</label>
-            <input type="file" class="form-control" id="editSubCategoryCoverPhoto" name="coverPhoto" accept="image/*">
-          </div>
-
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </div>
-        </form>
-      </div>
+                            <!-- Display Subcategories -->
+                            <div style="margin-left: 50px" class="subcategory-list">
+                                <ul class="list-group">
+                                    <li class="list-group-item" th:each="subcategory : ${category.subCategory}">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <img th:src="'data:image/jpeg;base64,' + ${subcategory.coverPhoto}" alt="Cover Image">
+                                            <h5 th:text="${subcategory.name}">Category Name</h5>
+                                        </div>
+                                        <!--Action div-->
+                                        <div>
+                                            <div class="d-flex justify-content-end p-2" style="margin: 5px">
+                                                <div class="dropdown">
+                                                    <button class="btn" type="button" id="dropdownMenuButton"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                             fill="currentColor" class="bi bi-three-dots-vertical"
+                                                             viewBox="0 0 16 16">
+                                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                                                        </svg>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li><a id="sub-edit-btn" class="dropdown-item"
+                                                               th:data-id="${subcategory.id}"
+                                                               th:data-name="${subcategory.name}"
+                                                               th:data-coverPhoto="${subcategory.coverPhoto}"
+                                                               data-bs-toggle="modal"
+                                                               data-bs-target="#editSubCategoryModal">Edit</a></li>
+                                                        <li><a th:href="@{/admin/deleteSubCategory/{id}(id=${subcategory.id})}"
+                                                               class="dropdown-item">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Action div end-->
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  document.querySelectorAll('#edit-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-      document.getElementById('editSubCategoryId').value = btn.getAttribute('data-id');
-      document.getElementById('editSubCategoryName').value = btn.getAttribute('data-name');
-    });
-  });
-</script>
-
 
 
 <!-- Bootstrap JS (includes Popper) -->
@@ -326,7 +369,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
 </body>
 </html>
 

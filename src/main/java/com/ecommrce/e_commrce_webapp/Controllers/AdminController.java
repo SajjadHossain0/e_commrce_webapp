@@ -16,6 +16,7 @@ import com.ecommrce.e_commrce_webapp.Repositories.AdvertisementRepository;
 import com.ecommrce.e_commrce_webapp.Repositories.CategoryRepository;
 import com.ecommrce.e_commrce_webapp.Repositories.SubCategoryRepository;
 import com.ecommrce.e_commrce_webapp.Services.CategoryService;
+import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class AdminController {
     private SubCategoryRepository subCategoryRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private SubCategoryService subCategoryService;
 
     @GetMapping("/admin_dashboard")
     public String admin() {
@@ -79,7 +82,6 @@ public class AdminController {
         advertisementRepository.save(ad);  // Save the advertisement to the database
         return "redirect:/admin/add_advertisement";  // Redirect to the advertisement page to see the new ad
     }
-
 
     @GetMapping("/deleteAdvertisement/{id}")
     public String deleteAdvertisement(@PathVariable("id") Long id) {
@@ -146,19 +148,19 @@ public class AdminController {
         categoryService.deleteCategory(id);
         return "redirect:/admin/manage_categories";
     }
-
 /*=================Category controllers end===================*/
 
-/*=================Sub-Category controllers===================*/
 
-    @GetMapping("/subcategory")
-    public String subcategoryPage(Model model) {
-        List<SubCategory> subCategories = subCategoryRepository.findAll();
-        List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("subCategories", subCategories);
-        model.addAttribute("categories", categories);
+/*=================Sub-Category controllers===================*/
+    @GetMapping("/categories/{categoryId}")
+    public String getCategory(@PathVariable Long categoryId, Model model) {
+        Category category = categoryService.getCategoryById(categoryId);
+        List<SubCategory> subcategories = (List<SubCategory>) subCategoryService.getSubCategoryById(categoryId);
+        model.addAttribute("category", category);
+        model.addAttribute("subcategories", subcategories);
         return "admin/manage_categories";
     }
+
 
     @PostMapping("/addSubCategory")
     public String addSubCategory(@RequestParam("name") String name,
@@ -199,14 +201,9 @@ public class AdminController {
     @GetMapping("/deleteSubCategory/{id}")
     public String deleteSubCategory(@PathVariable Long id) {
         subCategoryRepository.deleteById(id);
-        return "redirect:/admin/subcategory";
+        return "redirect:/admin/manage_categories";
     }
-
 /*=================Sub-Category controllers end===================*/
-
-
-
-
 
 
 
