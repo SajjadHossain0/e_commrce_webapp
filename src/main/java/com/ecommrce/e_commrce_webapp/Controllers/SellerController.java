@@ -3,10 +3,12 @@ package com.ecommrce.e_commrce_webapp.Controllers;
 import com.ecommrce.e_commrce_webapp.Entities.Category;
 import com.ecommrce.e_commrce_webapp.Entities.Product;
 import com.ecommrce.e_commrce_webapp.Entities.SubCategory;
+import com.ecommrce.e_commrce_webapp.Entities.User;
 import com.ecommrce.e_commrce_webapp.Services.CategoryService;
 import com.ecommrce.e_commrce_webapp.Services.ProductService;
 import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +55,7 @@ public class SellerController {
                               @RequestParam("price") Double price,
                               @RequestParam("category") String category,
                               @RequestParam("sub_category") String sub_category,
-                              @RequestParam("quantity") int quantity,
+                              @RequestParam("stock") int stock,
                               @RequestParam("short_description") String short_description,
                               @RequestParam("detailed_description") String detailed_description,
                               @RequestParam("product_details") String product_details){
@@ -80,7 +82,7 @@ public class SellerController {
         product.setPrice(price);
         product.setCategory(category);
         product.setSub_category(sub_category);
-        product.setQuantity(quantity);
+        product.setStock(stock);
         product.setShort_description(short_description);
         product.setDetailed_description(detailed_description);
         product.setProduct_details(product_details);
@@ -98,8 +100,8 @@ public class SellerController {
 
 
     @GetMapping("/view_products")
-    public String view_products(Model model){
-        List<Product> products = productService.getAllProducts();
+    public String view_products(@AuthenticationPrincipal User user, Model model){
+        List<Product> products = productService.getProductsByUser(user);
         model.addAttribute("products", products);
 
         return "seller/view_products";

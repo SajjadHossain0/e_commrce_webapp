@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Table(name = "user_table", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 @Setter
@@ -45,10 +48,13 @@ public class User {
     private String lastLoginTime;
     private String registrationTime;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
+
     public User() {
     }
 
-    public User(Long id, String first_name, String last_name, String email, String password, String address, String city, String state, String zip, String country, String phone_number, String role, boolean active, String lastLoginTime, String registrationTime) {
+    public User(Long id, String first_name, String last_name, String email, String password, String address, String city, String state, String zip, String country, String phone_number, String role, boolean active, String lastLoginTime, String registrationTime, List<Product> products) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -64,5 +70,6 @@ public class User {
         this.active = active;
         this.lastLoginTime = lastLoginTime;
         this.registrationTime = registrationTime;
+        this.products = products;
     }
 }

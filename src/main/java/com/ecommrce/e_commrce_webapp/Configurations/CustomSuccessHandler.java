@@ -31,13 +31,13 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         // Redirect the user based on their role.
         if (roles.contains("ROLE_ADMIN")) {
-            response.sendRedirect("/admin/admin_dashboard"); // Redirect to admin dashboard if the user is an admin.
+            response.sendRedirect("/admin/admin_dashboard");
         } else if (roles.contains("ROLE_SELLER")) {
-            response.sendRedirect("/seller/seller_dashboard"); // Redirect to user dashboard if the user is a regular user.
+            response.sendRedirect("/seller/seller_dashboard");
         }  else if (roles.contains("ROLE_USER")) {
-            response.sendRedirect("/"); // Redirect to user dashboard if the user is a regular user.
+            response.sendRedirect("/");
         } else {
-            response.sendRedirect("/"); // Redirect to the homepage if the user's role is not recognized.
+            response.sendRedirect("/");
         }
 
 

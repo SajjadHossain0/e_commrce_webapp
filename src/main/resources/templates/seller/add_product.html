@@ -17,6 +17,10 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
+<div style="margin: 10px">
+    <a href="/seller/seller_dashboard" class="btn btn-info btn-sm">Back</a>
+</div>
+
 <style>
     body {
         background-color: #f8f9fa;
@@ -114,10 +118,10 @@
             <input type="number" class="form-control" id="productPrice" name="price" placeholder="Enter price" required>
         </div>
 
-        <!-- Stock Quantity -->
+        <!-- Stock Stock -->
         <div class="mb-3">
             <label for="productStock" class="form-label">Stock Quantity</label>
-            <input type="number" class="form-control" id="productStock" name="quantity"
+            <input type="number" class="form-control" id="productStock" name="stock"
                    placeholder="Enter stock quantity" required>
         </div>
 
@@ -137,11 +141,13 @@
                 <!-- Sub-Category Selection -->
                 <div class="col-md-6">
                     <label for="productSubCategory" class="form-label">Sub-Category</label>
-                    <select class="form-select" id="productSubCategory" name="subcategory" required>
+                    <select class="form-select" id="productSubCategory" name="sub_category" required>
                         <option value="" disabled selected>Select a sub-category</option>
-                        <option th:each="cat : ${categories}" value="">
-                            <span th:each="subcategory : ${cat.subCategory}" th:text="${subcategory.name}"></span>
+                        <span th:each="cat : ${categories}">
+                        <option th:each="subcategory : ${cat.subCategory}" th:value="${subcategory.name}">
+                            <span th:text="${subcategory.name}"></span>
                         </option>
+                        </span>
                     </select>
                 </div>
             </div>

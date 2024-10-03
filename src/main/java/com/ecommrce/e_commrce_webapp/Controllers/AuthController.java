@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -91,8 +92,8 @@ public class AuthController {
 
     // Displays the login form
     @GetMapping("/login")
-    public String loginForm() {
-        return "authentication/login"; // Return the login form view
+    public String showLoginPage() {
+        return "authentication/login"; // Ensure this matches your template location
     }
 
 }

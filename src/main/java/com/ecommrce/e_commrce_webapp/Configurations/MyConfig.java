@@ -35,23 +35,23 @@ public class MyConfig {
                         .requestMatchers("/", "/register", "/login"
                         ,"/categories/**", "/product/**","/view_products/**")
                         .permitAll() // Allow access to these endpoints without authentication.
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Restrict access to user-specific pages to users with the "USER" role.
-                        .requestMatchers("/user/**").hasRole("USER") // Restrict access to user-specific pages to users with the "USER" role.
-                        .requestMatchers("/seller/**").hasRole("SELLER") // Restrict access to admin-specific pages to users with the "ADMIN" role.
-                        .anyRequest().authenticated())// Require authentication for all other requests.
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/seller/**").hasRole("SELLER")
+                        .anyRequest().authenticated())
 
                 // Configure form-based login.
                 .formLogin(form -> form
-                        .loginPage("/login") // Specify the custom login page URL.
-                        .permitAll() // Allow everyone to access the login page.
-                        .successHandler(customSuccessHandler) // Use the custom success handler on successful login.
-                        .failureHandler(customFailureHandler)) // Use the custom failure handler on failed login attempts.
+                        .loginPage("/login")
+                        .permitAll()
+                        .successHandler(customSuccessHandler)
+                        .failureHandler(customFailureHandler))
                 .logout(config -> config
-                        .logoutSuccessUrl("/")) // Redirect to the homepage after a successful logout.
+                        .logoutSuccessUrl("/"))
                 // Configure session management.
                 .sessionManagement(session -> session
-                        .maximumSessions(1)  // Limit each user to one active session at a time.
-                        .sessionRegistry(sessionRegistry())) // Attach the session registry to manage sessions.
+                        .maximumSessions(1)
+                        .sessionRegistry(sessionRegistry()))
 
                 // Set the UserService as the user details service.
                 .userDetailsService(userService)

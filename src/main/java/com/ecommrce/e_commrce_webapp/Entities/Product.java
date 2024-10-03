@@ -29,16 +29,20 @@ public class Product {
     private String category;
     private String sub_category;
 
-    private int quantity;
+    private int stock;
 
     private String short_description;
     private String detailed_description;
     private String product_details;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Product() {
     }
 
-    public Product(Long id, String product_image, String product_image1, String product_image2, String product_image3, String title, double price, String category, String sub_category, int quantity, String short_description, String detailed_description, String product_details) {
+    public Product(Long id, String product_image, String product_image1, String product_image2, String product_image3, String title, double price, String category, String sub_category, int stock, String short_description, String detailed_description, String product_details, User user) {
         this.id = id;
         this.product_image = product_image;
         this.product_image1 = product_image1;
@@ -48,9 +52,10 @@ public class Product {
         this.price = price;
         this.category = category;
         this.sub_category = sub_category;
-        this.quantity = quantity;
+        this.stock = stock;
         this.short_description = short_description;
         this.detailed_description = detailed_description;
         this.product_details = product_details;
+        this.user = user;
     }
 }
