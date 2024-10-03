@@ -2,25 +2,32 @@ package com.ecommrce.e_commrce_webapp.Controllers;
 
 import com.ecommrce.e_commrce_webapp.Entities.User;
 import com.ecommrce.e_commrce_webapp.Repositories.UserRepository;
+import com.ecommrce.e_commrce_webapp.Services.UserDataService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 //@RequestMapping("/user")
 public class UserController {
 
     private final UserRepository userRepository;
+    private UserDataService userDataService;
 
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserDataService userDataService) {
         this.userRepository = userRepository;
+        this.userDataService = userDataService;
     }
 
     @GetMapping("/profile")
@@ -43,4 +50,56 @@ public class UserController {
 
         return "menu/profile";
     }
+
+    @PostMapping("/change-address")
+    public String changeAddress(@RequestParam("address") String address, @RequestParam("city") String city,
+            @RequestParam("state") String state, @RequestParam("zip") String zip,
+            @RequestParam("country") String country, @RequestParam("phone_number") String phone_number, Principal principal) {
+
+        User user = userRepository.findByEmail(principal.getName());
+        user.setAddress(address);
+        user.setCity(city);
+        user.setState(state);
+        user.setZip(zip);
+        user.setCountry(country);
+        user.setPhone_number(phone_number);
+        userRepository.save(user);
+
+
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam("currentPassword") String currentPassword,
+                                 @RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword,
+                                 Principal principal, RedirectAttributes redirectAttributes) {
+
+        User user = userRepository.findByEmail(principal.getName());
+
+        if (!userDataService.checkIfValidOldPassword(user, currentPassword)) {
+            return "redirect:/change-password?error=CurrentPasswordIncorrect";
+        }
+        // Check if new password and confirm password match
+        if (!newPassword.equals(confirmPassword)) {
+            return "redirect:/change-password?error=PasswordMismatch";
+        }
+
+        // Check if current password matches the actual password
+        if (!userDataService.checkIfValidOldPassword(user, currentPassword)) {
+            redirectAttributes.addFlashAttribute("error", "Current password is incorrect.");
+            return "redirect:/change-password";
+        }
+
+        // Check if new password and confirm password match
+        if (!newPassword.equals(confirmPassword)) {
+            redirectAttributes.addFlashAttribute("error", "New password and confirm password do not match.");
+            return "redirect:/change-password";
+        }
+
+        // Save the new password (hashed)
+        userDataService.changeUserPassword(user, newPassword);
+
+        return "redirect:/profile";
+    }
+
 }
