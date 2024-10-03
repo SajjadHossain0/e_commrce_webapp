@@ -80,23 +80,26 @@
             <div class="row">
                 <div class="col-md-3">
                     <label for="productImage" class="form-label">Product Image 1</label>
-                    <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*" required>
+                    <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*"
+                           required>
                 </div>
                 <div class="col-md-3">
                     <label for="productImage1" class="form-label">Product Image 2</label>
-                    <input type="file" class="form-control" id="productImage1" name="product_image1" accept="image/*" required>
+                    <input type="file" class="form-control" id="productImage1" name="product_image1" accept="image/*"
+                           required>
                 </div>
                 <div class="col-md-3">
                     <label for="productImage2" class="form-label">Product Image 3</label>
-                    <input type="file" class="form-control" id="productImage2" name="product_image2" accept="image/*" required>
+                    <input type="file" class="form-control" id="productImage2" name="product_image2" accept="image/*"
+                           required>
                 </div>
                 <div class="col-md-3">
                     <label for="productImage3" class="form-label">Product Image 4</label>
-                    <input type="file" class="form-control" id="productImage3" name="product_image3" accept="image/*" required>
+                    <input type="file" class="form-control" id="productImage3" name="product_image3" accept="image/*"
+                           required>
                 </div>
             </div>
         </div>
-
 
         <!-- Product Name -->
         <div class="mb-3">
@@ -118,22 +121,30 @@
                    placeholder="Enter stock quantity" required>
         </div>
 
-        <!-- Category Selection -->
+        <!-- Category and Subcategory Selection -->
         <div class="mb-3">
-            <label for="productCategory" class="form-label">Category</label>
-            <select class="form-select" id="productCategory" name="category" required>
-                <!-- Dynamically populate options with category names -->
-                <option value="" disabled selected>Select a category</option>
-                <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
-            </select>
-        </div>
+            <div class="row">
+                <!-- Category Selection -->
+                <div class="col-md-6">
+                    <label for="productCategory" class="form-label">Category</label>
+                    <select class="form-select" id="productCategory" name="category" required>
+                        <!-- Dynamically populate options with category names -->
+                        <option value="" disabled selected>Select a category</option>
+                        <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+                    </select>
+                </div>
 
-        <!-- Sub-Category Selection -->
-        <div class="mb-3">
-            <label for="productSubCategory" class="form-label">Sub-Category</label>
-            <select class="form-select" id="productSubCategory" name="subcategory" required>
-                <option value="" disabled selected>Select a sub-category</option>
-            </select>
+                <!-- Sub-Category Selection -->
+                <div class="col-md-6">
+                    <label for="productSubCategory" class="form-label">Sub-Category</label>
+                    <select class="form-select" id="productSubCategory" name="subcategory" required>
+                        <option value="" disabled selected>Select a sub-category</option>
+                        <option th:each="cat : ${categories}" value="">
+                            <span th:each="subcategory : ${cat.subCategory}" th:text="${subcategory.name}"></span>
+                        </option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <!-- Product Details -->
@@ -169,27 +180,5 @@
         integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
         crossorigin="anonymous"></script>
 
-<script>
-    const categories = /*[[${categories}]]*/ [];
-    const subcategories = /*[[${subcategories}]]*/ [];
-
-    document.getElementById("productCategory").addEventListener("change", function() {
-        const selectedCategory = this.value;
-        const subCategorySelect = document.getElementById("productSubCategory");
-
-        // Clear previous options
-        subCategorySelect.innerHTML = `<option value="" disabled selected>Select a sub-category</option>`;
-
-        // Populate subcategories based on the selected category
-        subcategories.forEach(function(subcategory) {
-            if (subcategory.categoryName === selectedCategory) {
-                const option = document.createElement("option");
-                option.value = subcategory.name;
-                option.textContent = subcategory.name;
-                subCategorySelect.appendChild(option);
-            }
-        });
-    });
-</script>
 </body>
 </html>

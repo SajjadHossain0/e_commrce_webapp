@@ -21,7 +21,7 @@ public class Category {
     @Lob
     private String coverPhoto; // This will store the image as Base64 string
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SubCategory> subCategory;
 
     public Category() {}

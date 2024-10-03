@@ -37,12 +37,9 @@ public class SellerController {
     @GetMapping("/add_product")
     public String add_product(Model model){
         List<Category> categories = categoryService.getAllCategories();
+        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
         model.addAttribute("categories", categories);
-
-
-        List<SubCategory> subcategories = subCategoryService.getAllSubCategories();
-        model.addAttribute("subcategories", subcategories);
-
+        model.addAttribute("subCategories", subCategories);
 
         return "seller/add_product";
     }
@@ -101,7 +98,9 @@ public class SellerController {
 
 
     @GetMapping("/view_products")
-    public String view_products(){
+    public String view_products(Model model){
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
 
         return "seller/view_products";
     }
