@@ -12,11 +12,14 @@ package com.ecommrce.e_commrce_webapp.Controllers;
 import com.ecommrce.e_commrce_webapp.Entities.Advertisement;
 import com.ecommrce.e_commrce_webapp.Entities.Category;
 import com.ecommrce.e_commrce_webapp.Entities.SubCategory;
+import com.ecommrce.e_commrce_webapp.Entities.User;
 import com.ecommrce.e_commrce_webapp.Repositories.AdvertisementRepository;
 import com.ecommrce.e_commrce_webapp.Repositories.CategoryRepository;
 import com.ecommrce.e_commrce_webapp.Repositories.SubCategoryRepository;
 import com.ecommrce.e_commrce_webapp.Services.CategoryService;
 import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
+import com.ecommrce.e_commrce_webapp.Services.UserDataService;
+import com.ecommrce.e_commrce_webapp.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,16 +47,79 @@ public class AdminController {
     private CategoryService categoryService;
     @Autowired
     private SubCategoryService subCategoryService;
+    @Autowired
+    private UserDataService userDataService;
 
     @GetMapping("/admin_dashboard")
     public String admin() {
         return "admin/admin_dashboard";
     }
 
+/* ===============User view & Actions===================== */
+
     @GetMapping("/view_users")
-    public String viewUsers() {
+    public String viewUsers(Model model) {
+        List<User> user = userDataService.getAllUsers();
+        model.addAttribute("users", user);
+
         return "admin/view_users";
     }
+
+    @GetMapping("/make-seller/{id}")
+    public String makeSeller(@PathVariable Long id) {
+        User user = userDataService.getUserByID(id);
+        user.setRole("SELLER");
+        userDataService.saveUser(user);
+        return "redirect:/admin/view_users";
+    }
+
+    @GetMapping("/remove-seller/{id}")
+    public String removeSeller(@PathVariable Long id) {
+        User user = userDataService.getUserByID(id);
+        user.setRole("USER");
+        userDataService.saveUser(user);
+        return "redirect:/admin/view_users";
+    }
+
+    @GetMapping("/make-admin/{id}")
+    public String makeAdmin(@PathVariable Long id) {
+        User user = userDataService.getUserByID(id);
+        user.setRole("ADMIN");
+        userDataService.saveUser(user);
+        return "redirect:/admin/view_users";
+    }
+
+    @GetMapping("/remove-admin/{id}")
+    public String removeAdmin(@PathVariable Long id) {
+        User user = userDataService.getUserByID(id);
+        user.setRole("ADMIN");
+        userDataService.saveUser(user);
+        return "redirect:/admin/view_users";
+    }
+
+    @GetMapping("/blockUser/{id}")
+    public String blockUser(@PathVariable Long id) {
+        User user = userDataService.getUserByID(id);
+        user.setActive(false);
+        userDataService.saveUser(user);
+        return "redirect:/admin/view_users";
+    }
+
+    @GetMapping("/unblockUser/{id}")
+    public String unblockUser(@PathVariable Long id) {
+        User user = userDataService.getUserByID(id);
+        user.setActive(true);
+        userDataService.saveUser(user);
+        return "redirect:/admin/view_users";
+    }
+
+    @GetMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userDataService.deleteUser(id);
+        return "redirect:/admin/view_users";
+    }
+/* ===============User view & Actions end===================== */
+
 
 /* ===============Advertisement===================== */
     @GetMapping("/add_advertisement")
@@ -88,6 +154,7 @@ public class AdminController {
         advertisementRepository.deleteById(id);  // Delete advertisement by ID
         return "redirect:/admin/add_advertisement";  // Redirect back to the advertisement page
     }
+
 /* ===============Advertisement end===================== */
 
 

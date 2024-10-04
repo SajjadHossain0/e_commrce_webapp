@@ -79,32 +79,6 @@
     <h2 class="text-center mb-4">Add New Product</h2>
     <form id="addProductForm" th:action="@{/seller/add-product}" method="post" enctype="multipart/form-data">
 
-        <!-- Product Image -->
-        <div class="mb-3">
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="productImage" class="form-label">Product Image 1</label>
-                    <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*"
-                           required>
-                </div>
-                <div class="col-md-3">
-                    <label for="productImage1" class="form-label">Product Image 2</label>
-                    <input type="file" class="form-control" id="productImage1" name="product_image1" accept="image/*"
-                           required>
-                </div>
-                <div class="col-md-3">
-                    <label for="productImage2" class="form-label">Product Image 3</label>
-                    <input type="file" class="form-control" id="productImage2" name="product_image2" accept="image/*"
-                           required>
-                </div>
-                <div class="col-md-3">
-                    <label for="productImage3" class="form-label">Product Image 4</label>
-                    <input type="file" class="form-control" id="productImage3" name="product_image3" accept="image/*"
-                           required>
-                </div>
-            </div>
-        </div>
-
         <!-- Product Name -->
         <div class="mb-3">
             <label for="productTitle" class="form-label">Product Title</label>
@@ -172,6 +146,32 @@
             <label for="productMoreDesc" class="form-label">Detailed Description</label>
             <textarea class="form-control" id="productMoreDesc" rows="4" name="detailed_description"
                       placeholder="Enter detailed description" required></textarea>
+        </div>
+
+        <!-- Product Image -->
+        <div class="mb-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="productImage" class="form-label">Product Image 1</label>
+                    <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*"
+                           required>
+                </div>
+                <div class="col-md-3">
+                    <label for="productImage1" class="form-label">Product Image 2</label>
+                    <input type="file" class="form-control" id="productImage1" name="product_image1" accept="image/*"
+                           required>
+                </div>
+                <div class="col-md-3">
+                    <label for="productImage2" class="form-label">Product Image 3</label>
+                    <input type="file" class="form-control" id="productImage2" name="product_image2" accept="image/*"
+                           required>
+                </div>
+                <div class="col-md-3">
+                    <label for="productImage3" class="form-label">Product Image 4</label>
+                    <input type="file" class="form-control" id="productImage3" name="product_image3" accept="image/*"
+                           required>
+                </div>
+            </div>
         </div>
 
         <div class="d-grid">

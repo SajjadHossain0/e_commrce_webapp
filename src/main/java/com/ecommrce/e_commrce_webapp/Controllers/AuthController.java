@@ -85,7 +85,7 @@ public class AuthController {
             result.rejectValue("first_name", "error.registeredUser", e.getMessage()); // Show the error on the name field
         }
 
-        return "authentication/register"; // Return the registration form view
+        return "authentication/login"; // Return the registration form view
     }
 
 
