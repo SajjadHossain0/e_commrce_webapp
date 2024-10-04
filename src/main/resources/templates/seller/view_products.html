@@ -66,13 +66,196 @@
                     <td th:text="${product.category}"></td>
                     <td th:text="${product.sub_category}"></td>
                     <td th:text="${product.stock}"></td>
-                    <td><a th:href="@{/view_products/{productId}(productId=${product.id})}" class="btn btn-info">View</a></td>
+                    <td>
+                        <div>
+                            <div class="d-flex justify-content-end p-2" style="margin: 5px">
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" class="bi bi-three-dots-vertical"
+                                             viewBox="0 0 16 16">
+                                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                                        </svg>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a th:href="@{/view_products/{productId}(productId=${product.id})}"
+                                           style="text-decoration: none"><li class="dropdown-item">View</li></a>
+
+                                        <a th:data-id="${product.id}"
+                                        th:data-title="${product.title}"
+                                        th:data-price="${product.price}"
+                                        th:data-category="${product.category}"
+                                        th:data-sub_category="${product.sub_category}"
+                                        th:data-stock="${product.stock}"
+                                        th:data-short_description="${product.short_description}"
+                                        th:data-detailed_description="${product.detailed_description}"
+                                        th:data-product_details="${product.product_details}"
+                                        th:data-product_image="${product.product_image}"
+                                        th:data-product_image1="${product.product_image1}"
+                                        th:data-product_image2="${product.product_image2}"
+                                        th:data-product_image3="${product.product_image3}"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#editProductModal"
+                                           style="text-decoration: none"><li class="dropdown-item">Edit</li></a>
+
+                                        <a th:href="@{/seller/deleteProduct/{id}(id=${product.id})}"
+                                           style="text-decoration: none"><li class="dropdown-item">Delete</li></a>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- Edit product Modal -->
+                    <div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit SubCategory</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editProductForm" th:action="@{/seller/edit-product}" method="post"
+                                          enctype="multipart/form-data">
+                                        <input type="hidden" id="editProductId" name="id">
+
+
+                                        <!-- Product Name -->
+                                        <div class="mb-3">
+                                            <label for="productTitle" class="form-label">Product Title</label>
+                                            <input type="text" class="form-control" id="productTitle" name="title" placeholder="Enter product title"
+                                                   required>
+                                        </div>
+
+                                        <!-- Price -->
+                                        <div class="mb-3">
+                                            <label for="productPrice" class="form-label">Price</label>
+                                            <input type="number" class="form-control" id="productPrice" name="price" placeholder="Enter price" required>
+                                        </div>
+
+                                        <!-- Stock Stock -->
+                                        <div class="mb-3">
+                                            <label for="productStock" class="form-label">Stock Quantity</label>
+                                            <input type="number" class="form-control" id="productStock" name="stock"
+                                                   placeholder="Enter stock quantity" required>
+                                        </div>
+
+                                        <!-- Category and Subcategory Selection -->
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <!-- Category Selection -->
+                                                <div class="col-md-6">
+                                                    <label for="productCategory" class="form-label">Category</label>
+                                                    <select class="form-select" id="productCategory" name="category" required>
+                                                        <!-- Dynamically populate options with category names -->
+                                                        <option value="" disabled selected>Select a category</option>
+                                                        <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- Sub-Category Selection -->
+                                                <div class="col-md-6">
+                                                    <label for="productSubCategory" class="form-label">Sub-Category</label>
+                                                    <select class="form-select" id="productSubCategory" name="sub_category" required>
+                                                        <option value="" disabled selected>Select a sub-category</option>
+                                                        <span th:each="cat : ${categories}">
+                        <option th:each="subcategory : ${cat.subCategory}" th:value="${subcategory.name}">
+                            <span th:text="${subcategory.name}"></span>
+                        </option>
+                        </span>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Product Details -->
+                                        <div class="mb-3">
+                                            <label for="productDetails" class="form-label">Product Details</label>
+                                            <textarea class="form-control" id="productDetails" rows="3" name="product_details"
+                                                      placeholder="Enter product details" required></textarea>
+                                        </div>
+
+                                        <!-- Short Description -->
+                                        <div class="mb-3">
+                                            <label for="productShortDesc" class="form-label">Short Description</label>
+                                            <textarea class="form-control" id="productShortDesc" rows="2" name="short_description"
+                                                      placeholder="Enter short description" required></textarea>
+                                        </div>
+
+                                        <!-- More Description -->
+                                        <div class="mb-3">
+                                            <label for="productMoreDesc" class="form-label">Detailed Description</label>
+                                            <textarea class="form-control" id="productMoreDesc" rows="4" name="detailed_description"
+                                                      placeholder="Enter detailed description" required></textarea>
+                                        </div>
+
+                                        <!-- Product Image -->
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label for="productImage" class="form-label">Product Image 1</label>
+                                                    <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*"
+                                                           required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="productImage1" class="form-label">Product Image 2</label>
+                                                    <input type="file" class="form-control" id="productImage1" name="product_image1" accept="image/*"
+                                                           required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="productImage2" class="form-label">Product Image 3</label>
+                                                    <input type="file" class="form-control" id="productImage2" name="product_image2" accept="image/*"
+                                                           required>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="productImage3" class="form-label">Product Image 4</label>
+                                                    <input type="file" class="form-control" id="productImage3" name="product_image3" accept="image/*"
+                                                           required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Get the edit buttons
+                            const editButtons = document.querySelectorAll('#sub-edit-btn');
+
+                            // Add click event listener to each button
+                            editButtons.forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const subcategoryId = button.getAttribute('data-id');
+                                    const subcategoryName = button.getAttribute('data-name');
+
+                                    // Set the form fields with the category data
+                                    document.getElementById('editSubCategoryId').value = subcategoryId;
+                                    document.getElementById('editSubCategoryName').value = subcategoryName;
+                                });
+                            });
+                        });
+                    </script>
+
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
