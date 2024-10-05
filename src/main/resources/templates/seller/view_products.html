@@ -80,27 +80,34 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a th:href="@{/view_products/{productId}(productId=${product.id})}"
-                                           style="text-decoration: none"><li class="dropdown-item">View</li></a>
+                                           style="text-decoration: none">
+                                            <li class="dropdown-item">View</li>
+                                        </a>
 
-                                        <a th:data-id="${product.id}"
-                                        th:data-title="${product.title}"
-                                        th:data-price="${product.price}"
-                                        th:data-category="${product.category}"
-                                        th:data-sub_category="${product.sub_category}"
-                                        th:data-stock="${product.stock}"
-                                        th:data-short_description="${product.short_description}"
-                                        th:data-detailed_description="${product.detailed_description}"
-                                        th:data-product_details="${product.product_details}"
-                                        th:data-product_image="${product.product_image}"
-                                        th:data-product_image1="${product.product_image1}"
-                                        th:data-product_image2="${product.product_image2}"
-                                        th:data-product_image3="${product.product_image3}"
+                                        <a id="productedit-btn"
+                                           th:data-id="${product.id}"
+                                           th:data-title="${product.title}"
+                                           th:data-price="${product.price}"
+                                           th:data-category="${product.category}"
+                                           th:data-sub_category="${product.sub_category}"
+                                           th:data-stock="${product.stock}"
+                                           th:data-short_description="${product.short_description}"
+                                           th:data-detailed_description="${product.detailed_description}"
+                                           th:data-product_details="${product.product_details}"
+                                           th:data-product_image="${product.product_image}"
+                                           th:data-product_image1="${product.product_image1}"
+                                           th:data-product_image2="${product.product_image2}"
+                                           th:data-product_image3="${product.product_image3}"
                                            data-bs-toggle="modal"
                                            data-bs-target="#editProductModal"
-                                           style="text-decoration: none"><li class="dropdown-item">Edit</li></a>
+                                           style="text-decoration: none">
+                                            <li class="dropdown-item">Edit</li>
+                                        </a>
 
                                         <a th:href="@{/seller/deleteProduct/{id}(id=${product.id})}"
-                                           style="text-decoration: none"><li class="dropdown-item">Delete</li></a>
+                                           style="text-decoration: none">
+                                            <li class="dropdown-item">Delete</li>
+                                        </a>
                                     </ul>
                                 </div>
                             </div>
@@ -124,21 +131,19 @@
                                         <!-- Product Name -->
                                         <div class="mb-3">
                                             <label for="productTitle" class="form-label">Product Title</label>
-                                            <input type="text" class="form-control" id="productTitle" name="title" placeholder="Enter product title"
-                                                   required>
+                                            <input type="text" class="form-control" id="productTitle" name="title" placeholder="Enter product title">
                                         </div>
 
                                         <!-- Price -->
                                         <div class="mb-3">
                                             <label for="productPrice" class="form-label">Price</label>
-                                            <input type="number" class="form-control" id="productPrice" name="price" placeholder="Enter price" required>
+                                            <input type="number" class="form-control" id="productPrice" name="price" placeholder="Enter price">
                                         </div>
 
                                         <!-- Stock Stock -->
                                         <div class="mb-3">
                                             <label for="productStock" class="form-label">Stock Quantity</label>
-                                            <input type="number" class="form-control" id="productStock" name="stock"
-                                                   placeholder="Enter stock quantity" required>
+                                            <input type="number" class="form-control" id="productStock" name="stock" placeholder="Enter stock quantity">
                                         </div>
 
                                         <!-- Category and Subcategory Selection -->
@@ -147,23 +152,25 @@
                                                 <!-- Category Selection -->
                                                 <div class="col-md-6">
                                                     <label for="productCategory" class="form-label">Category</label>
-                                                    <select class="form-select" id="productCategory" name="category" required>
-                                                        <!-- Dynamically populate options with category names -->
+                                                    <select class="form-select" id="productCategory" name="category">
                                                         <option value="" disabled selected>Select a category</option>
-                                                        <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+                                                        <option th:each="cat : ${categories}" th:value="${cat.name}"
+                                                                th:text="${cat.name}"></option>
                                                     </select>
                                                 </div>
-
                                                 <!-- Sub-Category Selection -->
                                                 <div class="col-md-6">
-                                                    <label for="productSubCategory" class="form-label">Sub-Category</label>
-                                                    <select class="form-select" id="productSubCategory" name="sub_category" required>
-                                                        <option value="" disabled selected>Select a sub-category</option>
+                                                    <label for="productSubCategory"
+                                                           class="form-label">Sub-Category</label>
+                                                    <select class="form-select" id="productSubCategory"
+                                                            name="sub_category">
+                                                        <option value="" disabled selected>Select a sub-category
+                                                        </option>
                                                         <span th:each="cat : ${categories}">
-                        <option th:each="subcategory : ${cat.subCategory}" th:value="${subcategory.name}">
-                            <span th:text="${subcategory.name}"></span>
-                        </option>
-                        </span>
+                                                            <option th:each="subcategory : ${cat.subCategory}" th:value="${subcategory.name}">
+                                                                <span th:text="${subcategory.name}"></span>
+                                                            </option>
+                                                        </span>
                                                     </select>
                                                 </div>
                                             </div>
@@ -173,21 +180,21 @@
                                         <div class="mb-3">
                                             <label for="productDetails" class="form-label">Product Details</label>
                                             <textarea class="form-control" id="productDetails" rows="3" name="product_details"
-                                                      placeholder="Enter product details" required></textarea>
+                                                      placeholder="Enter product details"></textarea>
                                         </div>
 
                                         <!-- Short Description -->
                                         <div class="mb-3">
                                             <label for="productShortDesc" class="form-label">Short Description</label>
                                             <textarea class="form-control" id="productShortDesc" rows="2" name="short_description"
-                                                      placeholder="Enter short description" required></textarea>
+                                                      placeholder="Enter short description"></textarea>
                                         </div>
 
                                         <!-- More Description -->
                                         <div class="mb-3">
                                             <label for="productMoreDesc" class="form-label">Detailed Description</label>
                                             <textarea class="form-control" id="productMoreDesc" rows="4" name="detailed_description"
-                                                      placeholder="Enter detailed description" required></textarea>
+                                                      placeholder="Enter detailed description"></textarea>
                                         </div>
 
                                         <!-- Product Image -->
@@ -195,23 +202,26 @@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <label for="productImage" class="form-label">Product Image 1</label>
-                                                    <input type="file" class="form-control" id="productImage" name="product_image" accept="image/*"
-                                                           required>
+                                                    <input type="file" class="form-control" id="productImage"
+                                                           name="product_image" accept="image/*">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="productImage1" class="form-label">Product Image 2</label>
-                                                    <input type="file" class="form-control" id="productImage1" name="product_image1" accept="image/*"
-                                                           required>
+                                                    <label for="productImage1" class="form-label">Product Image
+                                                        2</label>
+                                                    <input type="file" class="form-control" id="productImage1"
+                                                           name="product_image1" accept="image/*">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="productImage2" class="form-label">Product Image 3</label>
-                                                    <input type="file" class="form-control" id="productImage2" name="product_image2" accept="image/*"
-                                                           required>
+                                                    <label for="productImage2" class="form-label">Product Image
+                                                        3</label>
+                                                    <input type="file" class="form-control" id="productImage2"
+                                                           name="product_image2" accept="image/*">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="productImage3" class="form-label">Product Image 4</label>
-                                                    <input type="file" class="form-control" id="productImage3" name="product_image3" accept="image/*"
-                                                           required>
+                                                    <label for="productImage3" class="form-label">Product Image
+                                                        4</label>
+                                                    <input type="file" class="form-control" id="productImage3"
+                                                           name="product_image3" accept="image/*">
                                                 </div>
                                             </div>
                                         </div>
@@ -227,17 +237,39 @@
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             // Get the edit buttons
-                            const editButtons = document.querySelectorAll('#sub-edit-btn');
+                            const editButtons = document.querySelectorAll('#productedit-btn');
 
                             // Add click event listener to each button
                             editButtons.forEach(button => {
                                 button.addEventListener('click', function () {
-                                    const subcategoryId = button.getAttribute('data-id');
-                                    const subcategoryName = button.getAttribute('data-name');
+                                    const productId = button.getAttribute('data-id');
+                                    const productTitle = button.getAttribute('data-title');
+                                    const productPrice = button.getAttribute('data-price');
+                                    const productCategory = button.getAttribute('data-category');
+                                    const productSub_category = button.getAttribute('data-sub_category');
+                                    const productStock = button.getAttribute('data-stock');
+                                    const productShort_description = button.getAttribute('data-short_description');
+                                    const productDetailed_description = button.getAttribute('data-detailed_description');
+                                    const productProduct_details = button.getAttribute('data-product_details');
+                                    const productProduct_image = button.getAttribute('data-product_image');
+                                    const productProduct_image1 = button.getAttribute('data-product_image1');
+                                    const productProduct_image2 = button.getAttribute('data-product_image2');
+                                    const productProduct_image3 = button.getAttribute('data-product_image3');
 
                                     // Set the form fields with the category data
-                                    document.getElementById('editSubCategoryId').value = subcategoryId;
-                                    document.getElementById('editSubCategoryName').value = subcategoryName;
+                                    document.getElementById('editProductId').value = productId;
+                                    document.getElementById('productTitle').value = productTitle;
+                                    document.getElementById('productPrice').value = productPrice;
+                                    document.getElementById('productCategory').value = productCategory;
+                                    document.getElementById('productSubCategory').value = productSub_category;
+                                    document.getElementById('productStock').value = productStock;
+                                    document.getElementById('productShortDesc').value = productShort_description;
+                                    document.getElementById('productMoreDesc').value = productDetailed_description;
+                                    document.getElementById('productDetails').value = productProduct_details;
+                                    document.getElementById('productImage').value = productProduct_image;
+                                    document.getElementById('productImage1').value = productProduct_image1;
+                                    document.getElementById('productImage2').value = productProduct_image2;
+                                    document.getElementById('productImage3').value = productProduct_image3;
                                 });
                             });
                         });

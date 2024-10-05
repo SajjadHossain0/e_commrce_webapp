@@ -129,7 +129,7 @@ public class SellerController {
 
         productService.saveProduct(product);
 
-        return "redirect:/seller/seller_dashboard";
+        return "redirect:/seller/view_products";
     }
 
     @GetMapping("/deleteProduct/{id}")
