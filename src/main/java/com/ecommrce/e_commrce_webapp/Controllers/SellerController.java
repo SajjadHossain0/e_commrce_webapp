@@ -7,6 +7,7 @@ import com.ecommrce.e_commrce_webapp.Entities.User;
 import com.ecommrce.e_commrce_webapp.Services.CategoryService;
 import com.ecommrce.e_commrce_webapp.Services.ProductService;
 import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,7 @@ public class SellerController {
                               @RequestParam("stock") int stock,
                               @RequestParam("short_description") String short_description,
                               @RequestParam("detailed_description") String detailed_description,
-                              @RequestParam("product_details") String product_details){
+                              @RequestParam("product_details") String product_details, HttpSession session){
 
         Product product = new Product();
         // Convert the cover photo to a Base64 string
@@ -86,9 +87,11 @@ public class SellerController {
         product.setDetailed_description(detailed_description);
         product.setProduct_details(product_details);
 
+        session.setAttribute("success","Product added successfully");
+
         productService.saveProduct(product);
 
-        return "redirect:/seller/seller_dashboard";
+        return "redirect:/seller/add_product";
     }
 
     @PostMapping("/edit-product")

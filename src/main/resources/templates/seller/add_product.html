@@ -77,6 +77,23 @@
 
 <div class="container">
     <h2 class="text-center mb-4">Add New Product</h2>
+
+    <!-- Success Message Block -->
+    <div th:if="${session.success != null}"
+         class="alert alert-success text-center"
+         role="alert" id="success-message">
+        <strong style="text-align: center" th:text="${session.success}"></strong>
+    </div>
+    <!-- Script to hide the message after 3 seconds -->
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script>
+
     <form id="addProductForm" th:action="@{/seller/add-product}" method="post" enctype="multipart/form-data">
 
         <!-- Product Name -->

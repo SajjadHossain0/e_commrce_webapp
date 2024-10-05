@@ -2,6 +2,7 @@ package com.ecommrce.e_commrce_webapp.Controllers;
 
 import com.ecommrce.e_commrce_webapp.Entities.User;
 import com.ecommrce.e_commrce_webapp.Repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -93,6 +94,7 @@ public class AuthController {
     // Displays the login form
     @GetMapping("/login")
     public String showLoginPage() {
+
         return "authentication/login"; // Ensure this matches your template location
     }
 
