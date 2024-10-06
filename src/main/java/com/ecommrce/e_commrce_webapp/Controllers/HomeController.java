@@ -38,7 +38,7 @@ public class HomeController {
     private ProductService productService;
 
     @GetMapping("/")
-    public String home(Model model){
+    public String home(Model model) {
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
@@ -53,23 +53,32 @@ public class HomeController {
         model.addAttribute("products", products);
 
 
-
         return "home";
     }
 
-/*========== caterory ================*/
+    /*========== category ================*/
     @GetMapping("/categories/{categoryId}")
     public String getCategory(@PathVariable Long categoryId, Model model) {
         Category category = categoryService.getCategoryById(categoryId);
         List<SubCategory> subcategories = (List<SubCategory>) subCategoryService.getSubCategoryById(categoryId);
         model.addAttribute("category", category);
         model.addAttribute("subcategories", subcategories);
+        List<Product> productsByCategory = productService.getProductsByCategory(category.getName());
+        model.addAttribute("productsByCategory", productsByCategory);
+
         return "view/view_category";
     }
-/*========== caterory end ================*/
+    /*========== category end ================*/
+
+
+    /*========== sub category ================*/
+
+
+    /*========== sub category end================*/
+
 
     @GetMapping("/product")
-    public String product(Model model){
+    public String product(Model model) {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
         return "view/view_product";
@@ -81,9 +90,6 @@ public class HomeController {
         model.addAttribute("product", product);
         return "view/view_product";
     }
-
-
-
 
 
 }

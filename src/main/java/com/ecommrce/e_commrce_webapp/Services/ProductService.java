@@ -35,6 +35,10 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return productRepository.findByUser(user);
     }
+    public List<Product> getProductsByCategory(String category) {
+        return productRepository.findByCategory(category);
+    }
+
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);

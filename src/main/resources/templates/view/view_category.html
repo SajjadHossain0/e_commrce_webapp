@@ -132,6 +132,7 @@
 </style>
 <!-- Circular Cards Section -->
 <div class="card-slider-container">
+
   <!-- Left button -->
   <button class="nav-btn left" onclick="slideLeft()">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -140,16 +141,13 @@
             d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
     </svg>
   </button>
-
   <!-- Cards -->
   <div class="card-container">
-      <div class="card" th:each="subcategory : ${category.subCategory}">
-        <img th:src="'data:image/jpeg;base64,' + ${subcategory.coverPhoto}" class="card-img-top"
-             alt="Category Image">
-        <div class="card-body" style="margin: 5px" th:text="${subcategory.name}">Category 1</div>
+    <div class="card" th:each="subcategory : ${category.subCategory}">
+        <img th:src="'data:image/jpeg;base64,' + ${subcategory.getCoverPhoto()}" class="card-img-top" alt="Category Image">
+        <div class="card-body" style="margin: 5px" th:text="${subcategory.getName()}"></div>
       </div>
   </div>
-
   <!-- Right button -->
   <button class="nav-btn right" onclick="slideRight()">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -158,6 +156,7 @@
             d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
     </svg>
   </button>
+
 </div>
 <!-- JavaScript for sliding -->
 <script>
@@ -178,6 +177,7 @@
   }
 </script>
 <!--@@@ Category card section close-->
+
 
 <!--@@@ Product card section-->
 <div class="container"
@@ -285,20 +285,23 @@
 
 <div class="product-grid">
 
-  <div class="product-card">
+  <div class="product-card" th:each="productByCategory : ${productsByCategory}">
     <!--photo size - 250x200-->
-    <img src="/images/view_admin_panel.png" alt="Product Image">
+    <img th:src="'data:image/jpeg;base64,' + ${productByCategory.product_image}" class="card-img-top"
+         alt="Category Image">
     <div class="product-info">
-      <h3 class="product-title">Product Name 1</h3>
-      <p class="product-price">$99.99</p>
+      <h3 class="product-title" th:text="${productByCategory.title}">Product Name 1</h3>
+      <p class="product-price" th:text="${productByCategory.price}">$99.99</p>
       <div class="product-reviews">
         <span class="stars">★★★★★</span>
+        <span th:text="${productByCategory.isStock_available() ? 'In Stock' : 'Out Of Stock'}"
+              th:style="${productByCategory.isStock_available()} ? 'color: green;' : 'color: red;'"></span>
         <span class="review-count">(120 reviews)</span>
       </div>
 
       <div style="text-align: center">
         <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
+        <a style="margin: 5px" th:href="@{/view_products/{productId}(productId=${productByCategory.id})}" class="product-btn">view product</a>
       </div>
     </div>
   </div>
