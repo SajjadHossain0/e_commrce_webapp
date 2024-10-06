@@ -5,20 +5,13 @@
 
 package com.ecommrce.e_commrce_webapp.Controllers;
 
-import com.ecommrce.e_commrce_webapp.Entities.Advertisement;
-import com.ecommrce.e_commrce_webapp.Entities.Category;
-import com.ecommrce.e_commrce_webapp.Entities.Product;
-import com.ecommrce.e_commrce_webapp.Entities.SubCategory;
+import com.ecommrce.e_commrce_webapp.Entities.*;
 import com.ecommrce.e_commrce_webapp.Repositories.AdvertisementRepository;
-import com.ecommrce.e_commrce_webapp.Services.CategoryService;
-import com.ecommrce.e_commrce_webapp.Services.ProductService;
-import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
+import com.ecommrce.e_commrce_webapp.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Base64;
 import java.util.List;

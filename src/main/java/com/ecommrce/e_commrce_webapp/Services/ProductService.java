@@ -1,9 +1,7 @@
 package com.ecommrce.e_commrce_webapp.Services;
 
-import com.ecommrce.e_commrce_webapp.Entities.Product;
-import com.ecommrce.e_commrce_webapp.Entities.User;
-import com.ecommrce.e_commrce_webapp.Repositories.ProductRepository;
-import com.ecommrce.e_commrce_webapp.Repositories.UserRepository;
+import com.ecommrce.e_commrce_webapp.Entities.*;
+import com.ecommrce.e_commrce_webapp.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +36,7 @@ public class ProductService {
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
+
 
 
     public void deleteProduct(Long id) {
