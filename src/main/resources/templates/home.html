@@ -17,6 +17,7 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
+
 <!--@@@ Ads section-->
 <style>
     /* Slideshow Container */
@@ -299,6 +300,7 @@
 <!--@@@ Category card section close-->
 
 
+
 <!--@@@ Product card section-->
 <div class="container"
      style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px; font-weight: bold">All Products
@@ -414,6 +416,8 @@
             <p class="product-price" th:text="${product.price}">$99.99</p>
             <div class="product-reviews">
                 <span class="stars">★★★★★</span>
+                <span th:text="${product.isStock_available() ? 'In Stock' : 'Out Of Stock'}"
+                      th:style="${product.isStock_available()} ? 'color: green;' : 'color: red;'"></span>
                 <span class="review-count">(120 reviews)</span>
             </div>
 
@@ -426,6 +430,7 @@
 
 </div>
 <!--@@@ Product card section close-->
+
 
 <section th:insert="~{base :: footer}"></section>
 

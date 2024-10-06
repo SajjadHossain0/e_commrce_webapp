@@ -86,7 +86,7 @@
     </div>
     <!-- Script to hide the message after 3 seconds -->
     <script>
-        setTimeout(function() {
+        setTimeout(function () {
             var successMessage = document.getElementById('success-message');
             if (successMessage) {
                 successMessage.style.display = 'none';
@@ -115,6 +115,28 @@
             <input type="number" class="form-control" id="productStock" name="stock"
                    placeholder="Enter stock quantity" required>
         </div>
+        <!--Stock available-->
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="true" name="stock_available" id="flexCheckInStock">
+                <label class="form-check-label" for="flexCheckInStock">In Stock</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="false" name="stock_available" id="flexCheckOutOfStock">
+                <label class="form-check-label" for="flexCheckOutOfStock">Out of Stock</label>
+            </div>
+        </div>
+        <script>
+            document.getElementById("flexCheckInStock").addEventListener('change', function() {
+                document.getElementById("flexCheckOutOfStock").checked = !this.checked;
+            });
+
+            document.getElementById("flexCheckOutOfStock").addEventListener('change', function() {
+                document.getElementById("flexCheckInStock").checked = !this.checked;
+            });
+        </script>
+
+
 
         <!-- Category and Subcategory Selection -->
         <div class="mb-3">

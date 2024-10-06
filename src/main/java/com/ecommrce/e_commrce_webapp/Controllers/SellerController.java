@@ -47,18 +47,11 @@ public class SellerController {
     }
 
     @PostMapping("/add-product")
-    public String add_product(@RequestParam("product_image") MultipartFile product_image,
-                              @RequestParam("product_image1") MultipartFile product_image1,
-                              @RequestParam("product_image2") MultipartFile product_image2,
-                              @RequestParam("product_image3") MultipartFile product_image3,
-                              @RequestParam("title") String title,
-                              @RequestParam("price") Double price,
-                              @RequestParam("category") String category,
-                              @RequestParam("sub_category") String sub_category,
-                              @RequestParam("stock") int stock,
-                              @RequestParam("short_description") String short_description,
-                              @RequestParam("detailed_description") String detailed_description,
-                              @RequestParam("product_details") String product_details, HttpSession session){
+    public String add_product(@RequestParam("product_image") MultipartFile product_image, @RequestParam("product_image1") MultipartFile product_image1, @RequestParam("product_image2") MultipartFile product_image2, @RequestParam("product_image3") MultipartFile product_image3,
+                              @RequestParam("title") String title, @RequestParam("price") Double price,
+                              @RequestParam("category") String category, @RequestParam("sub_category") String sub_category,
+                              @RequestParam("stock") int stock, @RequestParam("short_description") String short_description, @RequestParam("detailed_description") String detailed_description,
+                              @RequestParam("product_details") String product_details,@RequestParam("stock_available") boolean stock_available,HttpSession session,Model model){
 
         Product product = new Product();
         // Convert the cover photo to a Base64 string
@@ -86,6 +79,8 @@ public class SellerController {
         product.setShort_description(short_description);
         product.setDetailed_description(detailed_description);
         product.setProduct_details(product_details);
+        product.setStock_available(stock_available);
+
 
         session.setAttribute("success","Product added successfully");
 
@@ -95,16 +90,34 @@ public class SellerController {
     }
 
     @PostMapping("/edit-product")
-    public String edit_product(@RequestParam("id") Long id,@RequestParam("product_image") MultipartFile product_image,
-                              @RequestParam("product_image1") MultipartFile product_image1, @RequestParam("product_image2") MultipartFile product_image2,
-                              @RequestParam("product_image3") MultipartFile product_image3, @RequestParam("title") String title,
-                              @RequestParam("price") Double price, @RequestParam("category") String category,
-                              @RequestParam("sub_category") String sub_category, @RequestParam("stock") int stock,
-                              @RequestParam("short_description") String short_description, @RequestParam("detailed_description") String detailed_description,
-                              @RequestParam("product_details") String product_details){
+    public String edit_product(@RequestParam("id") Long id,@RequestParam("title") String title, @RequestParam("price") Double price, @RequestParam("category") String category,
+                              @RequestParam("sub_category") String sub_category, @RequestParam("stock") int stock, @RequestParam("short_description") String short_description, @RequestParam("detailed_description") String detailed_description,
+                              @RequestParam("product_details") String product_details,@RequestParam("stock_available") boolean stock_available){
 
         Product product = productService.getProductById(id);
-        // Convert the cover photo to a Base64 string
+
+        product.setTitle(title);
+        product.setPrice(price);
+        product.setCategory(category);
+        product.setSub_category(sub_category);
+        product.setStock(stock);
+        product.setShort_description(short_description);
+        product.setDetailed_description(detailed_description);
+        product.setProduct_details(product_details);
+        product.setStock_available(stock_available);
+
+
+        productService.saveProduct(product);
+
+        return "redirect:/seller/view_products";
+    }
+
+    @PostMapping("/edit-product-img")
+    public String edit_product_img(@RequestParam("id") Long id,@RequestParam("product_image") MultipartFile product_image,
+                                   @RequestParam("product_image1") MultipartFile product_image1, @RequestParam("product_image2") MultipartFile product_image2,
+                                   @RequestParam("product_image3") MultipartFile product_image3){
+        Product product = productService.getProductById(id);
+// Convert the cover photo to a Base64 string
         String encodedImage = null;
         String encodedImage1 = null;
         String encodedImage2 = null;
@@ -117,22 +130,16 @@ public class SellerController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         product.setProduct_image(encodedImage);
         product.setProduct_image1(encodedImage1);
         product.setProduct_image2(encodedImage2);
         product.setProduct_image3(encodedImage3);
-        product.setTitle(title);
-        product.setPrice(price);
-        product.setCategory(category);
-        product.setSub_category(sub_category);
-        product.setStock(stock);
-        product.setShort_description(short_description);
-        product.setDetailed_description(detailed_description);
-        product.setProduct_details(product_details);
 
         productService.saveProduct(product);
 
         return "redirect:/seller/view_products";
+
     }
 
     @GetMapping("/deleteProduct/{id}")

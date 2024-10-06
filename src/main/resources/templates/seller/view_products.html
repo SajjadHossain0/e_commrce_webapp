@@ -45,6 +45,7 @@
                     <th>Category</th>
                     <th>Sub-Category</th>
                     <th>Stock</th>
+                    <th>Stock Available</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -66,6 +67,8 @@
                     <td th:text="${product.category}"></td>
                     <td th:text="${product.sub_category}"></td>
                     <td th:text="${product.stock}"></td>
+                    <td th:text="${product.isStock_available() ? 'In Stock' : 'Out Of Stock'}"
+                        th:style="${product.isStock_available()} ? 'color: green;' : 'color: red;'"></td>
                     <td>
                         <div>
                             <div class="d-flex justify-content-end p-2" style="margin: 5px">
@@ -83,7 +86,6 @@
                                            style="text-decoration: none">
                                             <li class="dropdown-item">View</li>
                                         </a>
-
                                         <a id="productedit-btn"
                                            th:data-id="${product.id}"
                                            th:data-title="${product.title}"
@@ -101,9 +103,19 @@
                                            data-bs-toggle="modal"
                                            data-bs-target="#editProductModal"
                                            style="text-decoration: none">
-                                            <li class="dropdown-item">Edit</li>
+                                            <li class="dropdown-item">Edit product details</li>
                                         </a>
-
+                                        <a id="producteImgedit-btn"
+                                           th:data-id="${product.id}"
+                                           th:data-product_image="${product.product_image}"
+                                           th:data-product_image1="${product.product_image1}"
+                                           th:data-product_image2="${product.product_image2}"
+                                           th:data-product_image3="${product.product_image3}"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#editProductImgModal"
+                                           style="text-decoration: none">
+                                            <li class="dropdown-item">Edit Image</li>
+                                        </a>
                                         <a th:href="@{/seller/deleteProduct/{id}(id=${product.id})}"
                                            style="text-decoration: none">
                                             <li class="dropdown-item">Delete</li>
@@ -119,7 +131,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Edit SubCategory</h5>
+                                    <h5 class="modal-title">Edit Product Details</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -144,6 +156,18 @@
                                         <div class="mb-3">
                                             <label for="productStock" class="form-label">Stock Quantity</label>
                                             <input type="number" class="form-control" id="productStock" name="stock" placeholder="Enter stock quantity">
+                                        </div>
+
+                                        <!--Stock available-->
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="true" name="stock_available" id="flexCheckInStock">
+                                                <label class="form-check-label" for="flexCheckInStock">In Stock</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="false" name="stock_available" id="flexCheckOutOfStock">
+                                                <label class="form-check-label" for="flexCheckOutOfStock">Out of Stock</label>
+                                            </div>
                                         </div>
 
                                         <!-- Category and Subcategory Selection -->
@@ -197,35 +221,6 @@
                                                       placeholder="Enter detailed description"></textarea>
                                         </div>
 
-                                        <!-- Product Image -->
-                                        <div class="mb-3">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <label for="productImage" class="form-label">Product Image 1</label>
-                                                    <input type="file" class="form-control" id="productImage"
-                                                           name="product_image" accept="image/*">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="productImage1" class="form-label">Product Image
-                                                        2</label>
-                                                    <input type="file" class="form-control" id="productImage1"
-                                                           name="product_image1" accept="image/*">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="productImage2" class="form-label">Product Image
-                                                        3</label>
-                                                    <input type="file" class="form-control" id="productImage2"
-                                                           name="product_image2" accept="image/*">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="productImage3" class="form-label">Product Image
-                                                        4</label>
-                                                    <input type="file" class="form-control" id="productImage3"
-                                                           name="product_image3" accept="image/*">
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="d-grid">
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
@@ -274,6 +269,82 @@
                             });
                         });
                     </script>
+                    <!--Edit product Image Modal-->
+                    <div class="modal fade" id="editProductImgModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit Product Image</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editProductImgForm" th:action="@{/seller/edit-product-img}" method="post"
+                                          enctype="multipart/form-data">
+                                        <input type="hidden" id="editProductImgId" name="id">
+
+                                        <!-- Product Image -->
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label for="productImage" class="form-label">Product Image 1</label>
+                                                    <input type="file" class="form-control" id="productImage"
+                                                           name="product_image" accept="image/*">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="productImage1" class="form-label">Product Image
+                                                        2</label>
+                                                    <input type="file" class="form-control" id="productImage1"
+                                                           name="product_image1" accept="image/*">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="productImage2" class="form-label">Product Image
+                                                        3</label>
+                                                    <input type="file" class="form-control" id="productImage2"
+                                                           name="product_image2" accept="image/*">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="productImage3" class="form-label">Product Image
+                                                        4</label>
+                                                    <input type="file" class="form-control" id="productImage3"
+                                                           name="product_image3" accept="image/*">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Get the edit buttons
+                            const editButtons = document.querySelectorAll('#producteImgedit-btn');
+
+                            // Add click event listener to each button
+                            editButtons.forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const productId = button.getAttribute('data-id');
+                                    const productProduct_image = button.getAttribute('data-product_image');
+                                    const productProduct_image1 = button.getAttribute('data-product_image1');
+                                    const productProduct_image2 = button.getAttribute('data-product_image2');
+                                    const productProduct_image3 = button.getAttribute('data-product_image3');
+
+                                    // Set the form fields with the category data
+                                    document.getElementById('editProductImgId').value = productId;
+                                    document.getElementById('productImage').value = productProduct_image;
+                                    document.getElementById('productImage1').value = productProduct_image1;
+                                    document.getElementById('productImage2').value = productProduct_image2;
+                                    document.getElementById('productImage3').value = productProduct_image3;
+                                });
+                            });
+                        });
+                    </script>
+
+
 
                 </tr>
                 </tbody>

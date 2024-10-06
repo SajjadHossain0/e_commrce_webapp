@@ -40,6 +40,8 @@
 
             <div class="product-reviews">
                 <span class="stars">★★★★★</span>
+                <span th:text="${product.isStock_available() ? 'In Stock' : 'Out Of Stock'}"
+                      th:style="${product.isStock_available()} ? 'color: green;' : 'color: red;'"></span>
                 <span class="review-count">(120 reviews)</span>
             </div>
             <!-- Product Description -->

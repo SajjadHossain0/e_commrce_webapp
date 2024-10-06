@@ -35,6 +35,8 @@ public class Product {
     private String detailed_description;
     private String product_details;
 
+    private boolean stock_available;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -42,7 +44,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String product_image, String product_image1, String product_image2, String product_image3, String title, double price, String category, String sub_category, int stock, String short_description, String detailed_description, String product_details, User user) {
+    public Product(Long id, String product_image, String product_image1, String product_image2, String product_image3, String title, double price, String category, String sub_category, int stock, String short_description, String detailed_description, String product_details, boolean stock_available, User user) {
         this.id = id;
         this.product_image = product_image;
         this.product_image1 = product_image1;
@@ -56,6 +58,7 @@ public class Product {
         this.short_description = short_description;
         this.detailed_description = detailed_description;
         this.product_details = product_details;
+        this.stock_available = stock_available;
         this.user = user;
     }
 }
