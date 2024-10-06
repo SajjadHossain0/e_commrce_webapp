@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:object-fit="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,6 +115,18 @@
 <div class="container">
     <div class="container" style="text-align: center; font-size: 40px"><h2>Welcome, <span
             th:text="${user.first_name}"></span></h2></div>
+
+    <!--Profile pic-->
+    <div class="container" style="text-align: center; font-size: 40px">
+        <div style="background-color: #4CAF50;
+    border-radius: 50%;
+    width: 150px;height: 150px;
+    align-content: center">
+<!--            <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" class="card-img-top" alt="Category Image">-->
+            <img src="/images/view_admin_panel.png" height="150" width="150" class="card-img-top" alt="Category Image">
+
+        </div>
+    </div>
 
     <!--Your details-->
     <div style="margin: 20px">

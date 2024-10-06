@@ -36,7 +36,9 @@ public class ProductService {
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategory(category);
     }
-
+    public List<Product> getProductsBySubCategory(String sub_category) {
+        return productRepository.findBySubCategory(sub_category);
+    }
 
 
     public void deleteProduct(Long id) {

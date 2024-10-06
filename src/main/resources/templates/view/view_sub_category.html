@@ -17,7 +17,148 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
-<div>Hello</div>
+<div class="container" style="text-align: center; margin-top: 20px; font-size: 20px; font-weight: bold"
+     th:text="${subCategory.name}"></div>
+
+
+
+<!--@@@ Product card section-->
+<div class="container"
+     style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 20px; font-weight: bold">All Products
+</div>
+<style>
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 15px;
+  }
+
+  .product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .product-info {
+    padding: 15px;
+  }
+
+  .product-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .product-price {
+    font-size: 20px;
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .product-reviews {
+    margin-bottom: 10px;
+  }
+
+  .product-reviews .stars {
+    color: #f39c12;
+  }
+
+  .product-reviews .review-count {
+    font-size: 14px;
+    color: #777;
+  }
+
+  .product-btn {
+    display: inline-block;
+    padding: 5px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 15px;
+    height: 40px;
+    width: 100px;
+    transition: background-color 0.3s ease;
+  }
+
+  .product-btn:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .product-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .product-card img {
+      height: 150px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .product-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .product-card img {
+      height: 120px;
+    }
+  }
+</style>
+
+<div class="product-grid">
+
+  <div class="product-card" th:each="productBySubCategory : ${productsBySubCategory}">
+    <!--photo size - 250x200-->
+    <img th:src="'data:image/jpeg;base64,' + ${productBySubCategory.product_image}" class="card-img-top"
+         alt="Category Image">
+    <div class="product-info">
+      <h3 class="product-title" th:text="${productBySubCategory.title}">Product Name 1</h3>
+      <p class="product-price" th:text="${productBySubCategory.price}">$99.99</p>
+      <div class="product-reviews">
+        <span class="stars">★★★★★</span>
+        <span th:text="${productBySubCategory.isStock_available() ? 'In Stock' : 'Out Of Stock'}"
+              th:style="${productBySubCategory.isStock_available()} ? 'color: green;' : 'color: red;'"></span>
+        <span class="review-count">(120 reviews)</span>
+      </div>
+
+      <div style="text-align: center">
+        <th:block th:if="${productBySubCategory.isStock_available()==true}">
+          <a href="/" class="product-btn" style="text-decoration: none">Add to cart</a>
+        </th:block>
+        <th:block th:if="${productBySubCategory.isStock_available()==false}">
+          <a class="product-btn" style="text-decoration: none" disabled="">Out of stock</a>
+        </th:block>
+        <a style="margin: 5px" th:href="@{/view_products/{productId}(productId=${productBySubCategory.id})}"
+           class="product-btn">view product</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--@@@ Product card section close-->
+
 
 
 </body>

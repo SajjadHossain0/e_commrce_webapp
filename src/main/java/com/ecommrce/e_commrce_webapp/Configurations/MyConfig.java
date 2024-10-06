@@ -33,7 +33,7 @@ public class MyConfig {
                 // Configure authorization rules for different URLs.
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/register", "/login"
-                        ,"/categories/**", "/product/**","/view_products/**"
+                        ,"/categories/**","/sub-category/**", "/product/**","/view_products/**"
                         , "/change-address","/change-password")
                         .permitAll() // Allow access to these endpoints without authentication.
                         .requestMatchers("/admin/**").hasRole("ADMIN")

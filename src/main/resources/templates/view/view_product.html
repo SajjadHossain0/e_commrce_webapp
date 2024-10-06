@@ -23,13 +23,17 @@
     <div class="product-detail-grid">
         <!-- Product Image Section -->
         <div class="product-image-gallery">
-            <img id="mainProductImage" th:src="'data:image/jpeg;base64,' + ${product.product_image}" class="card-img-top" alt="Category Image">
+            <img id="mainProductImage" th:src="'data:image/jpeg;base64,' + ${product.product_image}"
+                 class="card-img-top" alt="Category Image">
 
 
             <div class="product-thumbnails">
-                <img th:src="'data:image/jpeg;base64,' + ${product.product_image1}" alt="Thumbnail 1" class="thumbnail-img" onclick="changeImage(this)">
-                <img th:src="'data:image/jpeg;base64,' + ${product.product_image2}" alt="Thumbnail 2" class="thumbnail-img" onclick="changeImage(this)">
-                <img th:src="'data:image/jpeg;base64,' + ${product.product_image3}" alt="Thumbnail 3" class="thumbnail-img" onclick="changeImage(this)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image1}" alt="Thumbnail 1"
+                     class="thumbnail-img" onclick="changeImage(this)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image2}" alt="Thumbnail 2"
+                     class="thumbnail-img" onclick="changeImage(this)">
+                <img th:src="'data:image/jpeg;base64,' + ${product.product_image3}" alt="Thumbnail 3"
+                     class="thumbnail-img" onclick="changeImage(this)">
             </div>
         </div>
 
@@ -58,7 +62,13 @@
                 <label for="quantity">Quantity:</label>
                 <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
 
-                <button class="add-to-cart-btn">Add to Cart</button>
+                <th:block th:if="${product.isStock_available()==true}">
+                    <a href="/" class="add-to-cart-btn" style="text-decoration: none">Add to cart</a>
+                </th:block>
+                <th:block th:if="${product.isStock_available()==false}">
+                    <a class="add-to-cart-btn" style="text-decoration: none" disabled="">Out of stock</a>
+                </th:block>
+
             </div>
             <!-- Product Specifications -->
             <div class="product-specs">
@@ -92,7 +102,8 @@
                 </div>
             </div>
 
-        </div>    </div>
+        </div>
+    </div>
 </div>
 
 <!-- CSS for Product Detail Page -->

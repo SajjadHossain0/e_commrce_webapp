@@ -52,10 +52,13 @@ public class HomeController {
     /*========== category ================*/
     @GetMapping("/categories/{categoryId}")
     public String getCategory(@PathVariable Long categoryId, Model model) {
+
         Category category = categoryService.getCategoryById(categoryId);
-        List<SubCategory> subcategories = (List<SubCategory>) subCategoryService.getSubCategoryById(categoryId);
         model.addAttribute("category", category);
+
+        List<SubCategory> subcategories = (List<SubCategory>) subCategoryService.getSubCategoryById(categoryId);
         model.addAttribute("subcategories", subcategories);
+
         List<Product> productsByCategory = productService.getProductsByCategory(category.getName());
         model.addAttribute("productsByCategory", productsByCategory);
 
@@ -66,6 +69,17 @@ public class HomeController {
 
     /*========== sub category ================*/
 
+    @GetMapping("/sub-category/{subCategoryId}")
+    public String getSubCategory(@PathVariable Long subCategoryId, Model model) {
+        SubCategory subCategory = subCategoryService.getSubCategoryById(subCategoryId);
+        model.addAttribute("subCategory", subCategory);
+
+
+        List<Product> productsBySubCategory = productService.getProductsBySubCategory(subCategory.getName());
+        model.addAttribute("productsBySubCategory", productsBySubCategory);
+
+        return "view/view_sub_category";
+    }
 
     /*========== sub category end================*/
 
