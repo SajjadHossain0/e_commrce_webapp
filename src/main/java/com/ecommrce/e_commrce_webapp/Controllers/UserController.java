@@ -1,7 +1,11 @@
 package com.ecommrce.e_commrce_webapp.Controllers;
 
+import com.ecommrce.e_commrce_webapp.Entities.Category;
+import com.ecommrce.e_commrce_webapp.Entities.SubCategory;
 import com.ecommrce.e_commrce_webapp.Entities.User;
 import com.ecommrce.e_commrce_webapp.Repositories.UserRepository;
+import com.ecommrce.e_commrce_webapp.Services.CategoryService;
+import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
 import com.ecommrce.e_commrce_webapp.Services.UserDataService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,11 +27,15 @@ import java.util.Map;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final CategoryService categoryService;
+    private final SubCategoryService subCategoryService;
     private UserDataService userDataService;
 
-    public UserController(UserRepository userRepository, UserDataService userDataService) {
+    public UserController(UserRepository userRepository, UserDataService userDataService, CategoryService categoryService, SubCategoryService subCategoryService) {
         this.userRepository = userRepository;
         this.userDataService = userDataService;
+        this.categoryService = categoryService;
+        this.subCategoryService = subCategoryService;
     }
 
     @GetMapping("/profile")
@@ -102,4 +110,14 @@ public class UserController {
         return "redirect:/profile";
     }
 
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
+        model.addAttribute("categoryForNavbar", categories);
+
+        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
+        model.addAttribute("subCategories", subCategories);
+
+    }
 }

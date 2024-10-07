@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -214,6 +215,17 @@ public class AdminController {
     public String deleteCategory(@PathVariable("id") Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/admin/manage_categories";
+    }
+
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
+        model.addAttribute("categoryForNavbar", categories);
+
+        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
+        model.addAttribute("subCategories", subCategories);
+
     }
 /*=================Category controllers end===================*/
 

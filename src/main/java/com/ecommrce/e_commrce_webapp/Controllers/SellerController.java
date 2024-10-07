@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Base64;
 import java.util.List;
 
@@ -167,7 +168,16 @@ public class SellerController {
         return "seller/view_products";
     }
 
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
+        model.addAttribute("categoryForNavbar", categories);
 
+        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
+        model.addAttribute("subCategories", subCategories);
+
+    }
 
 
 

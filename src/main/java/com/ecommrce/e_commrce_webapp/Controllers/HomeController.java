@@ -66,6 +66,7 @@ public class HomeController {
         return "view/view_category";
     }
 
+    //set this method in every controller to view caegory in navbar from every page
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
         //List<Category> categories = categoryService.getAllCategories();
