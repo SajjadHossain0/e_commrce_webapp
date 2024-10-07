@@ -24,9 +24,14 @@ public class SubCategory {
     public SubCategory() {
     }
 
-    public SubCategory(String name, String coverPhoto, Category category) {
+    public SubCategory(Long id, String name, String coverPhoto, Category category) {
+        this.id = id;
         this.name = name;
         this.coverPhoto = coverPhoto;
         this.category = category;
+    }
+
+
+    public SubCategory(String name, String coverPhotoBase64, Category category) {
     }
 }

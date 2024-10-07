@@ -1,7 +1,9 @@
 package com.ecommrce.e_commrce_webapp.Entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -24,12 +26,17 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SubCategory> subCategory;
 
-    public Category() {}
-
-    public Category(String name, String coverPhoto) {
-        this.name = name;
-        this.coverPhoto = coverPhoto;
+    public Category() {
     }
 
+    public Category(Long id, String name, String coverPhoto, List<SubCategory> subCategory) {
+        this.id = id;
+        this.name = name;
+        this.coverPhoto = coverPhoto;
+        this.subCategory = subCategory;
+    }
+
+    public Category(String name, String encodedImage) {
+    }
 }
 

@@ -36,9 +36,9 @@ public class MyConfig {
                         ,"/categories/**","/sub-category/**", "/product/**","/view_products/**"
                         , "/change-address","/change-password")
                         .permitAll() // Allow access to these endpoints without authentication.
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers("/seller/**").hasRole("SELLER")
+                        .requestMatchers("/admin/**","/cart/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**","/cart/**").hasRole("USER")
+                        .requestMatchers("/seller/**","/cart/**").hasRole("SELLER")
                         .anyRequest().authenticated())
 
                 // Configure form-based login.

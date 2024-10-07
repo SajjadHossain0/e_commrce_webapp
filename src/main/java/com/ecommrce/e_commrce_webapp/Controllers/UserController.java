@@ -1,12 +1,8 @@
 package com.ecommrce.e_commrce_webapp.Controllers;
 
-import com.ecommrce.e_commrce_webapp.Entities.Category;
-import com.ecommrce.e_commrce_webapp.Entities.SubCategory;
-import com.ecommrce.e_commrce_webapp.Entities.User;
+import com.ecommrce.e_commrce_webapp.Entities.*;
 import com.ecommrce.e_commrce_webapp.Repositories.UserRepository;
-import com.ecommrce.e_commrce_webapp.Services.CategoryService;
-import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
-import com.ecommrce.e_commrce_webapp.Services.UserDataService;
+import com.ecommrce.e_commrce_webapp.Services.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,12 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.security.Principal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 @Controller
 //@RequestMapping("/user")
@@ -29,13 +22,15 @@ public class UserController {
     private final UserRepository userRepository;
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
+    private final CartService cartService;
     private UserDataService userDataService;
 
-    public UserController(UserRepository userRepository, UserDataService userDataService, CategoryService categoryService, SubCategoryService subCategoryService) {
+    public UserController(UserRepository userRepository, UserDataService userDataService, CategoryService categoryService, SubCategoryService subCategoryService, CartService cartService) {
         this.userRepository = userRepository;
         this.userDataService = userDataService;
         this.categoryService = categoryService;
         this.subCategoryService = subCategoryService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/profile")
@@ -111,7 +106,7 @@ public class UserController {
     }
 
     @ModelAttribute
-    public void addAttributes(Principal principal, Model model) {
+    public void addAttributes(Model model) {
         //List<Category> categories = categoryService.getAllCategories();
         List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
         model.addAttribute("categoryForNavbar", categories);
@@ -120,4 +115,24 @@ public class UserController {
         model.addAttribute("subCategories", subCategories);
 
     }
+
+    @GetMapping("/view-cart")
+    public String viewCart(Model model) {
+
+        return "view/view_cart";
+    }
+
+    @PostMapping("/cart/add")
+    public ResponseEntity<String> addToCart(@AuthenticationPrincipal UserDetails userDetails,@RequestParam Long productId, @RequestParam int quantity, Principal principal) {
+
+        String username = userDetails.getUsername();  // Replace with actual user name retrieval logic
+        User user = userRepository.findByEmail(username);
+
+        cartService.addToCart(user, productId, quantity);
+
+        return ResponseEntity.ok("Product added to cart successfully.");
+    }
+
+
+
 }
