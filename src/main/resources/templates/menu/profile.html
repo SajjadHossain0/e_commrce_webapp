@@ -116,18 +116,6 @@
     <div class="container" style="text-align: center; font-size: 40px"><h2>Welcome, <span
             th:text="${user.first_name}"></span></h2></div>
 
-    <!--Profile pic-->
-    <div class="container" style="text-align: center; font-size: 40px">
-        <div style="background-color: #4CAF50;
-    border-radius: 50%;
-    width: 150px;height: 150px;
-    align-content: center">
-<!--            <img th:src="'data:image/jpeg;base64,' + ${category.coverPhoto}" class="card-img-top" alt="Category Image">-->
-            <img src="/images/view_admin_panel.png" height="150" width="150" class="card-img-top" alt="Category Image">
-
-        </div>
-    </div>
-
     <!--Your details-->
     <div style="margin: 20px">
         <div class="row" style="background-color: #4CAF50; padding: 10px">
@@ -187,9 +175,9 @@
         </div>
 
         <div class="row" style="background-color: #ffffff; padding: 10px">
-            <div><a style="text-decoration: none; font-size: 15px; padding: 5px" href="#" data-bs-toggle="modal"
+            <div><a style="text-decoration: none; font-size: 18px; padding: 5px" href="#" data-bs-toggle="modal"
                     data-bs-target="#ChangeAddress">Change your Address</a></div>
-            <div><a style="text-decoration: none; font-size: 15px; padding: 5px" href="#" data-bs-toggle="modal"
+            <div><a style="text-decoration: none; font-size: 18px; padding: 5px" href="#" data-bs-toggle="modal"
                     data-bs-target="#ChangePassword">Change your Password</a></div>
         </div>
     </div>
@@ -259,18 +247,20 @@
                         <span th:text="${success}"></span>
                     </div>
                     <form th:action="@{/change-password}" method="post">
-                            <div class="mb-3">
-                                <label for="currentPassword" class="form-label">Current Password</label>
-                                <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="newPassword" name="newPassword" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="confirmPassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                            </div>
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="currentPassword" name="currentPassword"
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                   required>
+                        </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Change Password</button>
                         </div>

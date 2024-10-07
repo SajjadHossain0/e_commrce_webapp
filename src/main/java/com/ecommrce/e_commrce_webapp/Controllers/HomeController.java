@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,6 +64,17 @@ public class HomeController {
         model.addAttribute("productsByCategory", productsByCategory);
 
         return "view/view_category";
+    }
+
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
+        model.addAttribute("categoryForNavbar", categories);
+
+        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
+        model.addAttribute("subCategories", subCategories);
+
     }
     /*========== category end ================*/
 

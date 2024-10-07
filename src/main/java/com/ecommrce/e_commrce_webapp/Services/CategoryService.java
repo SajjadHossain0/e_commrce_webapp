@@ -28,6 +28,10 @@ public class CategoryService {
         return categoryRepository.findById(id).orElse(null);
     }
 
+    public List<Category> getAllCategoriesWithSubCategories() {
+        return categoryRepository.findAll(); // Make sure this fetches the subcategories as well (eager or use JOIN FETCH)
+    }
+
     // Optional: Delete category by ID
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
