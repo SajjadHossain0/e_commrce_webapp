@@ -34,7 +34,7 @@ public class MyConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/register", "/login"
                         ,"/categories/**","/sub-category/**", "/product/**","/view_products/**"
-                        , "/change-address","/change-password")
+                        , "/change-address","/change-password","/cart/**")
                         .permitAll() // Allow access to these endpoints without authentication.
                         .requestMatchers("/admin/**","/cart/**").hasRole("ADMIN")
                         .requestMatchers("/user/**","/cart/**").hasRole("USER")
@@ -50,6 +50,7 @@ public class MyConfig {
                 .logout(config -> config
                         .logoutSuccessUrl("/"))
                 // Configure session management.
+
                 .sessionManagement(session -> session
                         .maximumSessions(1)
                         .sessionRegistry(sessionRegistry()))

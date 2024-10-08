@@ -13,22 +13,25 @@ public class CartItem {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     private int quantity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @Column(nullable = false)
+    private double totalPrice;
 
     public CartItem() {
     }
 
-    public CartItem(Long id, Product product, int quantity, Cart cart) {
+    public CartItem(Long id, Cart cart, Product product, int quantity, double totalPrice) {
         this.id = id;
+        this.cart = cart;
         this.product = product;
         this.quantity = quantity;
-        this.cart = cart;
+        this.totalPrice = totalPrice;
     }
 }

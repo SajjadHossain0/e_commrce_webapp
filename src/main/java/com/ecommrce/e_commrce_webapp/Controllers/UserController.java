@@ -3,9 +3,12 @@ package com.ecommrce.e_commrce_webapp.Controllers;
 import com.ecommrce.e_commrce_webapp.Entities.*;
 import com.ecommrce.e_commrce_webapp.Repositories.UserRepository;
 import com.ecommrce.e_commrce_webapp.Services.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,6 @@ import java.util.*;
 
 
 @Controller
-//@RequestMapping("/user")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -123,15 +125,22 @@ public class UserController {
     }
 
     @PostMapping("/cart/add")
-    public ResponseEntity<String> addToCart(@AuthenticationPrincipal UserDetails userDetails,@RequestParam Long productId, @RequestParam int quantity, Principal principal) {
+    public ResponseEntity<String> addToCart(@RequestParam Long productId, @RequestParam int quantity, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User not authenticated");
+        }
 
-        String username = userDetails.getUsername();  // Replace with actual user name retrieval logic
-        User user = userRepository.findByEmail(username);
+        // Get the user's roles from the security context if your user does not have getAuthorities()
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("User roles: " + authentication.getAuthorities());
 
         cartService.addToCart(user, productId, quantity);
-
-        return ResponseEntity.ok("Product added to cart successfully.");
+        return ResponseEntity.ok("Product added to cart successfully");
     }
+
+
+
 
 
 
