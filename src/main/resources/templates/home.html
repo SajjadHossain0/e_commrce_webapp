@@ -427,13 +427,11 @@
             <div style="text-align: center">
                 <!--                <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>-->
                 <th:block th:if="${product.isStock_available()==true}">
-<!--                    <a th:href="@{'/addToCart?pid='+${product.id}+'&uid='+${user.id}}" class="product-btn" style="text-decoration: none">Add to cart</a>-->
                     <form th:action="@{/addToCart}" method="post" style="display: inline;">
                         <input type="hidden" name="pid" th:value="${product.id}" />
                         <input type="hidden" name="uid" th:value="${user.id}" />
                         <button type="submit" class="product-btn" style="text-decoration: none">Add to cart</button>
                     </form>
-
                 </th:block>
                 <th:block th:if="${product.isStock_available()==false}">
                     <a class="product-btn" style="text-decoration: none" disabled="">Out of stock</a>
