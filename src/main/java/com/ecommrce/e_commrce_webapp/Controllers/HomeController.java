@@ -30,9 +30,12 @@ public class HomeController {
     private AdvertisementRepository advertisementRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserDataService userDataService;
 
     @GetMapping("/")
     public String home(Model model) {
+
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
@@ -47,7 +50,15 @@ public class HomeController {
         model.addAttribute("products", products);
 
 
+
         return "home";
+    }
+
+    @ModelAttribute
+    public void addAttribute(Principal principal, Model model) {
+        String email = principal.getName();
+        User user = userDataService.getUserByEmail(email);
+        model.addAttribute("user", user);
     }
 
     /*========== category ================*/

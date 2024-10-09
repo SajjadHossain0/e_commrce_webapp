@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
     public Cart findByUser(User user);
+    public Cart findByUserIdAndProductId(Long userId, Long productId);
 }

@@ -12,53 +12,44 @@ public class CartService {
 
     @Autowired
     private CartRepository cartRepository;
-
     @Autowired
-    private ProductRepository productRepository;
+    private UserDataService userDataService;
+    @Autowired
+    private ProductService productService;
 
-    public void addToCart(User user, Long productId, int quantity) {
-        // Retrieve the product by ID
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public Cart addToCart(Long productId, Long userId){
+        User user = userDataService.getUserByID(userId);
+        Product product = productService.getProductById(productId);
 
-        // Find cart by user, if not found create a new one
-        Cart cart = cartRepository.findByUser(user);
+        Cart existingCart = cartRepository.findByUserIdAndProductId(userId, productId);
 
-        // If the user doesn't have a cart, create a new one
-        if (cart == null) {
+        if (existingCart != null) {
+            // If the product is already in the cart, return null or handle accordingly
+            return null;
+        }
+
+        Cart cartStatus = cartRepository.findByUserIdAndProductId(userId, productId);
+        Cart cart = null;
+        if (cartStatus == null) {
             cart = new Cart();
-            cart.setUser(user);  // associate the cart with the user
-            cart.setItems(new ArrayList<>());  // initialize the list of items
+            cart.setUser(user);
+            cart.setProduct(product);
+            cart.setQuantity(1);
+            cart.setTotalprice(1* product.getPrice());
         }
-
-        // Check if the product is already in the cart
-        CartItem existingItem = cart.getItems().stream()
-                .filter(item -> item.getProduct().getId().equals(productId))
-                .findFirst()
-                .orElse(null);
-
-        if (existingItem != null) {
-            // Product already in the cart, update quantity and total price
-            existingItem.setQuantity(existingItem.getQuantity() + quantity);
-            existingItem.setTotalPrice(existingItem.getQuantity() * product.getPrice());
-        } else {
-            // Add new item to the cart
-            CartItem newItem = new CartItem();
-            newItem.setProduct(product);
-            newItem.setQuantity(quantity); // Set the quantity here
-            newItem.setTotalPrice(quantity * product.getPrice());
-            newItem.setCart(cart);
-            cart.getItems().add(newItem);
+        else {
+            cart.setQuantity(cart.getQuantity() + 1);
+            cart.setTotalprice(cart.getQuantity() * cart.getProduct().getPrice());
         }
+        Cart saveCart = cartRepository.save(cart);
 
-        // Update the total price of the cart
-        double cartTotalPrice = cart.getItems().stream()
-                .mapToDouble(CartItem::getTotalPrice)
-                .sum();
-        cart.setTotalPrice(cartTotalPrice);
 
-        // Save the cart and the cart items
-        cartRepository.save(cart);  // This should cascade and save the cart items as well if properly set up.
+        return saveCart;
+    }
+
+    public Cart getCartByUser(Long userId){
+
+        return null;
     }
 
 

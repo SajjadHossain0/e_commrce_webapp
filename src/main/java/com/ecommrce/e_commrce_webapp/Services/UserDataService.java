@@ -25,6 +25,10 @@ public class UserDataService {
         return userRepository.findById(userId).orElse(null);
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public void saveUser(User user) {
         if (user.getId() == null) {
             // New user, check email uniqueness
