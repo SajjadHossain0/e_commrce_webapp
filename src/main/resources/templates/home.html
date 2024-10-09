@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:font-weight="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:font-weight="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -425,7 +425,8 @@
             </div>
 
             <div style="text-align: center">
-                <!--                <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>-->
+                <!--If authorized-->
+                <th:block sec:authorize="isAuthenticated()">
                 <th:block th:if="${product.isStock_available()==true}">
                     <form th:action="@{/addToCart}" method="post" style="display: inline;">
                         <input type="hidden" name="pid" th:value="${product.id}" />
@@ -435,6 +436,7 @@
                 </th:block>
                 <th:block th:if="${product.isStock_available()==false}">
                     <a class="product-btn" style="text-decoration: none" disabled="">Out of stock</a>
+                </th:block>
                 </th:block>
                 <a style="margin: 5px" th:href="@{/view_products/{productId}(productId=${product.id})}"
                    class="product-btn">view product</a>

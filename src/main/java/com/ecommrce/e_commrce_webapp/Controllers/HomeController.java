@@ -56,10 +56,16 @@ public class HomeController {
 
     @ModelAttribute
     public void addAttribute(Principal principal, Model model) {
-        String email = principal.getName();
-        User user = userDataService.getUserByEmail(email);
-        model.addAttribute("user", user);
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+            model.addAttribute("user", user);
+        } else {
+            // Optionally, you can add a default user object or redirect to login
+            model.addAttribute("user", null); // Or handle unauthenticated users as needed
+        }
     }
+
 
     /*========== category ================*/
     @GetMapping("/categories/{categoryId}")

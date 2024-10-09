@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,6 +62,18 @@
                 <label for="quantity">Quantity:</label>
                 <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
 
+                <!--If not authorized-->
+                <th:block sec:authorize="!isAuthenticated()">
+                    <th:block th:if="${product.isStock_available()==true}">
+                        <a style="margin: 5px" href="/view-cart" class="product-btn">Add to Cart</a>
+                    </th:block>
+                    <th:block th:if="${product.isStock_available()==false}">
+                        <a class="product-btn" style="text-decoration: none" disabled="">Out of stock</a>
+                    </th:block>
+                </th:block>
+
+                <!--If authorized-->
+                <th:block sec:authorize="isAuthenticated()">
                 <th:block th:if="${product.isStock_available()==true}">
 <!--                    <a href="/" class="add-to-cart-btn" style="text-decoration: none">Add to cart</a>-->
                     <form th:action="@{/addToCart}" method="post" style="display: inline;">
@@ -72,6 +84,7 @@
                 </th:block>
                 <th:block th:if="${product.isStock_available()==false}">
                     <a class="add-to-cart-btn" style="text-decoration: none" disabled="">Out of stock</a>
+                </th:block>
                 </th:block>
 
             </div>

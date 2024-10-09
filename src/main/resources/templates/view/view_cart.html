@@ -17,5 +17,75 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
+<style>
+  .cart-container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  .cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .cart-item-info {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+  .cart-item-info h5 {
+    margin: 0;
+  }
+  .cart-actions {
+    text-align: right;
+  }
+  .cart-actions button {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+  .cart-actions button:hover {
+    background-color: #218838;
+  }
+</style>
+<div class="cart-container">
+  <h2>Your Shopping Cart</h2>
+  <div th:if="${cartItems.size() == 0}">
+    <p>Your cart is empty.</p>
+  </div>
+
+  <div th:each="cartItem : ${cartItems}" class="cart-item">
+    <img th:src="@{${cartItem.product.imageUrl}}" alt="Product Image">
+
+    <div class="cart-item-info">
+      <h5 th:text="${cartItem.product.name}"></h5>
+      <p>Quantity: <span th:text="${cartItem.quantity}"></span></p>
+      <p>Price: $<span th:text="${cartItem.product.price}"></span></p>
+    </div>
+
+    <div class="cart-actions">
+      <button>
+        <i class="fas fa-trash-alt"></i> Remove
+      </button>
+    </div>
+  </div>
+
+  <!--<div class="cart-summary">
+    <h3>Total: $<span th:text="${cartItems.stream().mapToDouble(cart -> cart.product.price * cart.quantity).sum()}"></span></h3>
+  </div>-->
+</div>
+
+
 </body>
 </html>

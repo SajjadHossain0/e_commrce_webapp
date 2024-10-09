@@ -110,7 +110,6 @@ public class UserController {
 
     @ModelAttribute
     public void addAttributes(Model model) {
-        //List<Category> categories = categoryService.getAllCategories();
         List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
         model.addAttribute("categoryForNavbar", categories);
 
@@ -119,10 +118,14 @@ public class UserController {
 
     }
 
-    @GetMapping("/view-cart")
-    public String viewCart(Model model) {
+    @GetMapping("/view-cart/{uid}")
+    public String viewCart(Model model, @PathVariable Long uid) {
 
+// Get the cart items for the user
+        List<Cart> cartItems = cartService.getCartByUserId(uid);
 
+        // Pass the cart items to the view
+        model.addAttribute("cartItems", cartItems);
 
         return "view/view_cart";
     }
@@ -141,6 +144,7 @@ public class UserController {
 
         return "view/view_cart";
     }
+
 
 
 

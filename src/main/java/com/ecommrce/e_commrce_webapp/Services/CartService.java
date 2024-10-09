@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartService {
@@ -47,9 +48,8 @@ public class CartService {
         return saveCart;
     }
 
-    public Cart getCartByUser(Long userId){
-
-        return null;
+    public List<Cart> getCartByUserId(Long userId){
+        return cartRepository.findByUserId(userId);
     }
 
 
