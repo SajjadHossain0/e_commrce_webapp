@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>E-commerce</title>
-  <style th:insert="~{base :: styles}"></style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>E-commerce</title>
+    <style th:insert="~{base :: styles}"></style>
 </head>
 <body>
 <!--@@@ Contact section-->
@@ -16,6 +16,33 @@
 <!--@@@ Navbar section-->
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
+
+<div class="subcategory-list">
+    <ul class="list-group">
+        <li class="list-group-item" th:each="cartItem : ${cartItems}">
+            <div class="d-flex justify-content-between align-items-center">
+                <div style="margin: 5px" class="d-flex align-items-center">
+                    <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}" height="100" width="100"
+                         alt="Product Image">
+                    <div style="margin-left: 15px; text-align: left">
+                        <h6 th:text="${cartItem.product.title}"></h6>
+                        <span th:text="${cartItem.product.short_description}"></span><br>
+                        <span>Quantity: <span th:text="${cartItem.quantity}"></span></span>
+                        <p style="color: #4CAF50">Price: <span th:text="${(cartItem.quantity*(cartItem.product.price))}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<!-- Bootstrap JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

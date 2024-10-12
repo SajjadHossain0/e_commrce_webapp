@@ -119,7 +119,18 @@ public class UserController {
     }
 
     @GetMapping("/viewCart")
-    public String viewCart() {
+    public String viewCart(Model model, Principal principal) {
+        // Get the logged-in user's ID
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+
+            // Fetch the cart items for the user
+            List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
+
+            // Add the cart items to the model to display in the view
+            model.addAttribute("cartItems", cartItems);
+        }
 
         return "view/view_cart";
     }
