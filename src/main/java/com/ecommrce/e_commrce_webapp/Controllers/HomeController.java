@@ -54,17 +54,6 @@ public class HomeController {
         return "home";
     }
 
-    @ModelAttribute
-    public void addAttribute(Principal principal, Model model) {
-        if (principal != null) {
-            String email = principal.getName();
-            User user = userDataService.getUserByEmail(email);
-            model.addAttribute("user", user);
-        } else {
-            // Optionally, you can add a default user object or redirect to login
-            model.addAttribute("user", null); // Or handle unauthenticated users as needed
-        }
-    }
 
 
     /*========== category ================*/
@@ -83,17 +72,7 @@ public class HomeController {
         return "view/view_category";
     }
 
-    //set this method in every controller to view caegory in navbar from every page
-    @ModelAttribute
-    public void addAttributes(Principal principal, Model model) {
-        //List<Category> categories = categoryService.getAllCategories();
-        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
-        model.addAttribute("categoryForNavbar", categories);
 
-        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
-        model.addAttribute("subCategories", subCategories);
-
-    }
     /*========== category end ================*/
 
 
@@ -126,6 +105,29 @@ public class HomeController {
         Product product = productService.getProductById(productId);
         model.addAttribute("product", product);
         return "view/view_product";
+    }
+
+
+
+    //set this method in every controller to view caegory in navbar from every page
+    @ModelAttribute
+    public void addAttributes(Principal principal, Model model) {
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
+        model.addAttribute("categoryForNavbar", categories);
+
+        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
+        model.addAttribute("subCategories", subCategories);
+
+    }
+
+    @ModelAttribute
+    public void addAttribute(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+            model.addAttribute("user", user);
+        }
     }
 
 

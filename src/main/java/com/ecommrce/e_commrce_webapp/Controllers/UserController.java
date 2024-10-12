@@ -59,8 +59,8 @@ public class UserController {
 
     @PostMapping("/change-address")
     public String changeAddress(@RequestParam("address") String address, @RequestParam("city") String city,
-            @RequestParam("state") String state, @RequestParam("zip") String zip,
-            @RequestParam("country") String country, @RequestParam("phone_number") String phone_number, Principal principal) {
+                                @RequestParam("state") String state, @RequestParam("zip") String zip,
+                                @RequestParam("country") String country, @RequestParam("phone_number") String phone_number, Principal principal) {
 
         User user = userRepository.findByEmail(principal.getName());
         user.setAddress(address);
@@ -118,14 +118,8 @@ public class UserController {
 
     }
 
-    @GetMapping("/view-cart/{uid}")
-    public String viewCart(Model model, @PathVariable Long uid) {
-
-// Get the cart items for the user
-        List<Cart> cartItems = cartService.getCartByUserId(uid);
-
-        // Pass the cart items to the view
-        model.addAttribute("cartItems", cartItems);
+    @GetMapping("/viewCart")
+    public String viewCart() {
 
         return "view/view_cart";
     }
@@ -135,21 +129,14 @@ public class UserController {
 
         Cart addToCart = cartService.addToCart(pid, uid);
         if (addToCart != null) {
-            session.setAttribute("successCart","Product failed added to your cart.");
-        }
-        else {
-            session.setAttribute("successCart","Product added to your cart.");
+            session.setAttribute("successCart", "Product failed added to your cart.");
+        } else {
+            session.setAttribute("successCart", "Product added to your cart.");
 
         }
 
         return "view/view_cart";
     }
-
-
-
-
-
-
 
 
 }

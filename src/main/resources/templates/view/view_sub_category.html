@@ -145,14 +145,14 @@
       <div style="text-align: center">
         <!--If authorized-->
         <th:block sec:authorize="isAuthenticated()">
-          <th:block th:if="${productsBySubCategory.isStock_available()==true}">
+          <th:block th:if="${productBySubCategory.isStock_available()==true}">
             <form th:action="@{/addToCart}" method="post" style="display: inline;">
-              <input type="hidden" name="pid" th:value="${productsBySubCategory.id}" />
+              <input type="hidden" name="pid" th:value="${productBySubCategory.id}" />
               <input type="hidden" name="uid" th:value="${user.id}" />
               <button type="submit" class="product-btn" style="text-decoration: none">Add to cart</button>
             </form>
           </th:block>
-          <th:block th:if="${productsBySubCategory.isStock_available()==false}">
+          <th:block th:if="${productBySubCategory.isStock_available()==false}">
             <a class="product-btn" style="text-decoration: none" disabled="">Out of stock</a>
           </th:block>
         </th:block>
