@@ -17,24 +17,143 @@
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
-<div class="subcategory-list">
+<style>
+    .cart-container {
+        margin: 20px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .cart-title {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .cart-item {
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .cart-product-img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 20px;
+    }
+
+    .cart-product-info {
+        text-align: left;
+    }
+
+    .cart-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .quantity-input {
+        width: 70px;
+        margin-right: 10px;
+    }
+
+    .update-btn, .remove-btn {
+        margin-top: 10px;
+    }
+
+    .cart-summary {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .cart-summary h4 {
+        margin-bottom: 20px;
+    }
+
+    .cart-summary p {
+        margin: 5px 0;
+    }
+
+    .btn-success {
+        width: 100%;
+    }
+
+</style>
+<div class="cart-container">
+    <h3 class="cart-title">Your Shopping Cart</h3>
+
+    <ul class="list-group">
+        <li class="list-group-item cart-item" th:each="cartItem : ${cartItems}">
+            <div class="cart-item-details d-flex justify-content-between align-items-center">
+                <!-- Product Image and Details -->
+                <div class="d-flex align-items-center">
+                    <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}" class="cart-product-img"
+                         alt="Product Image">
+                    <div class="cart-product-info" style="margin-left: 20px;">
+                        <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
+                        <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
+                        <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
+                        <span style="color: #4CAF50">Price: <strong th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+                    </div>
+                </div>
+
+                <!-- Actions: Remove from Cart and Update Quantity -->
+                <div class="cart-actions">
+                    <form th:action="@{/updateQuantity}" method="post" class="d-flex">
+                        <input type="number" name="quantity" class="form-control quantity-input" min="1" th:value="${cartItem.quantity}">
+                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
+                        <button type="submit" class="btn btn-primary update-btn">Update</button>
+                    </form>
+                    <form th:action="@{/removeFromCart}" method="post">
+                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
+                        <button type="submit" class="btn btn-danger remove-btn">Remove</button>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+        <h4>Cart Summary</h4>
+        <p>Total Items: <strong th:text="${totalItems}"></strong></p>
+        <p>Total Price: <strong th:text="${totalPrice}"></strong></p>
+        <a href="/checkout" class="btn btn-success btn-lg">Proceed to Checkout</a>
+    </div>
+</div>
+
+
+
+<!--
+<div class="cart-list">
     <ul class="list-group">
         <li class="list-group-item" th:each="cartItem : ${cartItems}">
             <div class="d-flex justify-content-between align-items-center">
                 <div style="margin: 5px" class="d-flex align-items-center">
-                    <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}" height="100" width="100"
+                    <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}" height="100"
+                         width="100"
                          alt="Product Image">
                     <div style="margin-left: 15px; text-align: left">
                         <h6 th:text="${cartItem.product.title}"></h6>
                         <span th:text="${cartItem.product.short_description}"></span><br>
                         <span>Quantity: <span th:text="${cartItem.quantity}"></span></span>
-                        <p style="color: #4CAF50">Price: <span th:text="${(cartItem.quantity*(cartItem.product.price))}"></span></p>
+                        <p style="color: #4CAF50">Price: <span
+                                th:text="${(cartItem.quantity*(cartItem.product.price))}"></span></p>
                     </div>
                 </div>
             </div>
         </li>
     </ul>
 </div>
+-->
 
 <!-- Bootstrap JS (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
