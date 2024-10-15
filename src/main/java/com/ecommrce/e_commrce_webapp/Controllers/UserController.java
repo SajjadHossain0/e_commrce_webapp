@@ -173,8 +173,11 @@ public class UserController {
      * @return redirects to the cart view after adding the product
      */
     @PostMapping("/addToCart")
-    public String addToCart(@RequestParam("pid") Long productId, @RequestParam("uid") Long userId, HttpSession session) {
-        Cart addedToCart = cartService.addToCart(productId, userId);
+    public String addToCart(@RequestParam("pid") Long productId,
+                            @RequestParam("uid") Long userId,
+                            @RequestParam("quantity") int quantity,
+                            HttpSession session) {
+        Cart addedToCart = cartService.addToCart(productId, userId, quantity);
         if (addedToCart != null) {
             session.setAttribute("successCart", "Product added to your cart.");
         } else {
@@ -196,3 +199,4 @@ public class UserController {
         return "redirect:/viewCart";
     }
 }
+

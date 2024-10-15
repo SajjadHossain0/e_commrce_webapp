@@ -104,73 +104,89 @@
     }
 
 </style>
+
 <div class="cart-container">
     <h3 class="cart-title">
         Your Shopping Cart
-        <span class="cart-count" th:text="${cartItems.size()}"></span>
+        <span class="cart-count" id="selected-items-count" th:text="${cartItems.size()}"></span>
     </h3>
+    <div style="margin: 16px">
+        <input type="checkbox" id="selectAll" onclick="selectAllItems()"> Select All
+    </div>
 
     <ul class="list-group">
+
         <li class="list-group-item cart-item" th:each="cartItem : ${cartItems}">
-            <div class="cart-item-details d-flex justify-content-between align-items-center">
-                <!-- Product Image and Details -->
-                <div class="d-flex align-items-center">
-                    <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}" class="cart-product-img"
-                         alt="Product Image">
-                    <div class="cart-product-info" style="margin-left: 20px;">
-                        <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
-                        <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
-                        <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
-                        <span style="color: #4CAF50">Price: <strong th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+            <a th:href="@{/view_products/{productId}(productId=${cartItem.product.id})}">
+                <div class="cart-item-details d-flex justify-content-between align-items-center">
+                    <!-- Product Image and Details -->
+                    <div class="d-flex align-items-center">
+                        <!-- Checkbox for individual items -->
+                        <label>
+                            <input style="margin-right: 10px" type="checkbox" class="item-checkbox" value="" onclick="updateSummary()">
+                        </label>
+
+                        <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}"
+                             class="cart-product-img"
+                             alt="Product Image">
+                        <div class="cart-product-info" style="margin-left: 20px;">
+                            <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
+                            <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
+                            <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
+                            <!-- Add 'item-price' class here -->
+                            <span>Price : <strong style="color: #4CAF50" class="item-price"
+                                                                        th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+                        </div>
+                    </div>
+                    <!-- Actions: Remove from Cart -->
+                    <div class="cart-actions">
+                        <a th:href="@{/deletecart/{id}(id=${cartItem.id})}" class="remove-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
-
-                <!-- Actions: Remove from Cart and Update Quantity -->
-                <div class="cart-actions">
-                    <form th:action="@{/updateQuantity}" method="post" class="d-flex">
-                        <input type="number" name="quantity" class="form-control quantity-input" min="1" th:value="${cartItem.quantity}">
-                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
-                        <button type="submit" class="btn btn-primary update-btn">Update</button>
-                    </form>
-                        <a th:href="@{/deletecart/{id}(id=${cartItem.id})}" type="submit" class="btn btn-danger remove-btn">Remove</a>
-                </div>
-            </div>
+            </a>
         </li>
     </ul>
 
     <!-- Cart Summary -->
     <div class="cart-summary">
         <h4>Cart Summary</h4>
-        <p>Total Items: <strong th:text="${totalItems}"></strong></p>
-        <p>Total Price: <strong th:text="${totalPrice}"></strong></p>
-        <a href="/checkout" class="btn btn-success btn-lg">Proceed to Checkout</a>
+        <p>Total Selected Items : <strong id="totalItems">0</strong></p>
+        <p>Total Price : <strong id="totalPrice">0</strong></p>
+        <a style="margin-top: 10px" href="/checkout" class="btn btn-success btn-lg">Proceed to Checkout</a>
     </div>
 </div>
+<script>
+    function selectAllItems() {
+        let selectAllCheckbox = document.getElementById('selectAll');
+        let checkboxes = document.querySelectorAll('.item-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+        updateSummary();
+    }
 
+    function updateSummary() {
+        let checkboxes = document.querySelectorAll('.item-checkbox:checked');
+        let totalItems = checkboxes.length;
+        let totalPrice = 0;
 
+        checkboxes.forEach(checkbox => {
+            let cartItem = checkbox.closest('.cart-item');
+            // Get the price using the 'item-price' class
+            let itemPrice = parseFloat(cartItem.querySelector('.item-price').textContent);
+            totalPrice += itemPrice;
+        });
 
-<!--
-<div class="cart-list">
-    <ul class="list-group">
-        <li class="list-group-item" th:each="cartItem : ${cartItems}">
-            <div class="d-flex justify-content-between align-items-center">
-                <div style="margin: 5px" class="d-flex align-items-center">
-                    <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}" height="100"
-                         width="100"
-                         alt="Product Image">
-                    <div style="margin-left: 15px; text-align: left">
-                        <h6 th:text="${cartItem.product.title}"></h6>
-                        <span th:text="${cartItem.product.short_description}"></span><br>
-                        <span>Quantity: <span th:text="${cartItem.quantity}"></span></span>
-                        <p style="color: #4CAF50">Price: <span
-                                th:text="${(cartItem.quantity*(cartItem.product.price))}"></span></p>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
--->
+        document.getElementById('totalItems').textContent = totalItems;
+        document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    }
+</script>
+
 
 <!-- Bootstrap JS (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

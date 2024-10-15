@@ -59,9 +59,6 @@
 
             <!-- Purchase Options -->
             <div class="purchase-options">
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" min="1" value="1" class="quantity-input">
-
                 <!--If not authorized-->
                 <th:block sec:authorize="!isAuthenticated()">
                     <th:block th:if="${product.isStock_available()==true}">
@@ -79,6 +76,8 @@
                     <form th:action="@{/addToCart}" method="post" style="display: inline;">
                         <input type="hidden" name="pid" th:value="${product.id}" />
                         <input type="hidden" name="uid" th:value="${user.id}" />
+                        <label for="quantity">Quantity:</label>
+                        <input id="quantity" type="number" name="quantity" min="1" value="1" class="quantity-input" />
                         <button type="submit" class="product-btn" style="text-decoration: none">Add to cart</button>
                     </form>
                 </th:block>
@@ -96,32 +95,6 @@
         </div>
     </div>
 
-    <!-- same category more Products Section (Optional) -->
-    <div class="related-products">
-        <h2>Related Products</h2>
-        <div class="product-grid">
-
-            <div class="product-card" th:each="product : ${products}">
-                <!--photo size - 250x200-->
-                <img th:src="'data:image/jpeg;base64,' + ${product.product_image}" class="card-img-top"
-                     alt="Category Image">
-                <div class="product-info">
-                    <h3 class="product-title" th:text="${product.title}">Product Name 1</h3>
-                    <p class="product-price" th:text="${product.price}">$99.99</p>
-                    <div class="product-reviews">
-                        <span class="stars">★★★★★</span>
-                        <span class="review-count">(120 reviews)</span>
-                    </div>
-
-                    <div style="text-align: center">
-                        <a style="margin: 5px" href="#" class="product-btn">Add to Cart</a>
-                        <a style="margin: 5px" href="/product" class="product-btn">view product</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
 </div>
 
 <!-- CSS for Product Detail Page -->

@@ -18,6 +18,7 @@ public class CartService {
     @Autowired
     private ProductService productService;
 
+/*
     public Cart addToCart(Long productId, Long userId){
         User user = userDataService.getUserByID(userId);
         Product product = productService.getProductById(productId);
@@ -47,6 +48,31 @@ public class CartService {
 
         return saveCart;
     }
+*/
+
+    public Cart addToCart(Long productId, Long userId, int quantity){
+        User user = userDataService.getUserByID(userId);
+        Product product = productService.getProductById(productId);
+
+        Cart existingCart = cartRepository.findByUserIdAndProductId(userId, productId);
+
+        if (existingCart != null) {
+            // If the product is already in the cart, update the quantity
+            existingCart.setQuantity(existingCart.getQuantity() + quantity);
+            existingCart.setTotalprice(existingCart.getQuantity() * product.getPrice());
+            return cartRepository.save(existingCart);
+        }
+
+        // Create new cart entry if product is not already in the cart
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cart.setProduct(product);
+        cart.setQuantity(quantity); // Set quantity from request
+        cart.setTotalprice(quantity * product.getPrice());
+
+        return cartRepository.save(cart);
+    }
+
 
     public void removeFromCart(Long id){
         cartRepository.deleteById(id);

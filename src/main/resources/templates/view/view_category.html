@@ -314,17 +314,18 @@
                         <form th:action="@{/addToCart}" method="post" style="display: inline;">
                             <input type="hidden" name="pid" th:value="${productByCategory.id}" />
                             <input type="hidden" name="uid" th:value="${user.id}" />
-                            <button type="submit" class="product-btn" style="text-decoration: none">Add to cart</button>
+                            <input type="hidden" name="quantity" min="1" value="1" class="quantity-input">
+                            <button type="submit" class="btn btn-primary" style="text-decoration: none">Add to cart</button>
                         </form>
                     </th:block>
                     <th:block th:if="${productByCategory.isStock_available()==false}">
-                        <a class="product-btn" style="text-decoration: none" disabled="">Out of stock</a>
+                        <a class="btn btn-primary" style="text-decoration: none" disabled="">Out of stock</a>
                     </th:block>
 
                 </th:block>
 
                 <a style="margin: 5px" th:href="@{/view_products/{productId}(productId=${productByCategory.id})}"
-                   class="product-btn">view product</a>
+                   class="btn btn-primary">view product</a>
             </div>
         </div>
     </div>
