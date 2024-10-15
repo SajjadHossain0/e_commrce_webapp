@@ -15,7 +15,7 @@ import java.security.Principal;
 import java.util.*;
 
 /**
- * Controller to handle user-related actions such as profile management, cart operations,
+ * Controller to handle user-related actions such as profile management
  * and updating user information like address and password.
  */
 @Controller
@@ -129,29 +129,24 @@ public class UserController {
         return "redirect:/profile";
     }
 
+
     /**
      * Adds common data to the model, such as categories and subcategories, for use in the view.
      *
      * @param model the model to pass data to the view
      */
     @ModelAttribute
-    public void addAttributes(Model model) {
-        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // Fetch categories with their subcategories
+    public void addAttributes(Principal principal, Model model) {
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
         model.addAttribute("categoryForNavbar", categories);
 
         List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
         model.addAttribute("subCategories", subCategories);
-    }
 
-    /**
-     * Displays the cart page for the logged-in user, showing all items in the cart.
-     *
-     * @param model the model to pass data to the view
-     * @param principal the authenticated user's information
-     * @return the cart view page
-     */
-    @GetMapping("/viewCart")
-    public String viewCart(Model model, Principal principal) {
+    }
+    @ModelAttribute
+    public void addAttributeForCart(Principal principal, Model model) {
         if (principal != null) {
             String email = principal.getName();
             User user = userDataService.getUserByEmail(email);
@@ -160,43 +155,14 @@ public class UserController {
             List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
             model.addAttribute("cartItems", cartItems);
         }
-
-        return "view/view_cart";
     }
-
-    /**
-     * Adds a product to the cart for the logged-in user.
-     *
-     * @param productId the ID of the product to add
-     * @param userId the ID of the user adding the product
-     * @param session the HTTP session for storing messages
-     * @return redirects to the cart view after adding the product
-     */
-    @PostMapping("/addToCart")
-    public String addToCart(@RequestParam("pid") Long productId,
-                            @RequestParam("uid") Long userId,
-                            @RequestParam("quantity") int quantity,
-                            HttpSession session) {
-        Cart addedToCart = cartService.addToCart(productId, userId, quantity);
-        if (addedToCart != null) {
-            session.setAttribute("successCart", "Product added to your cart.");
-        } else {
-            session.setAttribute("errorCart", "Failed to add product to your cart.");
+    @ModelAttribute
+    public void addAttribute(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+            model.addAttribute("user", user);
         }
-
-        return "redirect:/viewCart";
-    }
-
-    /**
-     * Deletes a cart item based on the provided ID.
-     *
-     * @param id the ID of the cart item to delete
-     * @return redirects to the cart view after deleting the cart item
-     */
-    @GetMapping("/deletecart/{id}")
-    public String deleteCart(@PathVariable("id") Long id) {
-        cartService.removeFromCart(id);
-        return "redirect:/viewCart";
     }
 }
 

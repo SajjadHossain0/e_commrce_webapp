@@ -1,12 +1,7 @@
 package com.ecommrce.e_commrce_webapp.Controllers;
 
-import com.ecommrce.e_commrce_webapp.Entities.Category;
-import com.ecommrce.e_commrce_webapp.Entities.Product;
-import com.ecommrce.e_commrce_webapp.Entities.SubCategory;
-import com.ecommrce.e_commrce_webapp.Entities.User;
-import com.ecommrce.e_commrce_webapp.Services.CategoryService;
-import com.ecommrce.e_commrce_webapp.Services.ProductService;
-import com.ecommrce.e_commrce_webapp.Services.SubCategoryService;
+import com.ecommrce.e_commrce_webapp.Entities.*;
+import com.ecommrce.e_commrce_webapp.Services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,6 +24,10 @@ public class SellerController {
     private SubCategoryService subCategoryService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserDataService userDataService;
+    @Autowired
+    private CartService cartService;
 
 
     @GetMapping("/seller_dashboard")
@@ -168,6 +167,10 @@ public class SellerController {
         return "seller/view_products";
     }
 
+
+
+
+
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
         //List<Category> categories = categoryService.getAllCategories();
@@ -178,10 +181,23 @@ public class SellerController {
         model.addAttribute("subCategories", subCategories);
 
     }
+    @ModelAttribute
+    public void addAttributeForCart(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
 
-
-
-
-
-
+            // Fetch the cart items for the user
+            List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
+            model.addAttribute("cartItems", cartItems);
+        }
+    }
+    @ModelAttribute
+    public void addAttribute(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+            model.addAttribute("user", user);
+        }
+    }
 }

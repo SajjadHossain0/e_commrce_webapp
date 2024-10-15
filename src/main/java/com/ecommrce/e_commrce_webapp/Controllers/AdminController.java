@@ -37,6 +37,8 @@ public class AdminController {
 
     @Autowired
     private UserDataService userDataService;
+    @Autowired
+    private CartService cartService;
 
     /**
      * Load the admin dashboard page
@@ -261,12 +263,34 @@ public class AdminController {
     /**
      * Add common model attributes for the navbar.
      */
+
     @ModelAttribute
     public void addAttributes(Principal principal, Model model) {
-        List<Category> categories = categoryService.getAllCategoriesWithSubCategories();
+        //List<Category> categories = categoryService.getAllCategories();
+        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // You need to fetch categories with their subcategories
         model.addAttribute("categoryForNavbar", categories);
 
         List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
         model.addAttribute("subCategories", subCategories);
+
+    }
+    @ModelAttribute
+    public void addAttributeForCart(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+
+            // Fetch the cart items for the user
+            List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
+            model.addAttribute("cartItems", cartItems);
+        }
+    }
+    @ModelAttribute
+    public void addAttribute(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+            model.addAttribute("user", user);
+        }
     }
 }

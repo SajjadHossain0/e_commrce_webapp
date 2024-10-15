@@ -32,6 +32,8 @@ public class HomeController {
     private ProductService productService;
     @Autowired
     private UserDataService userDataService;
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -120,7 +122,17 @@ public class HomeController {
         model.addAttribute("subCategories", subCategories);
 
     }
+    @ModelAttribute
+    public void addAttributeForCart(Principal principal, Model model) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
 
+            // Fetch the cart items for the user
+            List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
+            model.addAttribute("cartItems", cartItems);
+        }
+    }
     @ModelAttribute
     public void addAttribute(Principal principal, Model model) {
         if (principal != null) {
