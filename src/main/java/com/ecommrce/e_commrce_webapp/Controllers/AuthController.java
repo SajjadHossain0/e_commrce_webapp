@@ -13,59 +13,81 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This controller handles authentication-related actions,
+ * such as user registration and login.
+ */
 @Controller
 public class AuthController {
 
+    // Inject UserRepository to interact with the database
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Displays the registration form to the user.
+     *
+     * @param model Model object to pass data to the view.
+     * @return The registration form view.
+     */
     @GetMapping("/register")
     public String registerForm(Model model) {
-        User registeredUser = new User(); // Create a new User object to bind the form data
-        model.addAttribute("registeredUser", registeredUser); // Add the User object to the model
-        model.addAttribute("success", false); // Attribute to handle success messages
-        model.addAttribute("error", false); // Attribute to handle error messages
-        return "authentication/register"; // Return the registration form view
+        // Add an empty User object to the model for form binding
+        model.addAttribute("registeredUser", new User());
+        // Flags for managing success and error messages
+        model.addAttribute("success", false);
+        model.addAttribute("error", false);
+
+        // Return the view template for the registration form
+        return "authentication/register";
     }
 
-    // Handles the registration form submission
+    /**
+     * Handles user registration form submission.
+     *
+     * @param model           Model object to pass data to the view.
+     * @param registeredUser  The User object populated from form data.
+     * @param result          BindingResult object for validation errors.
+     * @return Redirect to the login page if successful, otherwise reload the form.
+     */
     @PostMapping("/register")
-    public String registerUser(Model model, @Valid @ModelAttribute("registeredUser") User registeredUser, BindingResult result) {
+    public String registerUser(Model model,
+                               @Valid @ModelAttribute("registeredUser") User registeredUser,
+                               BindingResult result) {
 
-        // Check if the entered email is already used
-        User userForEmailCheck = userRepository.findByEmail(registeredUser.getEmail());
-        if (userForEmailCheck != null) {
-            // Add an error if the email is already used
+        // Check if the email address is already registered
+        User existingUser = userRepository.findByEmail(registeredUser.getEmail());
+        if (existingUser != null) {
+            // Add error message if email is already in use
             result.addError(new FieldError(
-                    "registeredUser",
-                    "email",
-                    "Email Address is already used. Try another..."));
+                    "registeredUser", "email", "Email Address is already used. Try another..."
+            ));
         }
 
-        // If any validation error occurs, return to the registration page
+        // Return to the registration page if there are validation errors
         if (result.hasErrors()) {
-            model.addAttribute("error", true); // Set error attribute to true
-            return "authentication/register"; // Return the registration form view
+            model.addAttribute("error", true); // Set error flag for view
+            return "authentication/register"; // Reload the registration form
         }
 
         try {
-            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(); // Password encoder
+            // Create a password encoder instance to encrypt user passwords
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-            // Format the current date and time for registration and last login time
+            // Format the current date and time for user registration and last login
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a dd MMM yyyy");
             String formattedDateTime = LocalDateTime.now().format(formatter);
 
-            // Create a new user object to save in the database
+            // Create a new User object and populate it with form data
             User newUser = new User();
             newUser.setFirst_name(registeredUser.getFirst_name());
             newUser.setLast_name(registeredUser.getLast_name());
             newUser.setEmail(registeredUser.getEmail());
-            newUser.setPassword(bCryptPasswordEncoder.encode(registeredUser.getPassword())); // Encode the password
+            newUser.setPassword(passwordEncoder.encode(registeredUser.getPassword())); // Encrypt the password
             newUser.setAddress(registeredUser.getAddress());
             newUser.setCity(registeredUser.getCity());
             newUser.setState(registeredUser.getState());
@@ -73,29 +95,33 @@ public class AuthController {
             newUser.setCountry(registeredUser.getCountry());
             newUser.setPhone_number(registeredUser.getPhone_number());
 
-            newUser.setRole("USER"); // Set the user role
-            newUser.setLastLoginTime(formattedDateTime); // Set the last login time
-            newUser.setRegistrationTime(formattedDateTime); // Set the registration time
+            newUser.setRole("USER"); // Assign default role as 'USER'
+            newUser.setRegistrationTime(formattedDateTime); // Set registration time
+            newUser.setLastLoginTime(formattedDateTime); // Set last login time initially to registration time
 
-            userRepository.save(newUser); // Save the new user in the database
+            // Save the new user in the database
+            userRepository.save(newUser);
 
-            model.addAttribute("registeredUser", new User()); // Reset the form by binding a new User object
-            model.addAttribute("success", true); // Set success attribute to true
+            // Reset the form for the view after successful registration
+            model.addAttribute("registeredUser", new User());
+            model.addAttribute("success", true); // Set success flag for the view
 
         } catch (Exception e) {
-            result.rejectValue("first_name", "error.registeredUser", e.getMessage()); // Show the error on the name field
+            // If an exception occurs, add the error message to the form
+            result.rejectValue("first_name", "error.registeredUser", e.getMessage());
         }
 
-        return "authentication/login"; // Return the registration form view
+        // Redirect to login page after successful registration
+        return "authentication/login";
     }
 
-
-
-    // Displays the login form
+    /**
+     * Displays the login form to the user.
+     *
+     * @return The login form view.
+     */
     @GetMapping("/login")
     public String showLoginPage() {
-
-        return "authentication/login"; // Ensure this matches your template location
+        return "authentication/login"; // Return the view for login form
     }
-
 }

@@ -18,6 +18,23 @@
 <!--@@@ Navbar section close-->
 
 <style>
+    .cart-title {
+        position: relative;
+        display: inline-block;
+    }
+
+    .cart-count {
+        background-color: #f65252;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 8px;
+        font-size: 14px;
+        position: relative;
+        top: -10px;
+        left: 5px;
+        font-weight: bold;
+    }
+
     .cart-container {
         margin: 20px;
         padding: 20px;
@@ -88,7 +105,10 @@
 
 </style>
 <div class="cart-container">
-    <h3 class="cart-title">Your Shopping Cart</h3>
+    <h3 class="cart-title">
+        Your Shopping Cart
+        <span class="cart-count" th:text="${cartItems.size()}"></span>
+    </h3>
 
     <ul class="list-group">
         <li class="list-group-item cart-item" th:each="cartItem : ${cartItems}">
@@ -112,10 +132,7 @@
                         <input type="hidden" name="productId" th:value="${cartItem.product.id}">
                         <button type="submit" class="btn btn-primary update-btn">Update</button>
                     </form>
-                    <form th:action="@{/removeFromCart}" method="post">
-                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
-                        <button type="submit" class="btn btn-danger remove-btn">Remove</button>
-                    </form>
+                        <a th:href="@{/deletecart/{id}(id=${cartItem.id})}" type="submit" class="btn btn-danger remove-btn">Remove</a>
                 </div>
             </div>
         </li>

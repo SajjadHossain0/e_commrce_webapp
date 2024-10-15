@@ -48,6 +48,10 @@ public class CartService {
         return saveCart;
     }
 
+    public void removeFromCart(Long id){
+        cartRepository.deleteById(id);
+    }
+
     public List<Cart> getCartItemsByUserId(Long userId) {
         return cartRepository.findByUserId(userId);
     }
