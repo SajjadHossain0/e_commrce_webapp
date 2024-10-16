@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>E-commerce</title>
+  <style th:insert="~{base :: styles}"></style>
+</head>
+<body>
+<!--@@@ Contact section-->
+<section th:insert="~{base :: contact}"></section>
+<!--@@@ Contact section close-->
+<!--@@@ Navbar section-->
+<section th:insert="~{base :: navbar}"></section>
+<!--@@@ Navbar section close-->
+
+<style>
+  .checkout-container {
+    width: 70%;
+    margin: 20px auto;
+  }
+
+  .address-section, .selected-products, .order-summary, .place-order {
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .list-group-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    margin-top: 10px;
+  }
+
+</style>
+
+<div class="checkout-container">
+  <h2 align="center">Checkout</h2>
+
+  <!-- User's Address Section -->
+  <div class="address-section">
+    <h3>Shipping Address</h3>
+    <p><strong th:text="${user.first_name}"></strong> <strong th:text="${user.last_name}"></strong></p>
+    <p>
+      <strong>Email :</strong> <span th:text="${user.email}"></span>
+      <strong>Contact No. :</strong> <span th:text="${user.phone_number}"></span>
+    </p>
+    <p>
+      <strong>City :</strong> <span th:text="${user.city}"></span>
+      <strong>State :</strong> <span th:text="${user.state}"></span>
+      <strong>Zip :</strong> <span th:text="${user.zip}"></span>
+      <strong>Country :</strong> <span th:text="${user.country}"></span>
+    </p>
+    <p><strong>Address :</strong> <span th:text="${user.address}"></span></p>
+
+    <a href="/profile">Edit Address</a>
+  </div>
+
+  <!-- Selected Products -->
+  <div class="selected-products">
+    <h3>Selected Products</h3>
+    <ul class="list-group">
+      <li class="list-group-item" th:each="cartItem : ${cartItems}">
+        <div class="d-flex justify-content-between">
+          <span th:text="${cartItem.product.title}"></span>
+          <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span>
+          <span>Price: $<strong th:text="${cartItem.quantity * cartItem.product.price}"></strong></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="order-summary">
+    <h3>Order Summary</h3>
+    <p>Subtotal: $<strong th:text="${subtotal}">0.00</strong></p>
+    <p>Delivery Charge: $<strong th:text="${deliveryCharge}">0.00</strong></p>
+    <p>Total: $<strong th:text="${total}">0.00</strong></p>
+  </div>
+
+  <!-- Place Order Button -->
+  <div align="right" class="place-order">
+    <form action="/placeOrder" method="post">
+      <button type="submit" class="btn btn-success">Place Order</button>
+    </form>
+  </div>
+</div>
+
+
+
+<!-- Bootstrap JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ltrjvnR4/Jfpcf4VGESNopAZsN6V3rF4p0ytJXBxjSY8fYBfedMf7cufp04l68uH"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+</html>
