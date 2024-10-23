@@ -13,6 +13,7 @@
 <section th:insert="~{base :: contact}"></section>
 <!--@@@ Contact section close-->
 
+
 <!--@@@ Navbar section-->
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
@@ -110,55 +111,60 @@
         Your Shopping Cart
         <span class="cart-count" id="selected-items-count" th:text="${cartItems.size()}"></span>
     </h3>
-    <div style="margin: 16px">
-        <label for="selectAll"></label><input type="checkbox" id="selectAll" onclick="selectAllItems()"> Select All
-    </div>
 
-    <ul class="list-group">
+    <form action="/orders/checkout" method="post">
+        <div style="margin: 16px">
+            <label for="selectAll"></label><input type="checkbox" id="selectAll" onclick="selectAllItems()"> Select All
+        </div>
 
-        <li class="list-group-item cart-item" th:each="cartItem : ${cartItems}">
-            <a th:href="@{/view_products/{productId}(productId=${cartItem.product.id})}">
-                <div class="cart-item-details d-flex justify-content-between align-items-center">
-                    <!-- Product Image and Details -->
-                    <div class="d-flex align-items-center">
-                        <!-- Checkbox for individual items -->
-                        <label>
-                            <input style="margin-right: 10px" type="checkbox" class="item-checkbox" value="" onclick="updateSummary()">
-                        </label>
+        <ul class="list-group">
+            <li class="list-group-item cart-item" th:each="cartItem : ${cartItems}">
+                <a th:href="@{/view_products/{productId}(productId=${cartItem.product.id})}">
+                    <div class="cart-item-details d-flex justify-content-between align-items-center">
+                        <!-- Product Image and Details -->
+                        <div class="d-flex align-items-center">
+                            <!-- Checkbox for individual items -->
+                            <label>
+                                <input style="margin-right: 10px" type="checkbox" class="item-checkbox" value=""
+                                       onclick="updateSummary()">
+                            </label>
 
-                        <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}"
-                             class="cart-product-img"
-                             alt="Product Image">
-                        <div class="cart-product-info" style="margin-left: 20px;">
-                            <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
-                            <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
-                            <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
-                            <!-- Add 'item-price' class here -->
-                            <span>Price : <strong style="color: #4CAF50" class="item-price"
-                                                                        th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+                            <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}"
+                                 class="cart-product-img"
+                                 alt="Product Image">
+                            <div class="cart-product-info" style="margin-left: 20px;">
+                                <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
+                                <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
+                                <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
+                                <!-- Add 'item-price' class here -->
+                                <span>Price : <strong style="color: #4CAF50" class="item-price"
+                                                      th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+                            </div>
+                        </div>
+                        <!-- Actions: Remove from Cart -->
+                        <div class="cart-actions">
+                            <a th:href="@{/deletecart/{id}(id=${cartItem.id})}" class="remove-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red"
+                                     class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                </svg>
+                            </a>
                         </div>
                     </div>
-                    <!-- Actions: Remove from Cart -->
-                    <div class="cart-actions">
-                        <a th:href="@{/deletecart/{id}(id=${cartItem.id})}" class="remove-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </a>
-        </li>
-    </ul>
+                </a>
+            </li>
+        </ul>
 
-    <!-- Cart Summary -->
-    <div class="cart-summary">
-        <h4>Cart Summary</h4>
-        <p>Total Selected Items : <strong id="totalItems">0</strong></p>
-        <p>Total Price : <strong id="totalPrice">0</strong></p>
-        <a style="margin-top: 10px" th:href="@{/orders/checkout}" class="btn btn-success btn-lg">Proceed to Checkout</a>
-    </div>
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+            <h4>Cart Summary</h4>
+            <p>Total Selected Items : <strong id="totalItems">0</strong></p>
+            <p>Total Price : <strong id="totalPrice">0</strong></p>
+            <a style="margin-top: 10px" th:href="@{/orders/checkout}" class="btn btn-success btn-lg">Proceed to
+                Checkout</a>
+        </div>
+    </form>
 </div>
 <script>
     function selectAllItems() {

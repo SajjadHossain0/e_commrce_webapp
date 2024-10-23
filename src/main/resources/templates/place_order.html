@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>E-commerce</title>
-  <style th:insert="~{base :: styles}"></style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>E-commerce</title>
+    <style th:insert="~{base :: styles}"></style>
 </head>
 <body>
 <!--@@@ Contact section-->
@@ -17,83 +17,114 @@
 <!--@@@ Navbar section close-->
 
 <style>
-  .checkout-container {
-    width: 70%;
-    margin: 20px auto;
-  }
+    .checkout-container {
+        width: 70%;
+        margin: 20px auto;
+    }
 
-  .address-section, .selected-products, .order-summary, .place-order {
-    margin-bottom: 20px;
-  }
+    .address-section, .selected-products, .order-summary, .place-order {
+        margin-bottom: 20px;
+    }
 
-  h3 {
-    font-weight: bold;
-  }
+    h3 {
+        font-weight: bold;
+    }
 
-  .list-group-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+    .list-group-item {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
 
-  .btn {
-    margin-top: 10px;
-  }
+    .btn {
+        margin-top: 10px;
+    }
 
 </style>
 
 <div class="checkout-container">
-  <h2 align="center">Checkout</h2>
+    <h2 align="center">Checkout</h2>
 
-  <!-- User's Address Section -->
-  <div class="address-section">
-    <h3>Shipping Address</h3>
-    <p><strong th:text="${user.first_name}"></strong> <strong th:text="${user.last_name}"></strong></p>
-    <p>
-      <strong>Email :</strong> <span th:text="${user.email}"></span>
-      <strong>Contact No. :</strong> <span th:text="${user.phone_number}"></span>
-    </p>
-    <p>
-      <strong>City :</strong> <span th:text="${user.city}"></span>
-      <strong>State :</strong> <span th:text="${user.state}"></span>
-      <strong>Zip :</strong> <span th:text="${user.zip}"></span>
-      <strong>Country :</strong> <span th:text="${user.country}"></span>
-    </p>
-    <p><strong>Address :</strong> <span th:text="${user.address}"></span></p>
-
-    <a href="/profile">Edit Address</a>
-  </div>
-
-  <!-- Selected Products -->
-  <div class="selected-products">
-    <h3>Selected Products</h3>
-    <ul class="list-group">
-      <li class="list-group-item" th:each="cartItem : ${cartItems}">
-        <div class="d-flex justify-content-between">
-          <span th:text="${cartItem.product.title}"></span>
-          <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span>
-          <span>Price: $<strong th:text="${cartItem.quantity * cartItem.product.price}"></strong></span>
+    <!-- User's Address Section -->
+    <div class="address-section" style="background-color: #f3f3f3;padding: 15px">
+        <div align="right">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green"
+                 class="bi bi-geo-alt-fill"
+                 viewBox="0 0 16 16">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+            </svg>
         </div>
-      </li>
-    </ul>
-  </div>
+        <p style="font-size: 25px">
+            <strong th:text="${user.first_name}"></strong> <strong th:text="${user.last_name}"></strong>
+            <span style="font-size: 14px; color: #535353" th:text="${user.phone_number}"></span>
+        </p>
 
-  <!-- Order Summary -->
-  <div class="order-summary">
-    <h3>Order Summary</h3>
-    <p>Subtotal: $<strong th:text="${subtotal}">0.00</strong></p>
-    <p>Delivery Charge: $<strong th:text="${deliveryCharge}">0.00</strong></p>
-    <p>Total: $<strong th:text="${total}">0.00</strong></p>
-  </div>
+        <p>
+            <strong>Email :</strong> <span th:text="${user.email}"></span>
+        </p>
+        <p><strong>Address :</strong> <span th:text="${user.address}"></span></p>
+        <p>
+            <strong>City :</strong> <span th:text="${user.city}"></span>
+            <strong>State :</strong> <span th:text="${user.state}"></span>
+            <strong>Zip :</strong> <span th:text="${user.zip}"></span>
+            <strong>Country :</strong> <span th:text="${user.country}"></span>
+        </p>
 
-  <!-- Place Order Button -->
-  <div align="right" class="place-order">
-    <form action="/placeOrder" method="post">
-      <button type="submit" class="btn btn-success">Place Order</button>
-    </form>
-  </div>
+        <a href="/profile">Edit Address</a>
+    </div>
+
+    <!-- Selected Products -->
+    <div class="selected-products">
+        <div>
+            <div th:each="cartItem : ${cartItems}">
+                <div class="cart-item-details d-flex justify-content-between align-items-center">
+                    <!-- Product Image and Details -->
+                    <div class="d-flex align-items-center">
+                        <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}"
+                             class="cart-product-img"
+                             alt="Product Image"
+                             height="100" width="100">
+                        <div class="cart-product-info" style="margin-left: 20px;">
+                            <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
+                            <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
+                            <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
+                            <!-- Add 'item-price' class here -->
+                            <span>Price : <strong style="color: #4CAF50" class="item-price"
+                                                  th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+
+        <p>Subtotal : <strong th:text="${subtotal}">0.00</strong></p>
+        <p>Delivery Charge : <strong th:text="${deliveryCharge}">0.00</strong></p>
+        <p style="text-align: center; background-color: #63ff64; color: #000000">
+            Total : <strong th:text="${total}">0.00</strong></p>
+    </div>
+
+    <div class="select-payment" style="margin: 20px 0px 20px 0px">
+        <select class="form-select" aria-label="Default select example">
+            <option selected>Select payment method</option>
+            <option value="card">Credit/Debit card</option>
+            <option value="bkash">Bkash</option>
+            <option value="nagad">Nagad</option>
+            <option value="rocket">Rocket</option>
+        </select>
+    </div>
+
+    <!-- Place Order Button -->
+    <div align="right" class="place-order">
+        <form action="/placeOrder" method="post">
+            <button type="submit" class="btn btn-success">Place Order</button>
+        </form>
+    </div>
 </div>
-
 
 
 <!-- Bootstrap JS (includes Popper) -->

@@ -39,11 +39,8 @@ public class OrdersController {
     }
 
     @GetMapping("/orders/checkout")
-    public String checkout(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        String username = userDetails.getUsername();  // Retrieve the logged-in username
-        User user = userRepository.findByEmail(username);
-        model.addAttribute("user", user);
-        model.addAttribute("username", username);
+    public String checkout() {
+
 
         return "place_order";
     }

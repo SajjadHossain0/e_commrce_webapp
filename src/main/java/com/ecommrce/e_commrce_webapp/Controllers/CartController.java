@@ -15,12 +15,14 @@ public class CartController {
     private final UserDataService userDataService;
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
+    private final OrderService orderService;
 
-    public CartController(CartService cartService, UserDataService userDataService, CategoryService categoryService, SubCategoryService subCategoryService) {
+    public CartController(CartService cartService, UserDataService userDataService, CategoryService categoryService, SubCategoryService subCategoryService, OrderService orderService) {
         this.cartService = cartService;
         this.userDataService = userDataService;
         this.categoryService = categoryService;
         this.subCategoryService = subCategoryService;
+        this.orderService = orderService;
     }
 
 
@@ -80,19 +82,38 @@ public class CartController {
         return "redirect:/viewCart";
     }
 
-    /**
-     * Adds common data to the model, such as categories and subcategories, for use in the view.
-     *
-     * @param model the model to pass data to the view
-     */
-    @ModelAttribute
-    public void addAttributes(Model model) {
-        List<Category> categories = categoryService.getAllCategoriesWithSubCategories(); // Fetch categories with their subcategories
-        model.addAttribute("categoryForNavbar", categories);
 
-        List<SubCategory> subCategories = subCategoryService.getAllSubCategories();
-        model.addAttribute("subCategories", subCategories);
+    @PostMapping("/orders/checkout")
+    public String checkout(Principal principal, HttpSession session) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = userDataService.getUserByEmail(email);
+
+            List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
+
+            if (cartItems.isEmpty()) {
+                session.setAttribute("errorCheckout", "Your cart is empty.");
+                return "redirect:/viewCart";
+            }
+
+            // Create order and clear the cart
+            orderService.createOrder(user, cartItems);
+            //cartService.clearCart(user.getId());
+
+            session.setAttribute("successCheckout", "Order placed successfully.");
+            return "redirect:/orders/success"; // Redirect to success page
+        }
+
+        return "redirect:/login";
     }
+
+    @GetMapping("/orders/success")
+    public String success() {
+
+        return "order_success";
+    }
+
+
 
 
     @ModelAttribute
