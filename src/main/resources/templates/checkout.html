@@ -13,23 +13,44 @@
 <section th:insert="~{base :: contact}"></section>
 <!--@@@ Contact section close-->
 
-
 <!--@@@ Navbar section-->
 <section th:insert="~{base :: navbar}"></section>
 <!--@@@ Navbar section close-->
 
 <div class="container">
-    <h2>Checkout</h2>
+    <h2 align="center">Checkout</h2>
 
-    <h4>Shipping Address</h4>
-    <p th:text="${user.address}"></p>
+    <div class="card">
+        <div class="card-body">
+            <p class="card-title"><strong><span style="font-size: 25px;" th:text="${user.first_name +' '+ user.last_name}"></span></strong> <span th:text="${user.phone_number}"></span></p>
+            <p><span th:text="${user.address}"></span></p>
+            <p>City : <span th:text="${user.city}"></span> - <span th:text="${user.zip}"></span></p>
+            <p><span th:text="${user.country}"></span></p>
+        </div>
+    </div>
 
-    <h4>Order Summary</h4>
+    <h4 align="center">Order Summary</h4>
     <ul class="list-group">
-        <li class="list-group-item" th:each="cartItem : ${cartItems}">
-            <span th:text="${cartItem.product.title}"></span> -
-            Quantity: <span th:text="${cartItem.quantity}"></span> -
-            Price: <span th:text="${cartItem.product.price}"></span>
+        <li class="list-group-item cart-item" th:each="cartItem : ${cartItems}">
+            <a th:href="@{/view_products/{productId}(productId=${cartItem.product.id})}">
+                <div class="cart-item-details d-flex justify-content-between align-items-center">
+                    <!-- Product Image and Details -->
+                    <div class="d-flex align-items-center">
+                        <img th:src="'data:image/jpeg;base64,' + ${cartItem.product.product_image}"
+                             class="cart-product-img"
+                             alt="Product Image"
+                        height="100" width="100">
+                        <div class="cart-product-info" style="margin-left: 20px;">
+                            <h5 class="cart-product-title" th:text="${cartItem.product.title}"></h5>
+                            <p class="cart-product-description" th:text="${cartItem.product.short_description}"></p>
+                            <span>Quantity: <strong th:text="${cartItem.quantity}"></strong></span><br>
+                            <!-- Add 'item-price' class here -->
+                            <span>Price : <strong style="color: #4CAF50" class="item-price"
+                                                  th:text="${(cartItem.quantity * cartItem.product.price)}"></strong></span>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </li>
     </ul>
 
