@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>E-commerce</title>
+    <style th:insert="~{base :: styles}"></style>
+</head>
+<body>
+<!--@@@ Contact section-->
+<section th:insert="~{base :: contact}"></section>
+<!--@@@ Contact section close-->
+
+
+<!--@@@ Navbar section-->
+<section th:insert="~{base :: navbar}"></section>
+<!--@@@ Navbar section close-->
+
+<div class="container">
+    <h2>Checkout</h2>
+
+    <h4>Shipping Address</h4>
+    <p th:text="${user.address}"></p>
+
+    <h4>Order Summary</h4>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="cartItem : ${cartItems}">
+            <span th:text="${cartItem.product.title}"></span> -
+            Quantity: <span th:text="${cartItem.quantity}"></span> -
+            Price: <span th:text="${cartItem.product.price}"></span>
+        </li>
+    </ul>
+
+    <div class="mt-3">
+        <form action="/orders/placeOrder" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

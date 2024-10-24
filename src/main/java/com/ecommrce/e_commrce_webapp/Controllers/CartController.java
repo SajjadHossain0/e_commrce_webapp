@@ -83,37 +83,6 @@ public class CartController {
     }
 
 
-    @PostMapping("/orders/checkout")
-    public String checkout(Principal principal, HttpSession session) {
-        if (principal != null) {
-            String email = principal.getName();
-            User user = userDataService.getUserByEmail(email);
-
-            List<Cart> cartItems = cartService.getCartItemsByUserId(user.getId());
-
-            if (cartItems.isEmpty()) {
-                session.setAttribute("errorCheckout", "Your cart is empty.");
-                return "redirect:/viewCart";
-            }
-
-            // Create order and clear the cart
-            orderService.createOrder(user, cartItems);
-            //cartService.clearCart(user.getId());
-
-            session.setAttribute("successCheckout", "Order placed successfully.");
-            return "redirect:/orders/success"; // Redirect to success page
-        }
-
-        return "redirect:/login";
-    }
-
-    @GetMapping("/orders/success")
-    public String success() {
-
-        return "order_success";
-    }
-
-
 
 
     @ModelAttribute

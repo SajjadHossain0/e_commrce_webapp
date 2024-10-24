@@ -7,28 +7,32 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-public class Order {
+@Table(name = "orders")
+public class Order{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-
-    private Date orderDate;
-    private double totalAmount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
+    private Date orderDate;
+    private String status;
+    private double totalAmount;
+
     public Order() {
     }
 
-    public Order(Long id, User user, Date orderDate, double totalAmount, List<OrderItem> orderItems) {
+    public Order(Long id, User user, List<OrderItem> orderItems, Date orderDate, String status, double totalAmount) {
         this.id = id;
         this.user = user;
-        this.orderDate = orderDate;
-        this.totalAmount = totalAmount;
         this.orderItems = orderItems;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.totalAmount = totalAmount;
     }
 }

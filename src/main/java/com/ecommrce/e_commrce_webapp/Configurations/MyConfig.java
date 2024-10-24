@@ -34,8 +34,8 @@ public class MyConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/register", "/login"
                         ,"/categories/**","/sub-category/**", "/product/**","/view_products/**"
-                        , "/change-address","/change-password","/orders/**").permitAll()
-                        .requestMatchers("/view-cart", "/addToCart").authenticated()
+                        , "/change-address","/change-password").permitAll()
+                        .requestMatchers("/view-cart", "/addToCart","/orders/**").authenticated()
                         .requestMatchers("/admin/**","/view-cart","/addToCart").hasRole("ADMIN")
                         .requestMatchers("/user/**","/view-cart","/addToCart").hasRole("USER")
                         .requestMatchers("/seller/**","/view-cart","/addToCart").hasRole("SELLER")

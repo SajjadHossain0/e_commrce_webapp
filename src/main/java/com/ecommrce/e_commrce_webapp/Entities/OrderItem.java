@@ -12,21 +12,23 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne
-    private Product product;
-
-    @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     private int quantity;
-    private double price; // product price at the time of order
+    private double price;
 
     public OrderItem(){
     }
 
-    public OrderItem(Long id, Product product, Order order, int quantity, double price) {
+    public OrderItem(Long id, Order order, Product product, int quantity, double price) {
         this.id = id;
-        this.product = product;
         this.order = order;
+        this.product = product;
         this.quantity = quantity;
         this.price = price;
     }
